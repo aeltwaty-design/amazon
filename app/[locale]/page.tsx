@@ -6,6 +6,7 @@ import { Benefits } from '@/components/sections/Benefits';
 import { Brands } from '@/components/sections/Brands';
 import { Faq } from '@/components/sections/Faq';
 import { FinalCta } from '@/components/sections/FinalCta';
+import { Flow } from '@/components/sections/Flow';
 import { Footer } from '@/components/sections/Footer';
 import { HowTo } from '@/components/sections/HowTo';
 import { Pricing } from '@/components/sections/Pricing';
@@ -37,6 +38,7 @@ export default async function Page({ params }: Props) {
         <Brands content={content.brands} />
         <HowTo content={content.howTo} locale={locale} />
         <Pricing content={content.pricing} locale={locale} />
+        <Flow content={content.flow} locale={locale} />
         <Faq content={content.faq} />
         <FinalCta content={content.finalCta} />
         <Terms content={content.terms} locale={locale} />
