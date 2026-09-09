@@ -1,0 +1,7 @@
+# Windows checkouts would otherwise flip every file to CRLF and make Prettier's
+# endOfLine: lf report the whole tree as unformatted.
+* text=auto eol=lf
+*.png binary
+*.jpg binary
+*.webp binary
+*.woff2 binary

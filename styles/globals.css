@@ -1,0 +1,202 @@
+@import 'tailwindcss';
+@import './tokens.css';
+
+/* Only for the rare case a logical property cannot express it. */
+@custom-variant rtl (&:where([dir='rtl'], [dir='rtl'] *));
+
+@theme inline {
+  /* font-ui: the locale-ordered stack; font-price: Figtree always (brief §3). */
+  --font-ui: var(--font-stack);
+  --font-price: var(--font-latin), ui-sans-serif, system-ui, sans-serif;
+}
+
+/*
+ * Font-stack ownership: next/font defines --font-latin / --font-arabic on <html>;
+ * only these two rules read them, so stack order is decided in one place.
+ * --dir (±1) lets CSS-only transforms mirror in RTL without JavaScript.
+ */
+html[lang='ar'] {
+  --font-stack: var(--font-arabic), var(--font-latin), ui-sans-serif, system-ui, sans-serif;
+  --dir: -1;
+}
+html[lang='en'] {
+  --font-stack: var(--font-latin), var(--font-arabic), ui-sans-serif, system-ui, sans-serif;
+  --dir: 1;
+}
+
+/*
+ * Per-script type overrides. Negative tracking breaks Arabic letter joins and
+ * a 0.9 line-height clips Cairo's ascenders, so the measured Latin values are
+ * variables that Arabic redefines.
+ */
+html {
+  --w-display: 800;
+  --lh-display: 0.9;
+  --lh-h2: 1;
+  --tracking-h2: -0.04em;
+  --tracking-h3: -0.01em;
+}
+html[lang='ar'] {
+  --w-display: 700;
+  --lh-display: 1.05;
+  --lh-h2: 1.2;
+  --tracking-h2: 0;
+  --tracking-h3: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+body {
+  font-family: var(--font-stack);
+  background: var(--color-bg-page);
+  color: var(--color-ink);
+  min-height: 100svh;
+}
+
+/*
+ * Hero load-sequence pre-hide: only with JS present and motion allowed, so a
+ * no-JS or reduced-motion visitor sees the content immediately.
+ */
+@media (prefers-reduced-motion: no-preference) {
+  html.has-js [data-enter] {
+    opacity: 0;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  [data-hero-mirror] {
+    display: none;
+  }
+}
+
+@layer components {
+  /* Type scale measured on noon One at 1440 × 900 (brief §3). rem values carry the px. */
+  .type-display {
+    font-size: clamp(44px, 7.4vw, 107px);
+    line-height: var(--lh-display);
+    font-weight: var(--w-display);
+    letter-spacing: 0;
+    text-wrap: balance;
+  }
+  .type-h2 {
+    font-size: clamp(32px, 3.3vw, 47.5px);
+    line-height: var(--lh-h2);
+    font-weight: 700;
+    letter-spacing: var(--tracking-h2);
+    text-wrap: balance;
+  }
+  .type-h3 {
+    font-size: 1.60625rem; /* 25.7px */
+    line-height: 1.15;
+    font-weight: 700;
+    letter-spacing: var(--tracking-h3);
+  }
+  .type-faq-q {
+    font-size: 1.2375rem; /* 19.8px */
+    line-height: 1.3;
+    font-weight: 600;
+  }
+  .type-body {
+    font-size: 1rem; /* 16px */
+    line-height: 1.5;
+    font-weight: 500;
+  }
+  .type-body-lg {
+    font-size: 1.125rem; /* 18px */
+    line-height: 1.5;
+    font-weight: 500;
+  }
+  .type-small {
+    font-size: 0.8125rem; /* 13px */
+    line-height: 1.4;
+    font-weight: 500;
+  }
+  .type-btn {
+    font-size: 1.125rem; /* 18px */
+    line-height: 1;
+    font-weight: 700;
+  }
+  .type-btn-hero {
+    font-size: 1.3125rem; /* 21px */
+    line-height: 1;
+    font-weight: 700;
+  }
+  .type-toggle {
+    font-size: 0.86875rem; /* 13.9px */
+    line-height: 1;
+    font-weight: 600;
+  }
+  .type-ribbon {
+    font-size: 1.1125rem; /* 17.8px */
+    line-height: 1;
+    font-weight: 700;
+  }
+  .type-price {
+    font-family: var(--font-price);
+    font-size: clamp(36px, 3.5vw, 48px);
+    line-height: 1;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    font-variant-numeric: tabular-nums;
+  }
+  /* Every number, including Arabic-Indic prose digits. */
+  .num {
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* Section rhythm (brief §4): 104/149 at ≥1024, 64/80 below. */
+  .section {
+    padding-block: 64px 80px;
+  }
+  @media (min-width: 1024px) {
+    .section {
+      padding-block: 104px 149px;
+    }
+  }
+  .gutter {
+    padding-inline: 18px;
+  }
+  @media (min-width: 600px) {
+    .gutter {
+      padding-inline: 24px;
+    }
+  }
+
+  /* Benefit card: fill from the tone utility, hover shifts toward ink by the token. */
+  .benefit-card {
+    background-color: var(--card-base);
+    transition:
+      background-color var(--card-hover) var(--ease-spring),
+      translate var(--card-hover) var(--ease-spring);
+  }
+  @media (hover: hover) {
+    .benefit-card:hover {
+      background-color: color-mix(
+        in oklab,
+        var(--card-base),
+        var(--color-ink) var(--color-card-hover-shift)
+      );
+      translate: 0 -4px;
+    }
+  }
+}
+
+@utility card-tone-* {
+  --card-base: --value(--color-card-*);
+}
+
+@keyframes hint-bounce {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(var(--scroll-arrow-bounce-distance));
+  }
+}
