@@ -61,6 +61,16 @@ body {
 }
 
 /*
+ * Font gate: the boot script in the layout adds `fonts-ready` once both
+ * families have loaded (or after its timeout). Until then the page is hidden,
+ * so the swap reflow cannot register as a layout shift. No-JS never has
+ * `has-js`, so it is never gated.
+ */
+html.has-js:not(.fonts-ready) body {
+  visibility: hidden;
+}
+
+/*
  * Hero load-sequence pre-hide: only with JS present and motion allowed, so a
  * no-JS or reduced-motion visitor sees the content immediately.
  */
@@ -78,7 +88,10 @@ body {
 @layer components {
   /* Type scale measured on noon One at 1440 × 900 (brief §3). rem values carry the px. */
   .type-display {
-    font-size: clamp(44px, 7.4vw, 107px);
+    /* The measured 7.4vw/107px is for a four-word headline; capped against the
+       viewport height so a long headline, the price block and the peeking
+       cards still fit in one pinned viewport. */
+    font-size: min(clamp(44px, 7.4vw, 107px), 8.5svh);
     line-height: var(--lh-display);
     font-weight: var(--w-display);
     letter-spacing: 0;

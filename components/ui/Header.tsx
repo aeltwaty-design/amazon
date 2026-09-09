@@ -58,13 +58,12 @@ export function Header({ locale, content, localeSwitchLabel }: Props) {
             {content.wordmark}
           </Link>
           <span aria-hidden className="hidden h-6 w-px bg-current opacity-30 min-[820px]:block" />
-          <div className="hidden w-28 min-[820px]:block">
+          <div className="hidden w-36 min-[820px]:block">
             <ImageSlot
               title={content.partnerSlot.title}
-              description={content.partnerSlot.description}
-              width={112}
-              height={32}
-              className="rounded-btn"
+              width={144}
+              height={36}
+              className="rounded-btn p-1"
             />
           </div>
         </div>
