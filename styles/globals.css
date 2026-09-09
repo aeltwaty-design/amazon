@@ -212,14 +212,18 @@ html[data-js]:not([data-fonts]) body {
     }
   }
 
-  /* Mirror cards: the wide one morphs out of the tile pile through these
-     insets (the choreography tweens the variables, S2b); the others keep the
-     defaults, which clip nothing. */
+  /* Mirror cards: every card is clipped by the choreography through these
+     insets — the wide one to tile 1's square, then a bar (S2b); all five to
+     pills that expand into their slots (S2c–S2d). The defaults clip nothing. */
   .benefit-card[data-hero-card] {
     --clip-x: 0px;
     --clip-y: 0px;
-    --clip-r: var(--radius-card);
-    clip-path: inset(var(--clip-y) var(--clip-x) var(--clip-y) var(--clip-x) round var(--clip-r));
+    /* rx / ry split so the corners stay round while the card is scaled vertically */
+    --clip-rx: var(--radius-card);
+    --clip-ry: var(--radius-card);
+    clip-path: inset(
+      var(--clip-y) var(--clip-x) var(--clip-y) var(--clip-x) round var(--clip-rx) / var(--clip-ry)
+    );
   }
 
   /* Hero sector tiles (noon One's marketplace row): a scroll-snap strip below
