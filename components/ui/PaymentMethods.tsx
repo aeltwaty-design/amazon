@@ -2,10 +2,11 @@
 
 import type { SlotCopy } from '@/content/types';
 import { ImageSlot } from '@/components/ui/ImageSlot';
+import type { Art } from '@/lib/art';
 import { cn } from '@/lib/cn';
 import type { PaymentMethod } from '@/lib/pricing';
 
-type Option = { value: PaymentMethod; label: string; slot: SlotCopy };
+type Option = { value: PaymentMethod; label: string; slot: SlotCopy; mark?: Art };
 
 type Props = {
   label: string;
@@ -40,12 +41,19 @@ export function PaymentMethods({ label, options, value, onChange, disabled }: Pr
                 onChange={() => onChange(option.value)}
                 className="sr-only"
               />
-              <div className="w-full">
+              {/* Fixed-height box: the scheme marks have very different aspect
+                  ratios, so the image scales to height and centres. */}
+              <div className="flex h-10 w-full items-center justify-center">
                 <ImageSlot
                   title={option.slot.title}
-                  width={96}
-                  height={40}
-                  className="rounded-btn"
+                  width={option.mark?.width ?? 96}
+                  height={option.mark?.height ?? 40}
+                  src={option.mark?.src}
+                  sizes="96px"
+                  className={cn(
+                    'rounded-btn',
+                    option.mark && 'h-7 w-auto max-w-[96px] object-contain',
+                  )}
                 />
               </div>
               <span className="type-small font-bold">{option.label}</span>

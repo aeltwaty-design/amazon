@@ -4,6 +4,7 @@ import { useErrorMessage, useFlowContent } from '@/components/flow/FlowContentCo
 import { Button } from '@/components/ui/Button';
 import { Callout } from '@/components/ui/Callout';
 import { PaymentMethods } from '@/components/ui/PaymentMethods';
+import { PAYMENT_MARKS } from '@/lib/art';
 import { Summary, type SummaryRow } from '@/components/ui/Summary';
 import type { FlowState } from '@/lib/flow';
 import { fmt } from '@/lib/i18n';
@@ -47,6 +48,7 @@ export function PaymentStep({ state, onMethodChange, onPay }: Props) {
           value: method,
           label: copy.methods[method],
           slot: copy.methodSlot[method],
+          mark: PAYMENT_MARKS[method],
         }))}
       />
 

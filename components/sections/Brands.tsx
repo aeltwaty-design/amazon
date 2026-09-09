@@ -1,12 +1,12 @@
+import Image from 'next/image';
 import type { SiteContent } from '@/content/types';
-import { ImageSlot } from '@/components/ui/ImageSlot';
 import { SECTION_IDS } from '@/lib/anchors';
-import { fmt } from '@/lib/i18n';
-
-const LOGO_COUNT = 10;
+import { BRANDS } from '@/lib/art';
 
 // The row carries data-parallax; PageMotion owns the ±24px travel. The
 // section clips horizontally so that travel never widens the page.
+// Logos are SVGs, which next/image serves as-is; each tile fixes the height
+// and lets the wordmark find its own width so nothing is stretched.
 export function Brands({ content }: { content: SiteContent['brands'] }) {
   return (
     <section
@@ -24,13 +24,17 @@ export function Brands({ content }: { content: SiteContent['brands'] }) {
           data-parallax="brands-row"
           className="mx-auto mt-12 grid max-w-content grid-cols-3 gap-4 sm:grid-cols-5 lg:gap-6"
         >
-          {Array.from({ length: LOGO_COUNT }, (_, i) => (
-            <li key={i}>
-              <ImageSlot
-                title={fmt(content.logoSlot, { n: i + 1 })}
-                width={132}
-                height={72}
-                className="rounded-btn bg-bg-page"
+          {BRANDS.map((brand) => (
+            <li
+              key={brand.id}
+              className="flex h-[72px] items-center justify-center rounded-btn bg-bg-page px-5 lg:h-[84px]"
+            >
+              <Image
+                src={brand.src}
+                alt={brand.name}
+                width={brand.width}
+                height={brand.height}
+                className="h-auto max-h-8 w-auto max-w-full object-contain lg:max-h-9"
               />
             </li>
           ))}
