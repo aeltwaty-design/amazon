@@ -25,7 +25,9 @@ export function Price({ halalas, locale, size = 'inline', strike = false, classN
       className={cn(
         'num inline-flex items-baseline gap-[0.25em]',
         SIZE[size],
-        strike && 'text-ink-muted line-through decoration-2',
+        // Colour is inherited (no opacity): the caller's muted token already
+        // meets 4.5:1 on its surface, and dimming it further would not.
+        strike && 'line-through decoration-2',
         className,
       )}
     >

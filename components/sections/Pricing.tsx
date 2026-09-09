@@ -7,7 +7,10 @@ type Props = { content: SiteContent['pricing']; locale: Locale };
 
 export function Pricing({ content, locale }: Props) {
   return (
-    <section id={SECTION_IDS.pricing} className="section scroll-mt-header bg-bg-surface">
+    <section
+      id={SECTION_IDS.pricing}
+      className="section scroll-mt-header overflow-x-clip bg-bg-surface"
+    >
       <div className="gutter mx-auto flex max-w-content flex-col items-center">
         <h2 data-reveal className="type-h2 text-center">
           {content.title}

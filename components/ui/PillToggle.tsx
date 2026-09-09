@@ -33,7 +33,8 @@ const TONE = {
     track: 'bg-cta-glow',
     thumb: 'bg-ink-on-dark',
     active: 'text-ink',
-    inactive: 'text-ink-on-dark-muted hover:text-ink-on-dark',
+    // Full ink at 85%: the muted token on the glow track fails 4.5:1.
+    inactive: 'text-ink-on-dark/85 hover:text-ink-on-dark',
   },
 } as const;
 

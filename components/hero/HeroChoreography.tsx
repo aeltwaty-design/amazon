@@ -1,6 +1,7 @@
 'use client';
 
 import { useViewportKey } from '@/hooks/useViewportKey';
+import { FONTS_ATTR } from '@/lib/boot';
 import { dirX, type Locale } from '@/lib/i18n';
 import {
   Flip,
@@ -377,16 +378,17 @@ export function HeroChoreography({ locale }: { locale: Locale }) {
       });
 
       let cancelled = false;
-      if (document.documentElement.classList.contains('fonts-ready')) build();
+      const fontsReady = () => document.documentElement.hasAttribute(FONTS_ATTR);
+      if (fontsReady()) build();
       else {
         const observer = new MutationObserver(() => {
-          if (!document.documentElement.classList.contains('fonts-ready')) return;
+          if (!fontsReady()) return;
           observer.disconnect();
           if (!cancelled) build();
         });
         observer.observe(document.documentElement, {
           attributes: true,
-          attributeFilter: ['class'],
+          attributeFilter: [FONTS_ATTR],
         });
         return () => {
           cancelled = true;

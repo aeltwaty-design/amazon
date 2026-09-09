@@ -58,6 +58,10 @@ body {
   background: var(--color-bg-page);
   color: var(--color-ink);
   min-height: 100svh;
+  /* clip, not hidden: no scroll container is created, so sticky and the pin
+     keep working, and a tilted card entering from the side cannot widen the
+     document for a frame (that registers as a layout shift). */
+  overflow-x: clip;
 }
 
 /*
@@ -66,7 +70,7 @@ body {
  * so the swap reflow cannot register as a layout shift. No-JS never has
  * `has-js`, so it is never gated.
  */
-html.has-js:not(.fonts-ready) body {
+html[data-js]:not([data-fonts]) body {
   visibility: hidden;
 }
 
@@ -75,7 +79,7 @@ html.has-js:not(.fonts-ready) body {
  * no-JS or reduced-motion visitor sees the content immediately.
  */
 @media (prefers-reduced-motion: no-preference) {
-  html.has-js [data-enter] {
+  html[data-js] [data-enter] {
     opacity: 0;
   }
 }

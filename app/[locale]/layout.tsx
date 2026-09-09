@@ -1,29 +1,19 @@
 import type { Metadata } from 'next';
 import { Cairo, Figtree } from 'next/font/google';
 import type { ReactNode } from 'react';
+import { BootSignals } from '@/components/motion/BootSignals';
 import { LayoutShiftProbe } from '@/components/motion/LayoutShiftProbe';
 import { Header } from '@/components/ui/Header';
 import { ScrollHint } from '@/components/ui/ScrollHint';
 import { getContent } from '@/content';
+import { BOOT_SCRIPT } from '@/lib/boot';
 import { DEFAULT_LOCALE, LOCALES, dirFor, isLocale } from '@/lib/i18n';
 import '@/styles/globals.css';
-
-const FONT_GATE_TIMEOUT_MS = 1000;
 
 // Variable fonts: one file per family covers 400–800, which the brief's body
 // (400–500) and display (800) both need; four static cuts would be larger.
 const figtree = Figtree({ subsets: ['latin'], display: 'swap', variable: '--font-latin' });
 const cairo = Cairo({ subsets: ['arabic', 'latin'], display: 'swap', variable: '--font-arabic' });
-
-// Runs before first paint. `has-js` scopes the hero's [data-enter] pre-hide to
-// JS-capable browsers. `fonts-ready` lifts the page's visibility gate once the
-// fonts are in: a font swap reflows the Arabic headline, and a reflow on a
-// visible element is a layout shift. Hidden elements are not counted, so the
-// page paints once, with the right fonts. Font requests are only issued by the
-// first layout, so `fonts.ready` is consulted two frames in (it would resolve
-// immediately before that); the timeout guards against a font that never
-// arrives.
-const BOOT = `(function(){var h=document.documentElement;h.classList.add('has-js');var done=false;function ready(){if(done)return;done=true;h.classList.add('fonts-ready')}if(!document.fonts){ready();return}requestAnimationFrame(function(){requestAnimationFrame(function(){document.fonts.ready.then(ready,ready)})});setTimeout(ready,${FONT_GATE_TIMEOUT_MS})})()`;
 
 type Props = { children: ReactNode; params: Promise<{ locale: string }> };
 
@@ -57,9 +47,11 @@ export default async function LocaleLayout({ children, params }: Props) {
       suppressHydrationWarning
     >
       <head>
-        <script dangerouslySetInnerHTML={{ __html: BOOT }} />
+        {/* First paint only; BootSignals re-applies the same attributes after each mount. */}
+        <script dangerouslySetInnerHTML={{ __html: BOOT_SCRIPT }} />
       </head>
       <body className="bg-bg-page font-ui text-ink antialiased">
+        <BootSignals />
         <a
           href="#main"
           className="sr-only focus:not-sr-only focus:fixed focus:start-4 focus:top-4 focus:z-[100] focus:rounded-btn focus:bg-cta-bg focus:px-4 focus:py-2 focus:text-cta-fg"

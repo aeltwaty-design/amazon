@@ -45,6 +45,13 @@ Conventions: **p** is the pinned-scrub timeline progress (0 = pin starts, 1 = pi
 | P7  | Button hover           | `Button`                         | hover                    | `--btn-hover`  | `--ease-out-cubic` | y −1px, radial `--color-cta-glow`            | no      | none           | `components/ui/Button.tsx`        |
 | P8  | Pill toggle thumb      | `PillToggle`                     | selection change         | `--plans-switch` | `--ease-out-cubic` | translateX × `--dir`                       | CSS     | instant        | `components/ui/PillToggle.tsx`    |
 | P9  | Benefit card hover     | `.benefit-card`                  | hover                    | `--card-hover` | `--ease-spring`    | fill shifts by `--color-card-hover-shift`, y −4px | no | none          | `styles/globals.css`              |
+| P10 | Price view switch      | `PlanCard` amount                | Before VAT / Total toggle | `--plans-switch` | `--ease-out-cubic` | `fade-up` keyframes: opacity 0→1, y 6→0   | no      | none           | `components/ui/PlanCard.tsx`      |
+| P11 | FAQ panel open/close   | `ui/Faq` `[data-panel]`          | summary click            | `--motion-300` | `--ease-out-cubic` | height 0↔auto, opacity; chevron rotates 180° | no   | native toggle  | `components/ui/Faq.tsx`           |
+| P12 | Stepper state          | `Stepper` bubbles                | step change              | `--motion-300` | CSS ease           | colour swap complete/current/upcoming        | connector via `start-` | instant | `components/ui/Stepper.tsx`  |
+
+## Boot signals
+
+Two attributes on `<html>` gate everything above: `data-js` (the hero pre-hide only applies with JavaScript) and `data-fonts` (the page stays `visibility: hidden` until both font families are in, 1 s timeout, so the swap can never register as a layout shift). The inline script in the layout sets them before first paint; `components/motion/BootSignals.tsx` re-applies them in a layout effect after every mount, because React 19 strips all attributes from `<html>` when the locale layout remounts on a soft navigation. The hero choreography waits for `data-fonts` before it measures anything.
 
 ## Guard rails
 
