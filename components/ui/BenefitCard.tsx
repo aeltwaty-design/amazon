@@ -1,5 +1,6 @@
 import type { SlotCopy } from '@/content/types';
 import { ImageSlot } from '@/components/ui/ImageSlot';
+import type { Art } from '@/lib/art';
 import { cn } from '@/lib/cn';
 
 export type CardTone = 1 | 2 | 3 | 4 | 5;
@@ -9,6 +10,8 @@ type Props = {
   title?: string;
   body?: string;
   slot: SlotCopy;
+  /** the rendered illustration; without it the slot stays a labelled placeholder */
+  art?: Art;
   wide?: boolean;
   flipId: string;
   /** mirror = the copy that flies inside the hero; grid = the real in-flow card */
@@ -24,7 +27,7 @@ const TONE_CLASS: Record<CardTone, string> = {
   5: 'card-tone-5',
 };
 
-export function BenefitCard({ tone, title, body, slot, wide = false, flipId, mode }: Props) {
+export function BenefitCard({ tone, title, body, slot, art, wide = false, flipId, mode }: Props) {
   const hooks =
     mode === 'mirror'
       ? { 'data-hero-card': '', 'data-enter': '' }
@@ -68,13 +71,22 @@ export function BenefitCard({ tone, title, body, slot, wide = false, flipId, mod
         </div>
         {body ? <p className="type-body mt-3 max-w-[38ch] text-ink-muted">{body}</p> : null}
       </div>
-      <div className={cn('absolute end-0 bottom-0', wide ? 'w-[38%] max-w-[420px]' : 'w-[58%]')}>
+      {/* The 3D stills are transparent WebPs with their contact shadow baked in,
+          so they sit straight on the card fill; the placeholder keeps its tint. */}
+      <div
+        className={cn(
+          'absolute end-0 bottom-0',
+          wide ? 'w-[60%] max-w-[500px] lg:w-[44%]' : 'w-[64%]',
+        )}
+      >
         <ImageSlot
           title={slot.title}
           description={slot.description}
-          width={wide ? 420 : 210}
-          height={wide ? 200 : 170}
-          className="rounded-none rounded-ss-card border-0 bg-ink/5 text-ink"
+          width={art?.width ?? (wide ? 420 : 210)}
+          height={art?.height ?? (wide ? 200 : 170)}
+          src={art?.src}
+          sizes={wide ? '(min-width: 1024px) 500px, 60vw' : '(min-width: 1024px) 234px, 64vw'}
+          className={cn('rounded-none', !art && 'rounded-ss-card border-0 bg-ink/5 text-ink')}
         />
       </div>
     </article>

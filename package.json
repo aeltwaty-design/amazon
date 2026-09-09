@@ -14,7 +14,9 @@
     "typecheck": "tsc --noEmit",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
-    "check": "npm run typecheck && npm run lint && npm run lint:colors && npm run build"
+    "check": "npm run typecheck && npm run lint && npm run lint:colors && npm run build",
+    "render:art": "node scripts/render/render.mjs",
+    "render:lottie": "node scripts/render/build-hero-lottie.mjs"
   },
   "dependencies": {
     "@gsap/react": "2.1.2",
@@ -43,6 +45,7 @@
     "playwright": "^1.63.0",
     "prettier": "3.9.6",
     "prettier-plugin-tailwindcss": "0.8.1",
+    "sharp": "0.35.4",
     "tailwindcss": "4.3.3",
     "typescript": "5.9.3"
   }

@@ -1,6 +1,7 @@
 import type { SiteContent } from '@/content/types';
 import { BenefitCard, type CardTone } from '@/components/ui/BenefitCard';
 import { SECTION_IDS } from '@/lib/anchors';
+import { ART, type Art } from '@/lib/art';
 
 type GridProps = { content: SiteContent['benefits']; mode: 'mirror' | 'grid' };
 
@@ -12,14 +13,15 @@ export function BenefitGrid({ content, mode }: GridProps) {
     title?: string;
     body?: string;
     slot: SiteContent['benefits']['illustrationSlot'];
+    art: Art;
     wide: boolean;
     tone: CardTone;
   }[] = [
-    { ...first, wide: true, tone: 1 },
-    { ...second, wide: false, tone: 2 },
-    { ...third, wide: false, tone: 3 },
-    { ...fourth, wide: false, tone: 4 },
-    { slot: content.illustrationSlot, wide: true, tone: 5 },
+    { ...first, art: ART.benefits.cards[0], wide: true, tone: 1 },
+    { ...second, art: ART.benefits.cards[1], wide: false, tone: 2 },
+    { ...third, art: ART.benefits.cards[2], wide: false, tone: 3 },
+    { ...fourth, art: ART.benefits.cards[3], wide: false, tone: 4 },
+    { slot: content.illustrationSlot, art: ART.benefits.wide, wide: true, tone: 5 },
   ];
 
   return (
@@ -37,6 +39,7 @@ export function BenefitGrid({ content, mode }: GridProps) {
           title={item.title}
           body={item.body}
           slot={item.slot}
+          art={item.art}
         />
       ))}
     </div>

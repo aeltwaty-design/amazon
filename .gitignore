@@ -12,3 +12,6 @@ out/
 # os / editor
 .DS_Store
 Thumbs.db
+
+# 3D render masters (scripts/render)
+.render/

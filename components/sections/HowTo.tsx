@@ -1,6 +1,7 @@
 import type { SiteContent } from '@/content/types';
 import { ImageSlot } from '@/components/ui/ImageSlot';
 import { SECTION_IDS } from '@/lib/anchors';
+import { ART } from '@/lib/art';
 import { formatInteger, type Locale } from '@/lib/i18n';
 
 type Props = { content: SiteContent['howTo']; locale: Locale };
@@ -30,8 +31,10 @@ export function HowTo({ content, locale }: Props) {
                 <ImageSlot
                   title={step.slot.title}
                   description={step.slot.description}
-                  width={320}
-                  height={200}
+                  width={ART.howTo[i]?.width ?? 320}
+                  height={ART.howTo[i]?.height ?? 200}
+                  src={ART.howTo[i]?.src}
+                  sizes="(min-width: 1024px) 340px, 90vw"
                   className="rounded-plan"
                 />
               </div>
