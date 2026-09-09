@@ -1,5 +1,5 @@
 import type { SiteContent } from '@/content/types';
-import { ImageSlot } from '@/components/ui/ImageSlot';
+import { AppMockup } from '@/components/ui/AppMockup';
 import { SECTION_IDS } from '@/lib/anchors';
 
 export function About({ content }: { content: SiteContent['about'] }) {
@@ -26,13 +26,7 @@ export function About({ content }: { content: SiteContent['about'] }) {
           </dl>
         </div>
         <div data-reveal className="mx-auto w-full max-w-[400px]">
-          <ImageSlot
-            title={content.screenshotSlot.title}
-            description={content.screenshotSlot.description}
-            width={400}
-            height={520}
-            className="rounded-card"
-          />
+          <AppMockup copy={content.mockup} label={content.screenshotSlot.title} />
         </div>
       </div>
     </section>

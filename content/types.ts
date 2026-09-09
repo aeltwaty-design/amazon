@@ -54,12 +54,26 @@ export type SiteContent = {
     body: string;
     stats: readonly [Stat, Stat, Stat];
     screenshotSlot: SlotCopy;
+    /** UI copy inside the DOM phone mockup that stands in for the screenshot */
+    mockup: {
+      time: string;
+      greeting: string;
+      pointsLabel: string;
+      points: string;
+      pointsWorth: string;
+      membership: string;
+      membershipSub: string;
+      categories: readonly string[];
+      offersTitle: string;
+      seeAll: string;
+      /** `brand` is a `BRANDS` id from `lib/art.ts` */
+      offers: readonly { brand: string; deal: string }[];
+      nav: readonly [string, string, string, string];
+    };
   };
   brands: {
     title: string;
     subtitle: string;
-    /** {n} */
-    logoSlot: string;
   };
   howTo: { title: string; steps: readonly [Step, Step, Step] };
   pricing: {

@@ -49,4 +49,16 @@ Logos: `components/brand/WalaOneLockup.tsx` (bilingual lockup, mark-right for Ar
 
 Contrast (WCAG AA, computed): ink on white 16.5:1, ink-muted on white 7.6:1 and 4.7–7.2:1 on every pastel including hover, white on Primary 800/900 10.8/13.5:1, ink on yellow 10.2:1, white on Primary 600 5.7:1, ok/err text on their washes ≥ 5.2:1. Lighthouse accessibility is 100 in both locales.
 
+## Artwork
+
+Every former `ImageSlot` placeholder is filled; the component stays so a slot can be emptied again by passing no `src`. `lib/art.ts` is the single map from slot to file and intrinsic size.
+
+**3D illustrations** (`public/illustrations/*.webp`) are rendered, not downloaded: `npm run render:art` opens headless Chromium (Playwright), builds each scene in Three.js with soft "clay" physical materials, a room environment and a tinted contact shadow on a transparent background, and writes a WebP per scene (11 files, 2–14 kB each). Scenes live in `scripts/render/scenes.js`: the five Benefits cards (bag + % badge, coin stack, gift/ticket/cup, extruded "40%", WalaOne × Amazon tiles), the three How-to steps (envelope with the six-digit code card, card + lock + green check, phone with a notification) and three hero sprites. Screen textures are drawn on a canvas from the brand SVGs, so the phone screens show the real mark and the Amazon smile with no text, which is why one render serves both locales. Pass scene names to render a subset (`npm run render:art -- rate step2`); lossless PNG masters land in `.render/` (ignored). The camera fits the sampled vertices of each scene, so a scene can be edited without re-tuning framing.
+
+**Hero Lottie** (`public/lottie/hero-illustration.json`, 20 kB) is assembled by `npm run render:lottie` from the three hero sprites, embedded as base64 WebP image layers with bob and tilt keyframes on a 5 s seamless loop. It still goes through `HeroLottie`, so reduced motion shows the first frame.
+
+**App mockup** (`components/ui/AppMockup.tsx`) is DOM, not an image: a CSS phone frame around the WalaOne home screen with the points card, the Amazon membership banner, category chips, three merchant offers and a tab bar. Its copy is in `content.about.mockup` per locale and it flips with `dir`; it is exposed to assistive tech as one image named by the slot title.
+
+**Merchant and scheme logos** (`public/brands/`, `public/payment/`) are SVGs from Wikimedia Commons (public-domain geometry; trademarks apply). The ten merchants are a sample across the six sectors, not a confirmed partner list: replace the entries in `BRANDS` before launch and the footer's draft note goes with them. mada, Visa and the Mastercard circles (as the generic credit card) sit on the payment step.
+
 See `MOTION.md` for every animation, its trigger, duration, easing and the token it reads.

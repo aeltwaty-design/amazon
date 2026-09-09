@@ -72,12 +72,30 @@ export const en = {
       { value: '12', label: 'months' },
     ],
     screenshotSlot: { title: 'App screenshot', description: 'WalaOne home screen' },
+    mockup: {
+      // authored: invented UI copy for the phone mockup
+      time: '9:41',
+      greeting: 'Good morning, Sara',
+      pointsLabel: 'Your points balance',
+      points: '12,450',
+      pointsWorth: '≈ 124 SAR',
+      membership: 'Amazon membership active',
+      membershipSub: 'Employee offers unlocked — no codes',
+      categories: ['Restaurants', 'Shopping', 'Travel', 'Fun', 'Health', 'Hotels'],
+      offersTitle: 'Picked for you',
+      seeAll: 'See all',
+      offers: [
+        { brand: 'mcdonalds', deal: '20% off' },
+        { brand: 'ikea', deal: '15% off' },
+        { brand: 'booking', deal: '2× points' },
+      ],
+      nav: ['Home', 'Offers', 'Wallet', 'Me'],
+    },
   },
   brands: {
     title: 'Your Favourite Brands, Closer to You',
     subtitle:
       'Enjoy exclusive benefits and offers from a wide range of brands across different categories.',
-    logoSlot: 'Brand logo {n}', // authored
   },
   howTo: {
     title: 'Subscribe in a Few Simple Steps',
@@ -280,6 +298,6 @@ export const en = {
       },
     ],
     partnership: 'WalaOne · in partnership with Amazon',
-    draftNote: 'Draft — imagery and illustrations are pending.', // authored
+    draftNote: 'Preview — merchant logos are samples pending partner confirmation.', // authored
   },
 } satisfies SiteContent;

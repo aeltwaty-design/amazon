@@ -73,11 +73,29 @@ export const ar = {
       { value: '12', label: 'شهرًا' },
     ],
     screenshotSlot: { title: 'لقطة شاشة التطبيق', description: 'الشاشة الرئيسية لولاء ون' },
+    mockup: {
+      // authored: invented UI copy for the phone mockup
+      time: '٩:٤١',
+      greeting: 'صباح الخير، سارة',
+      pointsLabel: 'رصيد نقاطك',
+      points: '١٢٬٤٥٠',
+      pointsWorth: '≈ ١٢٤ ريال',
+      membership: 'عضوية أمازون مفعّلة',
+      membershipSub: 'عروض الموظفين متاحة — بدون أكواد',
+      categories: ['مطاعم', 'تسوق', 'سفر', 'ترفيه', 'صحة', 'فنادق'],
+      offersTitle: 'مختارة لك',
+      seeAll: 'الكل',
+      offers: [
+        { brand: 'mcdonalds', deal: 'خصم ٢٠٪' },
+        { brand: 'ikea', deal: 'خصم ١٥٪' },
+        { brand: 'booking', deal: 'نقاط مضاعفة' },
+      ],
+      nav: ['الرئيسية', 'العروض', 'المحفظة', 'حسابي'],
+    },
   },
   brands: {
     title: 'علاماتك المفضلة أقرب لك',
     subtitle: 'استمتع بمزايا وعروض لدى مجموعة واسعة من العلامات التجارية في مختلف المجالات.',
-    logoSlot: 'شعار العلامة {n}', // authored
   },
   howTo: {
     title: 'اشترك بخطوات بسيطة',
@@ -278,6 +296,6 @@ export const ar = {
       },
     ],
     partnership: 'ولاء ون · بالشراكة مع أمازون',
-    draftNote: 'نسخة أولية — الصور والرسومات بانتظار الإضافة.', // authored
+    draftNote: 'نسخة تجريبية — شعارات العلامات التجارية نماذج بانتظار تأكيد الشركاء.', // authored
   },
 } satisfies SiteContent;
