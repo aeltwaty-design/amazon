@@ -9,6 +9,7 @@ import { Button } from '@/components/ui/Button';
 import { LocaleToggle } from '@/components/ui/LocaleToggle';
 import { SECTION_IDS } from '@/lib/anchors';
 import { cn } from '@/lib/cn';
+import { useHeroTone } from '@/lib/heroTone';
 import { dirFor, type Locale } from '@/lib/i18n';
 
 type Props = {
@@ -43,14 +44,19 @@ export function Header({ locale, content, localeSwitchLabel }: Props) {
     };
   }, []);
 
-  const tone = scrolled ? 'on-light' : 'on-dark';
+  // While the hero is pinned, scrollY grows but the purple surface is still
+  // up; the choreography publishes the surface's tone so the header goes
+  // solid only once that surface has faded (see lib/heroTone.ts).
+  const heroTone = useHeroTone();
+  const solid = scrolled && heroTone !== 'dark';
+  const tone = solid ? 'on-light' : 'on-dark';
 
   return (
     <header
-      data-scrolled={scrolled}
+      data-scrolled={solid}
       className={cn(
         'fixed inset-x-0 top-0 z-50 h-header transition-colors duration-(--header-surface) ease-out-cubic',
-        scrolled ? 'border-b border-line bg-bg-page text-ink' : 'text-ink-on-dark',
+        solid ? 'border-b border-line bg-bg-page text-ink' : 'text-ink-on-dark',
       )}
     >
       <div className="gutter mx-auto flex h-full max-w-wide items-center justify-between gap-4">
@@ -60,7 +66,7 @@ export function Header({ locale, content, localeSwitchLabel }: Props) {
           <Link href={`/${locale}`} aria-label={content.wordmark} className="inline-flex">
             <WalaOneLockup
               dir={dirFor(locale)}
-              tone={scrolled ? 'color' : 'mono'}
+              tone={solid ? 'color' : 'mono'}
               className="h-8 w-auto"
             />
           </Link>
@@ -78,7 +84,7 @@ export function Header({ locale, content, localeSwitchLabel }: Props) {
           />
           <Button
             href={`#${SECTION_IDS.flow}`}
-            variant={scrolled ? 'header' : 'header-on-dark'}
+            variant={solid ? 'header' : 'header-on-dark'}
             className="hidden min-[820px]:inline-flex"
           >
             {content.cta}

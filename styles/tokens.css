@@ -62,6 +62,7 @@
 
   /* radii (measured on noon One @1440) */
   --radius-card: 30px;
+  --radius-tile: 32px; /* hero sector tile */
   --radius-plan: 20px;
   --radius-btn: 10px;
   --radius-btn-hero: 15px;
@@ -95,10 +96,13 @@
   --hero-cta-settle: -3px;
   --hero-illustration-exit: 900ms;
   --hero-illustration-exit-start: 100ms;
-  --hero-card-enter: 530ms;
-  --hero-card-enter-distance: 300px;
+  --hero-tile-enter: 530ms;
+  --hero-tile-enter-start: 950ms; /* after the CTA has landed (550 + 420) */
+  --hero-tile-enter-distance: 300px;
 
   --card-hover: 440ms;
+  --tile-hover-lift: 18px;
+  --tile-fade: 180ms; /* illustration ↔ label cross-fade on a tile */
   --plans-switch: 250ms;
 
   --scroll-arrow-bounce: 1.45s;

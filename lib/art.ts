@@ -15,7 +15,17 @@ const ill = (name: string, width: number, height: number): Art => ({
   height,
 });
 
+/** the five hero sector tiles, in row order (tile 1 becomes the tone-1 wide card) */
+export type HeroTileId = 'restaurants' | 'shopping' | 'travel' | 'entertainment' | 'health';
+
 export const ART = {
+  tiles: {
+    restaurants: ill('tile-restaurants', 432, 432),
+    shopping: ill('tile-shopping', 432, 432),
+    travel: ill('tile-travel', 432, 432),
+    entertainment: ill('tile-entertainment', 432, 432),
+    health: ill('tile-health', 432, 432),
+  } satisfies Record<HeroTileId, Art>,
   benefits: {
     // Same order as `content.benefits.cards`.
     cards: [

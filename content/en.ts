@@ -36,6 +36,13 @@ export const en = {
       title: 'Co-branded app mockup',
       description: 'WalaOne app with the Amazon × WalaOne identity',
     },
+    tiles: [
+      { id: 'restaurants', label: 'Restaurants' },
+      { id: 'shopping', label: 'Shopping' },
+      { id: 'travel', label: 'Travel' },
+      { id: 'entertainment', label: 'Entertainment' },
+      { id: 'health', label: 'Health & Hotels' },
+    ], // authored: sector names, mirrored from the About copy
   },
   benefits: {
     title: 'Get More with WalaOne',

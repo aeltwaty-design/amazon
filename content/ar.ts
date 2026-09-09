@@ -37,6 +37,13 @@ export const ar = {
       title: 'نموذج التطبيق المشترك',
       description: 'تطبيق ولاء ون بهوية أمازون × ولاء ون',
     },
+    tiles: [
+      { id: 'restaurants', label: 'مطاعم' },
+      { id: 'shopping', label: 'تسوق' },
+      { id: 'travel', label: 'سفر' },
+      { id: 'entertainment', label: 'ترفيه' },
+      { id: 'health', label: 'صحة وفنادق' },
+    ], // authored: sector names, mirrored from the About copy
   },
   benefits: {
     title: 'مع ولاء ون، استفادتك أكبر',

@@ -211,6 +211,107 @@ html[data-js]:not([data-fonts]) body {
       translate: 0 -4px;
     }
   }
+
+  /* Mirror cards: the wide one morphs out of the tile pile through these
+     insets (the choreography tweens the variables, S2b); the others keep the
+     defaults, which clip nothing. */
+  .benefit-card[data-hero-card] {
+    --clip-x: 0px;
+    --clip-y: 0px;
+    --clip-r: var(--radius-card);
+    clip-path: inset(var(--clip-y) var(--clip-x) var(--clip-y) var(--clip-x) round var(--clip-r));
+  }
+
+  /* Hero sector tiles (noon One's marketplace row): a scroll-snap strip below
+     1024, a five-up grid above. GSAP owns `transform` on the <li>; hover lifts
+     the inner surface with `translate`, so the two never fight. The strip's
+     block padding is where the mobile rise (24px) happens without creating
+     scrollable overflow inside the row. */
+  .hero-tiles {
+    display: flex;
+    gap: 15px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+    padding-block: 28px;
+    margin-block: -28px;
+  }
+  .hero-tiles::-webkit-scrollbar {
+    display: none;
+  }
+  .hero-tile {
+    position: relative;
+    flex: 0 0 160px;
+    height: 200px;
+    scroll-snap-align: start;
+  }
+  /* Tile 1 is the top of the pile; later tiles slide under it in DOM order. */
+  .hero-tile:nth-child(1) {
+    z-index: 5;
+  }
+  .hero-tile:nth-child(2) {
+    z-index: 4;
+  }
+  .hero-tile:nth-child(3) {
+    z-index: 3;
+  }
+  .hero-tile:nth-child(4) {
+    z-index: 2;
+  }
+  .hero-tile:nth-child(5) {
+    z-index: 1;
+  }
+  @media (min-width: 1024px) {
+    .hero-tiles {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      overflow: visible;
+      padding-block: 0;
+      margin-block: 0;
+      /* 216px tiles (measured on noon) once the viewport is tall enough;
+         otherwise they shrink with its height so headline, price, CTA and
+         tiles share one pinned viewport, and with its width because the
+         headline wraps to more lines when narrow (187px at 1440 × 900). */
+      max-width: calc(5 * min(216px, 21svh, 20vw - 100px) + 4 * 15px);
+    }
+    .hero-tile {
+      flex: none;
+      height: auto;
+      aspect-ratio: 1;
+    }
+  }
+  .hero-tile-surface {
+    background-color: var(--card-base);
+    transition: translate var(--card-hover) var(--ease-spring);
+  }
+  .hero-tile-art,
+  .hero-tile-label {
+    transition: opacity var(--tile-fade) ease-out;
+  }
+  @media (min-width: 1024px) and (hover: hover) {
+    .hero-tile-label {
+      opacity: 0;
+    }
+    .hero-tile:hover {
+      z-index: 10;
+    }
+    .hero-tile:hover .hero-tile-surface {
+      translate: 0 calc(-1 * var(--tile-hover-lift));
+    }
+    .hero-tile:hover .hero-tile-art {
+      opacity: 0;
+    }
+    .hero-tile:hover .hero-tile-label {
+      opacity: 1;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .hero-tile-surface,
+    .hero-tile-art,
+    .hero-tile-label {
+      transition: none;
+    }
+  }
 }
 
 @utility card-tone-* {

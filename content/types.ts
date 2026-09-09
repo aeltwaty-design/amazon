@@ -1,8 +1,10 @@
 import type { FooterLinkId } from '@/lib/anchors';
+import type { HeroTileId } from '@/lib/art';
 import type { PaymentMethod } from '@/lib/pricing';
 import type { FlowErrorCode } from '@/lib/validation';
 
 export type SlotCopy = { title: string; description: string };
+export type HeroTile = { id: HeroTileId; label: string };
 export type FieldCopy = { label: string; hint?: string };
 export type Stat = { value: string; label: string };
 export type Step = { title: string; body: string; slot: SlotCopy };
@@ -43,6 +45,8 @@ export type SiteContent = {
     ghostCta: string;
     trust: readonly [string, string, string];
     illustrationSlot: SlotCopy;
+    /** the five sector tiles under the CTA; tile 1 gathers the others and becomes the wide benefit card */
+    tiles: readonly [HeroTile, HeroTile, HeroTile, HeroTile, HeroTile];
   };
   benefits: {
     title: string;

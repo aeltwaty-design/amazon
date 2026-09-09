@@ -44,7 +44,9 @@ export function BenefitCard({ tone, title, body, slot, art, wide = false, flipId
         wide ? 'min-h-[260px] lg:col-span-3 lg:h-[320px]' : 'min-h-[300px] lg:h-[347px]',
       )}
     >
-      <div className="relative z-10 flex h-full flex-col p-6 lg:p-7">
+      {/* data-card-inner: the choreography fades a mirror card's contents in
+          after its box has arrived (S2d), so both inner layers carry it. */}
+      <div data-card-inner className="relative z-10 flex h-full flex-col p-6 lg:p-7">
         <div className="flex items-start justify-between gap-4">
           {title ? (
             <h3 className="type-h3 max-w-[16ch]">{title}</h3>
@@ -74,6 +76,7 @@ export function BenefitCard({ tone, title, body, slot, art, wide = false, flipId
       {/* The 3D stills are transparent WebPs with their contact shadow baked in,
           so they sit straight on the card fill; the placeholder keeps its tint. */}
       <div
+        data-card-inner
         className={cn(
           'absolute end-0 bottom-0',
           wide ? 'w-[60%] max-w-[500px] lg:w-[44%]' : 'w-[64%]',

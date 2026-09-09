@@ -3,16 +3,23 @@
 import { useState } from 'react';
 import { SECTION_IDS } from '@/lib/anchors';
 import { cn } from '@/lib/cn';
+import { useHeroTone } from '@/lib/heroTone';
 import { ScrollTrigger, prefersReducedMotion, useGSAP } from '@/lib/motion';
 
 type Props = { labels: { down: string; up: string } };
 
 // Fixed round button. Its own ScrollTriggers decide direction (flips after the
-// hero pin) and tone (light over dark surfaces), so it never couples to the
-// hero choreography.
+// hero pin) and which dark surfaces are under it; the hero's published tone
+// (lib/heroTone.ts) overrides the hero's entry once its surface has faded.
 export function ScrollHint({ labels }: Props) {
   const [direction, setDirection] = useState<'down' | 'up'>('down');
-  const [onDark, setOnDark] = useState(true);
+  // null until the first toggle: the page loads over the hero, so start dark.
+  const [activeSurfaces, setActiveSurfaces] = useState<readonly HTMLElement[] | null>(null);
+  const heroTone = useHeroTone();
+  const onDark =
+    activeSurfaces === null
+      ? true
+      : activeSurfaces.some((el) => !(el.hasAttribute('data-hero') && heroTone === 'light'));
 
   useGSAP(() => {
     const hero = document.querySelector<HTMLElement>('[data-hero]');
@@ -31,7 +38,11 @@ export function ScrollHint({ labels }: Props) {
         trigger: surface,
         start: 'top bottom-=54px',
         end: 'bottom bottom-=54px',
-        onToggle: (self) => setOnDark(self.isActive),
+        onToggle: (self) =>
+          setActiveSurfaces((prev) => {
+            const rest = (prev ?? []).filter((el) => el !== surface);
+            return self.isActive ? [...rest, surface] : rest;
+          }),
       });
     });
   }, []);
