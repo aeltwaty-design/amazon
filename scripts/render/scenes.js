@@ -321,6 +321,144 @@ export function pill() {
   return g;
 }
 
+// ---------- sector tile props ----------
+export function burger() {
+  const g = new THREE.Group();
+  const bun = clay(C.yellowDeep);
+  const bottom = mesh(new THREE.CylinderGeometry(0.5, 0.46, 0.18, 48), bun);
+  const patty = mesh(new THREE.CylinderGeometry(0.5, 0.5, 0.14, 48), clay(C.ink));
+  patty.position.y = 0.16;
+  const cheese = rbox(0.98, 0.04, 0.98, 0.01, gold());
+  cheese.position.y = 0.25;
+  cheese.rotation.y = 0.5;
+  const lettuce = mesh(new THREE.TorusGeometry(0.46, 0.07, 12, 48), clay(C.green));
+  lettuce.rotation.x = Math.PI / 2;
+  lettuce.position.y = 0.3;
+  const top = mesh(new THREE.SphereGeometry(0.52, 48, 24, 0, Math.PI * 2, 0, Math.PI / 2), bun);
+  top.position.y = 0.34;
+  top.scale.y = 0.62;
+  g.add(bottom, patty, cheese, lettuce, top);
+  for (let i = 0; i < 7; i++) {
+    const a = i * 0.9 + 0.3;
+    const d = 0.18 + (i % 3) * 0.09;
+    const seed = mesh(new THREE.SphereGeometry(0.035, 12, 8), clay(C.white));
+    seed.position.set(
+      Math.cos(a) * d,
+      0.34 + 0.62 * Math.sqrt(0.52 * 0.52 - d * d),
+      Math.sin(a) * d,
+    );
+    g.add(seed);
+  }
+  return g;
+}
+
+export function suitcase() {
+  const g = new THREE.Group();
+  g.add(rbox(1.1, 1.4, 0.5, 0.12, gloss(C.purple), 8));
+  const handle = mesh(new THREE.TorusGeometry(0.22, 0.05, 12, 32, Math.PI), gold());
+  handle.position.y = 0.72;
+  g.add(handle);
+  const band = rbox(1.12, 0.12, 0.52, 0.02, gold());
+  band.position.y = 0.1;
+  g.add(band);
+  const badge = rbox(0.3, 0.2, 0.04, 0.03, clay(C.white));
+  badge.position.set(-0.25, 0.42, 0.26);
+  g.add(badge);
+  for (const x of [-0.35, 0.35]) {
+    const wheel = mesh(new THREE.CylinderGeometry(0.1, 0.1, 0.08, 24), clay(C.ink));
+    wheel.rotation.x = Math.PI / 2;
+    wheel.position.set(x, -0.72, 0);
+    g.add(wheel);
+  }
+  return g;
+}
+
+export function plane() {
+  const g = new THREE.Group();
+  const body = mesh(new THREE.CapsuleGeometry(0.16, 0.9, 8, 24), clay(C.white));
+  body.rotation.z = Math.PI / 2;
+  g.add(body);
+  const wing = rbox(0.42, 0.04, 1.3, 0.02, clay(C.white));
+  wing.position.x = 0.02;
+  g.add(wing);
+  const fin = rbox(0.28, 0.32, 0.04, 0.02, clay(C.purple));
+  fin.position.set(-0.55, 0.2, 0);
+  const tail = rbox(0.24, 0.03, 0.5, 0.02, clay(C.purple));
+  tail.position.set(-0.55, 0.02, 0);
+  g.add(fin, tail);
+  for (let i = 0; i < 3; i++) {
+    const win = mesh(new THREE.SphereGeometry(0.035, 12, 8), clay(C.purple));
+    win.position.set(0.05 + i * 0.16, 0.05, 0.155);
+    g.add(win);
+  }
+  return g;
+}
+
+export function popcorn() {
+  const g = new THREE.Group();
+  g.add(mesh(new THREE.CylinderGeometry(0.42, 0.32, 0.9, 48), clay(C.white)));
+  for (let i = 0; i < 8; i++) {
+    const a = (i * Math.PI) / 4;
+    const stripe = rbox(0.09, 0.84, 0.04, 0.01, clay(C.purple));
+    stripe.position.set(Math.cos(a) * 0.365, 0, Math.sin(a) * 0.365);
+    stripe.rotation.set(0.11, Math.PI / 2 - a, 0, 'YXZ');
+    g.add(stripe);
+  }
+  const kernels = [
+    C.white,
+    C.lilacLight,
+    C.yellow,
+    C.white,
+    C.lilacLight,
+    C.white,
+    C.yellow,
+    C.white,
+    C.lilacLight,
+    C.white,
+  ];
+  kernels.forEach((color, i) => {
+    const a = i * 1.9;
+    const d = i < 4 ? 0.12 : 0.28;
+    const k = mesh(new THREE.SphereGeometry(0.11 + (i % 3) * 0.02, 20, 14), clay(color));
+    k.position.set(Math.cos(a) * d, 0.52 + (i < 4 ? 0.12 : 0) - (i % 2) * 0.03, Math.sin(a) * d);
+    k.scale.set(1, 0.85, 1.1);
+    g.add(k);
+  });
+  return g;
+}
+
+// The classic three.js heart shape, drawn tip-up and turned over.
+export function heart(size = 0.6, mat = clay(C.purple)) {
+  const s = new THREE.Shape();
+  const x = -0.8;
+  const y = -0.95;
+  s.moveTo(x + 0.5, y + 0.5);
+  s.bezierCurveTo(x + 0.5, y + 0.5, x + 0.4, y, x, y);
+  s.bezierCurveTo(x - 0.6, y, x - 0.6, y + 0.7, x - 0.6, y + 0.7);
+  s.bezierCurveTo(x - 0.6, y + 1.1, x - 0.3, y + 1.54, x + 0.5, y + 1.9);
+  s.bezierCurveTo(x + 1.2, y + 1.54, x + 1.6, y + 1.1, x + 1.6, y + 0.7);
+  s.bezierCurveTo(x + 1.6, y + 0.7, x + 1.6, y, x + 1, y);
+  s.bezierCurveTo(x + 0.7, y, x + 0.5, y + 0.5, x + 0.5, y + 0.5);
+  const h = extrude(s, 0.3, mat, 0.05);
+  h.rotation.z = Math.PI;
+  h.scale.setScalar(size);
+  return h;
+}
+
+export function firstAid() {
+  const g = new THREE.Group();
+  g.add(rbox(1.0, 0.8, 0.45, 0.1, clay(C.white), 8));
+  const handle = mesh(new THREE.TorusGeometry(0.16, 0.04, 10, 24, Math.PI), clay(C.lilac));
+  handle.position.y = 0.42;
+  g.add(handle);
+  const bar1 = rbox(0.42, 0.13, 0.06, 0.03, clay(C.purple));
+  bar1.position.z = 0.24;
+  const bar2 = rbox(0.13, 0.42, 0.06, 0.03, clay(C.purple));
+  bar2.position.z = 0.24;
+  g.add(bar1, bar2);
+  return g;
+}
+
 export function phone(screenTex, w = 1, h = 2.1, d = 0.1) {
   const g = new THREE.Group();
   g.add(rbox(w, h, d, 0.16, gloss(C.ink), 8));
@@ -763,6 +901,115 @@ export const SCENES = {
       face.position.z = 0.037;
       g.add(face);
       g.rotation.set(-0.2, 0.25, 0.1);
+      return g;
+    },
+  },
+  // Hero sector tiles: square, framed tight, one or two props each.
+  'tile-restaurants': {
+    w: 432,
+    h: 432,
+    dir: [0.8, 0.8, 1.6],
+    pad: 1.06,
+    build() {
+      const g = new THREE.Group();
+      const c = cup();
+      c.position.set(-0.55, 0, 0.1);
+      c.rotation.y = 0.3;
+      g.add(c);
+      const b = burger();
+      b.position.set(0.45, -0.335, 0.35);
+      b.rotation.y = -0.3;
+      g.add(b);
+      const s1 = sparkle(0.12);
+      s1.position.set(-0.05, 0.75, -0.2);
+      g.add(s1);
+      return g;
+    },
+  },
+  'tile-shopping': {
+    w: 432,
+    h: 432,
+    dir: [0.8, 0.8, 1.6],
+    pad: 1.06,
+    build() {
+      const g = new THREE.Group();
+      const b = bag(1.0, 1.2, 0.55);
+      b.position.set(-0.2, 0, 0);
+      b.rotation.y = 0.3;
+      g.add(b);
+      const t = tag(clay(C.white));
+      t.position.set(0.65, -0.35, 0.5);
+      t.rotation.set(-0.3, 0.2, -0.4);
+      t.scale.setScalar(0.8);
+      g.add(t);
+      const s1 = sparkle(0.12);
+      s1.position.set(0.7, 0.75, -0.1);
+      g.add(s1);
+      return g;
+    },
+  },
+  'tile-travel': {
+    w: 432,
+    h: 432,
+    dir: [0.8, 0.8, 1.6],
+    pad: 1.06,
+    build() {
+      const g = new THREE.Group();
+      const s = suitcase();
+      s.position.set(-0.25, 0, 0);
+      s.rotation.y = 0.35;
+      g.add(s);
+      const p = plane();
+      p.position.set(0.8, 0.8, -0.2);
+      p.rotation.set(0.15, 0.4, 0.25);
+      p.scale.setScalar(0.75);
+      g.add(p);
+      const s1 = sparkle(0.1);
+      s1.position.set(0.45, -0.55, 0.6);
+      g.add(s1);
+      return g;
+    },
+  },
+  'tile-entertainment': {
+    w: 432,
+    h: 432,
+    dir: [0.8, 0.8, 1.6],
+    pad: 1.06,
+    build() {
+      const g = new THREE.Group();
+      const p = popcorn();
+      p.position.set(-0.4, 0, 0.2);
+      p.rotation.y = 0.3;
+      g.add(p);
+      const t = ticket(1.2, 0.7);
+      t.position.set(0.55, 0.45, -0.4);
+      t.rotation.set(-0.15, 0.5, 0.3);
+      g.add(t);
+      const st = star(0.2, gold(), 0.08);
+      st.position.set(0.7, -0.3, 0.6);
+      st.rotation.set(0.2, 0.3, 0.2);
+      g.add(st);
+      return g;
+    },
+  },
+  'tile-health': {
+    w: 432,
+    h: 432,
+    dir: [0.8, 0.8, 1.6],
+    pad: 1.06,
+    build() {
+      const g = new THREE.Group();
+      const h = heart(0.7);
+      h.position.set(-0.35, 0.3, 0.1);
+      h.rotation.y = 0.3;
+      g.add(h);
+      const f = firstAid();
+      f.position.set(0.55, -0.4, 0.4);
+      f.rotation.y = -0.3;
+      g.add(f);
+      const s1 = sparkle(0.12);
+      s1.position.set(0.55, 0.75, -0.2);
+      g.add(s1);
       return g;
     },
   },
