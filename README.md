@@ -30,9 +30,9 @@ Accepted email domains live in `APPROVED_DOMAINS` in `lib/validation.ts`; subdom
 
 On the production build (`next build && next start`) with headless Chromium, in `/ar` and `/en` at 1440×900 and 390×844:
 
-- Hero pin lasts exactly one viewport; at the unpin scroll the five hero cards and their grid twins report identical rectangles in Arabic and rectangles within 0.5 px in English, where Figtree’s fractional line heights put the grid on a half pixel (see `MOTION.md` for the mechanism); at the 0.42 handover the wide card's clipped square reports tile 1's rectangle in both locales, including after a resize mid-pin.
-- Tile hover: the inner surface reports `translate: 0px -18px`, illustration opacity 0, label opacity 1 and z-index 10 after 500 ms; from p 0.12 the tiles report `pointer-events: none`.
-- Header and scroll hint keep their on-dark tones through the pinned purple surface and switch at p 0.6 (`data-hero-tone`), switching back when scrolling up.
+- Hero pin lasts exactly one viewport; at the unpin scroll the five hero cards and their grid twins report identical rectangles in Arabic and rectangles within 0.5 px in English, where Figtree’s fractional line heights put the grid on a half pixel (see `MOTION.md` for the mechanism); at the 0.42 handover the wide card's clipped square reports tile 1's rectangle in both locales, including after a resize mid-pin; at p 0.72 the five mirror cards report equal-width clipped rectangles stacked and centred on the viewport.
+- Tile hover: the inner surface reports `translate: 0px -18px`, illustration opacity 0, label opacity 1 and z-index 10 after 500 ms; from p 0.06 the tiles report `pointer-events: none`.
+- Header and scroll hint keep their on-dark tones through the pinned purple surface and switch at p 0.62 (`data-hero-tone`), switching back when scrolling up.
 - Layout Shift API total **0.0000** in all four configurations, including through the pin. The two shifts that existed and were removed: the Arabic font swap (page is now visibility-gated until fonts arrive, 1 s timeout) and the illustration collapse (now transform-only).
 - Reduced motion renders a static page with the same content, no pin, no reveals.
 - The locale toggle switches route, `lang`, `dir` and content, rebuilds the choreography, persists to `localStorage`, and a cold visit to `/ar` with a stored `en` preference redirects.
