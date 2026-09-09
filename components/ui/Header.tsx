@@ -3,12 +3,13 @@
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import type { SiteContent } from '@/content/types';
+import { AmazonLogo } from '@/components/brand/AmazonLogo';
+import { WalaOneLockup } from '@/components/brand/WalaOneLockup';
 import { Button } from '@/components/ui/Button';
-import { ImageSlot } from '@/components/ui/ImageSlot';
 import { LocaleToggle } from '@/components/ui/LocaleToggle';
 import { SECTION_IDS } from '@/lib/anchors';
 import { cn } from '@/lib/cn';
-import type { Locale } from '@/lib/i18n';
+import { dirFor, type Locale } from '@/lib/i18n';
 
 type Props = {
   locale: Locale;
@@ -54,17 +55,18 @@ export function Header({ locale, content, localeSwitchLabel }: Props) {
     >
       <div className="gutter mx-auto flex h-full max-w-wide items-center justify-between gap-4">
         <div className="flex items-center gap-4">
-          <Link href={`/${locale}`} className="type-h3 tracking-tight">
-            {content.wordmark}
+          {/* Both logos read currentColor, so the header's colour tween recolours
+              them (white over the hero, brand/black once solid) with no swap. */}
+          <Link href={`/${locale}`} aria-label={content.wordmark} className="inline-flex">
+            <WalaOneLockup
+              dir={dirFor(locale)}
+              tone={scrolled ? 'color' : 'mono'}
+              className="h-8 w-auto"
+            />
           </Link>
           <span aria-hidden className="hidden h-6 w-px bg-current opacity-30 min-[820px]:block" />
-          <div className="hidden w-36 min-[820px]:block">
-            <ImageSlot
-              title={content.partnerSlot.title}
-              width={144}
-              height={36}
-              className="rounded-btn p-1"
-            />
+          <div className="hidden min-[820px]:block">
+            <AmazonLogo title={content.partnerSlot.title} className="h-6 w-auto" />
           </div>
         </div>
         <div className="flex items-center gap-3">

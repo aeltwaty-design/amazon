@@ -25,7 +25,7 @@ type TextProps = BaseProps & {
 };
 
 const INPUT =
-  'type-body w-full rounded-btn border bg-bg-elevated px-4 py-3 text-ink transition-colors duration-(--motion-300) placeholder:text-ink-muted focus-visible:outline-[2.5px] focus-visible:outline-offset-2 focus-visible:outline-ink aria-invalid:border-err';
+  'type-body w-full rounded-btn border border-line bg-bg-elevated px-4 py-3 text-ink transition-colors duration-(--motion-300) placeholder:text-ink-muted focus-visible:outline-[2.5px] focus-visible:outline-offset-2 focus-visible:outline-brand aria-invalid:border-err';
 
 function ErrorText({ id, message }: { id: string; message: string }) {
   return (
@@ -95,7 +95,7 @@ export function CheckboxField({ id, error, registration, children, className }: 
           type="checkbox"
           aria-invalid={message ? true : undefined}
           aria-describedby={errorId}
-          className="mt-1 size-5 shrink-0 accent-ink"
+          className="mt-1 size-5 shrink-0 accent-brand"
           {...registration}
         />
         <span>{children}</span>

@@ -4,7 +4,7 @@ import { SECTION_IDS } from '@/lib/anchors';
 
 export function FinalCta({ content }: { content: SiteContent['finalCta'] }) {
   return (
-    <section data-surface="dark" className="section bg-bg-hero text-ink-on-dark">
+    <section data-surface="dark" className="surface-hero section text-ink-on-dark">
       <div className="gutter mx-auto flex max-w-content flex-col items-center text-center">
         <h2 data-reveal className="type-h2">
           {content.title}

@@ -10,7 +10,8 @@ const button = cva(
     'relative isolate inline-flex items-center justify-center gap-2 whitespace-nowrap select-none',
     'rounded-(--btn-radius) bg-(--btn-bg) text-(--btn-fg)',
     'transition-transform duration-(--btn-hover) ease-out-cubic hover:-translate-y-px',
-    'focus-visible:outline-[2.5px] focus-visible:outline-offset-2 focus-visible:outline-current',
+    // Ring in the button's own colour, so it shows against the surrounding surface.
+    'focus-visible:outline-[2.5px] focus-visible:outline-offset-2 focus-visible:outline-(--btn-bg)',
     'disabled:pointer-events-none disabled:opacity-60 aria-busy:cursor-progress',
     // Radial glow on hover, painted behind the label.
     'after:pointer-events-none after:absolute after:inset-0 after:-z-10 after:rounded-[inherit]',
@@ -25,7 +26,7 @@ const button = cva(
         primary:
           'type-btn h-[54px] px-[26px] [--btn-bg:var(--color-cta-bg)] [--btn-fg:var(--color-cta-fg)] [--btn-radius:var(--radius-btn)]',
         ghost:
-          'type-btn-hero border border-current/30 px-[28px] py-[18px] [--btn-bg:transparent] [--btn-fg:currentColor] [--btn-radius:var(--radius-btn-hero)] after:hidden',
+          'type-btn-hero border border-current/30 px-[28px] py-[18px] [--btn-bg:transparent] [--btn-fg:currentColor] [--btn-radius:var(--radius-btn-hero)] after:hidden focus-visible:outline-current',
         header:
           'type-toggle h-10 px-4 [--btn-bg:var(--color-cta-bg)] [--btn-fg:var(--color-cta-fg)] [--btn-radius:var(--radius-btn)]',
         'header-on-dark':

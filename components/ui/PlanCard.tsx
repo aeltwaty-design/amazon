@@ -45,7 +45,7 @@ export function PlanCard({ locale, content }: Props) {
       data-tilt
       className="w-full max-w-plan overflow-hidden rounded-plan bg-bg-elevated shadow-[0_24px_60px_-30px_var(--color-ink)]"
     >
-      <div className="type-ribbon flex h-[55px] items-center justify-center bg-ink px-6 text-center text-ink-on-dark">
+      <div className="type-ribbon flex h-[55px] items-center justify-center bg-brand px-6 text-center text-ink-on-dark">
         {content.ribbon}
       </div>
       <div className="p-6">

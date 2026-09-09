@@ -22,7 +22,7 @@ export function HowTo({ content, locale }: Props) {
               {/* The <ol> already numbers the step for assistive tech. */}
               <span
                 aria-hidden
-                className="type-toggle num flex size-10 items-center justify-center rounded-pill bg-ink text-ink-on-dark"
+                className="type-toggle num flex size-10 items-center justify-center rounded-pill bg-brand text-ink-on-dark"
               >
                 {formatInteger(i + 1, locale)}
               </span>

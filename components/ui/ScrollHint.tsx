@@ -53,8 +53,10 @@ export function ScrollHint({ labels }: Props) {
       className={cn(
         'fixed end-6 bottom-6 z-40 flex size-[60px] items-center justify-center rounded-pill shadow-lg',
         'transition-colors duration-(--motion-300) ease-out-cubic',
-        'focus-visible:outline-[2.5px] focus-visible:outline-offset-2 focus-visible:outline-current',
-        onDark ? 'bg-cta-on-dark-bg text-cta-on-dark-fg' : 'bg-cta-bg text-cta-fg',
+        'focus-visible:outline-[2.5px] focus-visible:outline-offset-2',
+        onDark
+          ? 'bg-cta-on-dark-bg text-cta-on-dark-fg focus-visible:outline-ink-on-dark'
+          : 'bg-cta-bg text-cta-fg focus-visible:outline-brand',
       )}
     >
       <span

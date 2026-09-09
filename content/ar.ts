@@ -278,6 +278,6 @@ export const ar = {
       },
     ],
     partnership: 'ولاء ون · بالشراكة مع أمازون',
-    draftNote: 'نسخة أولية — الألوان والصور وشعار الشريك بانتظار الاعتماد.', // authored
+    draftNote: 'نسخة أولية — الصور والرسومات بانتظار الإضافة.', // authored
   },
 } satisfies SiteContent;

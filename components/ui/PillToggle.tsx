@@ -30,7 +30,8 @@ const TONE = {
     inactive: 'text-ink-muted hover:text-ink',
   },
   'on-dark': {
-    track: 'bg-cta-glow',
+    // 15% white over the purple hero: the 32% glow track drops white below 4.5:1.
+    track: 'bg-ink-on-dark/15',
     thumb: 'bg-ink-on-dark',
     active: 'text-ink',
     // Full ink at 85%: the muted token on the glow track fails 4.5:1.

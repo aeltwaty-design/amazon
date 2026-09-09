@@ -280,6 +280,6 @@ export const en = {
       },
     ],
     partnership: 'WalaOne · in partnership with Amazon',
-    draftNote: 'Draft — colours, imagery and the partner mark are pending approval.', // authored
+    draftNote: 'Draft — imagery and illustrations are pending.', // authored
   },
 } satisfies SiteContent;

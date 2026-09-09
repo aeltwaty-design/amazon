@@ -27,7 +27,9 @@ export const HERO = {
   STACK: { peekPx: 140, fanX: 24, fanY: 10, scale: 0.94 },
   LOAD: { headlineStartMs: 50, wordStaggerMs: 40, subMs: 280, subStartMs: 300, cardStaggerMs: 60 },
   TEXT_EXIT_Y: -40,
-  /** [start, end] progress window that cross-fades the dark surface; null = hard cut at unpin (brief) */
+  /** [start, end] progress window that cross-fades the dark surface; null = hard cut at unpin (brief).
+   *  The surface is now a gradient (`.surface-hero`): enabling this needs an opacity tween on a
+   *  separate surface layer, since a backgroundColor tween cannot fade a background-image. */
   HERO_SURFACE_FADE: null as null | readonly [number, number],
   MOBILE_ART_PARALLAX_PX: 12,
   MQ: {

@@ -5,7 +5,8 @@ import { HeroLottie } from '@/components/hero/HeroLottie';
 import { Button } from '@/components/ui/Button';
 import { Price } from '@/components/ui/Price';
 import { SECTION_IDS } from '@/lib/anchors';
-import { fmt, type Locale } from '@/lib/i18n';
+import { dirFor, fmt, type Locale } from '@/lib/i18n';
+import { WalaOneLockup } from '@/components/brand/WalaOneLockup';
 import { PRICE, PRICING, formatMoney, formatRiyals } from '@/lib/pricing';
 
 type Props = {
@@ -28,19 +29,19 @@ export function Hero({ locale, content, benefits, lockupLabel }: Props) {
     <section
       data-hero
       data-surface="dark"
-      className="relative z-10 min-h-svh bg-bg-hero text-ink-on-dark"
+      className="surface-hero relative z-10 min-h-svh text-ink-on-dark"
     >
       <div
         data-hero-text
         className="gutter mx-auto flex min-h-svh max-w-content flex-col items-center justify-center pt-header pb-[164px] text-center"
       >
         <div data-hero-lockup data-enter className="mb-4">
-          <HeroLottie src="/lottie/logo-lockup.json" label={lockupLabel} className="h-12 w-40" />
+          <WalaOneLockup dir={dirFor(locale)} title={lockupLabel} className="h-12 w-auto" />
         </div>
         <p
           data-hero-eyebrow
           data-enter
-          className="type-toggle rounded-pill bg-cta-glow px-4 py-2 text-ink-on-dark"
+          className="type-toggle rounded-pill bg-accent px-4 py-2 text-ink"
         >
           {content.eyebrow}
         </p>

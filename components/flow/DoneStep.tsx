@@ -66,7 +66,7 @@ export function DoneStep({ state }: Props) {
             <li key={step} className="flex items-start gap-3">
               <span
                 aria-hidden
-                className="type-toggle num flex size-7 shrink-0 items-center justify-center rounded-pill bg-ink text-ink-on-dark"
+                className="type-toggle num flex size-7 shrink-0 items-center justify-center rounded-pill bg-brand text-ink-on-dark"
               >
                 {formatInteger(i + 1, locale)}
               </span>

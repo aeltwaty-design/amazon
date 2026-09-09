@@ -40,15 +40,15 @@ export function Stepper({ steps, current, label, locale }: Props) {
                   aria-hidden
                   className={cn(
                     'absolute start-[calc(50%+20px)] top-4 h-px w-[calc(100%-40px)]',
-                    i < current ? 'bg-ink' : 'bg-line',
+                    i < current ? 'bg-brand' : 'bg-line',
                   )}
                 />
               ) : null}
               <span
                 className={cn(
                   'type-toggle num flex size-8 items-center justify-center rounded-pill border transition-colors duration-(--motion-300)',
-                  state === 'complete' && 'border-ink bg-ink text-ink-on-dark',
-                  state === 'current' && 'border-ink bg-bg-elevated text-ink',
+                  state === 'complete' && 'border-brand bg-brand text-ink-on-dark',
+                  state === 'current' && 'border-brand bg-bg-elevated text-brand',
                   state === 'upcoming' && 'border-line bg-bg-elevated text-ink-muted',
                 )}
               >

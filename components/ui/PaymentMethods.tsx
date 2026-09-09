@@ -28,8 +28,8 @@ export function PaymentMethods({ label, options, value, onChange, disabled }: Pr
               key={option.value}
               className={cn(
                 'flex cursor-pointer flex-col items-center gap-2 rounded-btn border p-3 transition-colors duration-(--motion-300)',
-                'has-focus-visible:outline-[2.5px] has-focus-visible:outline-offset-2 has-focus-visible:outline-ink',
-                checked ? 'border-ink bg-bg-surface' : 'border-line bg-bg-elevated',
+                'has-focus-visible:outline-[2.5px] has-focus-visible:outline-offset-2 has-focus-visible:outline-brand',
+                checked ? 'border-brand bg-brand-wash' : 'border-line bg-bg-elevated',
               )}
             >
               <input

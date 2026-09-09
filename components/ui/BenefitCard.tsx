@@ -74,7 +74,7 @@ export function BenefitCard({ tone, title, body, slot, wide = false, flipId, mod
           description={slot.description}
           width={wide ? 420 : 210}
           height={wide ? 200 : 170}
-          className="rounded-none rounded-ss-card border-0 bg-ink/5"
+          className="rounded-none rounded-ss-card border-0 bg-ink/5 text-ink"
         />
       </div>
     </article>

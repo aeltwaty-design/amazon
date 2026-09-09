@@ -43,7 +43,7 @@ export default async function Page({ params }: Props) {
         <FinalCta content={content.finalCta} />
         <Terms content={content.terms} locale={locale} />
       </main>
-      <Footer content={content.footer} wordmark={content.header.wordmark} />
+      <Footer content={content.footer} wordmark={content.header.wordmark} locale={locale} />
       <PageMotion locale={locale} />
     </>
   );
