@@ -41,7 +41,7 @@ export function Hero({ locale, content, benefits, lockupLabel }: Props) {
         {/* The text block fades out at S3 while the tiles below must stay put
             until the pile hands over to the card, hence the two siblings. */}
         <div data-hero-text className="flex flex-col items-center text-center">
-          <div data-hero-lockup data-enter className="mb-4">
+          <div data-hero-lockup data-enter className="mb-3">
             <WalaOneLockup dir={dirFor(locale)} title={lockupLabel} className="h-12 w-auto" />
           </div>
           <p
@@ -51,18 +51,18 @@ export function Hero({ locale, content, benefits, lockupLabel }: Props) {
           >
             {content.eyebrow}
           </p>
-          <h1 className="type-display mt-4 flex flex-wrap items-center justify-center gap-x-[0.25em]">
+          <h1 className="type-display mt-3 flex flex-wrap items-center justify-center gap-x-[0.25em]">
             {words(content.h1Lead).map((word, i) => (
               <span key={`lead-${i}`} data-hero-word data-enter className="inline-block">
                 {word}
               </span>
             ))}
-            {/* The box takes the artwork's own aspect; the sticker carries its
-                white halo, so it floats between the words with no backing. */}
+            {/* 1.5× the line by design (the line it sits on grows with it); the
+                box takes the artwork's own aspect and has no backing. */}
             <span
               data-hero-art
               style={{ aspectRatio: `${HERO_LOTTIE.crop.w} / ${HERO_LOTTIE.crop.h}` }}
-              className="inline-flex h-[0.95em] shrink-0 overflow-hidden align-middle"
+              className="inline-flex h-[1.5em] shrink-0 overflow-hidden align-middle"
             >
               <HeroLottie
                 src={HERO_LOTTIE.src}
@@ -80,14 +80,14 @@ export function Hero({ locale, content, benefits, lockupLabel }: Props) {
           <p
             data-hero-sub
             data-enter
-            className="type-body-lg mt-4 max-w-[640px] text-ink-on-dark-muted"
+            className="type-body-lg mt-3 max-w-[640px] text-ink-on-dark-muted"
           >
             {content.sub}
           </p>
           <p
             data-hero-price
             data-enter
-            className="mt-4 flex flex-wrap items-baseline justify-center gap-x-3 gap-y-1"
+            className="mt-3 flex flex-wrap items-baseline justify-center gap-x-3 gap-y-1"
           >
             <Price halalas={PRICE.subtotal} locale={locale} size="lead" />
             <span className="type-body text-ink-on-dark-muted">{content.perYear}</span>
@@ -96,7 +96,7 @@ export function Hero({ locale, content, benefits, lockupLabel }: Props) {
             </span>
             <span className="type-small w-full text-ink-on-dark-muted">{priceLead}</span>
           </p>
-          <div data-hero-ctas data-enter className="mt-6 flex flex-wrap justify-center gap-4">
+          <div data-hero-ctas data-enter className="mt-5 flex flex-wrap justify-center gap-4">
             <Button href={`#${SECTION_IDS.flow}`} variant="primary-on-dark">
               {content.cta}
             </Button>

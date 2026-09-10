@@ -16,7 +16,7 @@ const TONE_CLASS = ['card-tone-1', 'card-tone-2', 'card-tone-3', 'card-tone-4', 
 // assistive tech reads the sector names whether or not they are shown.
 export function HeroTiles({ tiles }: Props) {
   return (
-    <ul data-hero-tiles className="hero-tiles mt-8 w-full lg:mt-8">
+    <ul data-hero-tiles className="hero-tiles mt-6 w-full lg:mt-6">
       {tiles.map((tile, i) => {
         const art = ART.tiles[tile.id];
         return (

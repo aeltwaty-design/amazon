@@ -32,8 +32,8 @@ export const en = {
     cta: 'Subscribe Now',
     ghostCta: 'What is WalaOne?',
     illustrationSlot: {
-      title: 'Megaphone announcing the offer', // authored: the headline animation's accessible name
-      description: 'animated megaphone sticker',
+      title: 'Savings growing from a shopping cart', // authored: the headline animation's accessible name
+      description: 'animated cart with a coin sprouting from it',
     },
     tiles: [
       { id: 'restaurants', label: 'Restaurants' },

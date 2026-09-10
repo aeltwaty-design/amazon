@@ -16,7 +16,8 @@
     "format:check": "prettier --check .",
     "check": "npm run typecheck && npm run lint && npm run lint:colors && npm run build",
     "render:art": "node scripts/render/render.mjs",
-    "render:lottie": "node scripts/render/build-hero-lottie.mjs"
+    "render:lottie": "node scripts/render/build-hero-lottie.mjs",
+    "render:headline": "node scripts/render/recolor-lottie.mjs"
   },
   "dependencies": {
     "@gsap/react": "2.1.2",

@@ -275,8 +275,9 @@ html[data-js]:not([data-fonts]) body {
       /* 216px tiles (measured on noon) once the viewport is tall enough;
          otherwise they shrink with its height so headline, price, CTA and
          tiles share one pinned viewport, and with its width because the
-         headline wraps to more lines when narrow (187px at 1440 × 900). */
-      max-width: calc(5 * min(216px, 21svh, 20vw - 100px) + 4 * 15px);
+         headline wraps to more lines when narrow (162px at 1440 × 900, which
+         leaves room for the 1.5em headline animation). */
+      max-width: calc(5 * min(216px, 18svh, 20vw - 100px) + 4 * 15px);
     }
     .hero-tile {
       flex: none;
