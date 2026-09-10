@@ -1,9 +1,11 @@
 // Recolours the headline Lottie to the palette and writes the file the hero
-// plays. The source is scripts/render/src/hero-cart.json ("10.json" from the
-// "Savings & Budgeting" Lottie pack, untouched): a shopping cart with a coin
-// growing out of it. Every colour in it is mapped to a token in
-// styles/tokens.css by name, so no colour value lives here, and the strokes
-// are thickened so the outlines stay legible at headline size.
+// plays. The source is scripts/render/src/hero-megaphone.json (the design-
+// supplied "Megaphone Loop": a hand raising a megaphone, two floating discs,
+// three sound waves), untouched. Every colour in it is mapped to a token in
+// styles/tokens.css by name, so no colour value lives here; the sound waves,
+// which share the outline colour in the source, get their own token because
+// dark lines vanish on the dark hero surface; strokes are thickened so the
+// outlines stay legible at headline size.
 //   npm run render:headline
 import fs from 'node:fs';
 import path from 'node:path';
@@ -11,21 +13,20 @@ import { fileURLToPath } from 'node:url';
 
 const here = path.dirname(fileURLToPath(import.meta.url));
 const root = path.resolve(here, '..', '..');
-const src = path.join(here, 'src', 'hero-cart.json');
+const src = path.join(here, 'src', 'hero-megaphone.json');
 const out = path.join(root, 'public', 'lottie', 'hero-illustration.json');
 const tokensCss = path.join(root, 'styles', 'tokens.css');
 
 /** source colour (rounded 0–255 rgb) → token name */
 const MAP = {
-  '133,62,244': 'ink-on-dark', // purple outlines → white, like the headline
-  '0,0,0': 'ink-on-dark-muted', // black rim, swirl and tag string → Primary 100
-  '0,218,158': 'card-5', // teal cart body and leaves → lilac
-  '157,219,244': 'brand-wash', // light-blue blobs in the cart → Primary 50
-  '247,101,102': 'accent', // coral wheels, coin rim and % tag → CTA yellow
-  '254,208,1': 'accent', // coin and stem → CTA yellow
+  '35,35,40': 'ink', // outlines and the dark bell opening
+  '110,227,253': 'accent', // cyan rim, handle, grip, inner bell, discs → CTA yellow
+  '242,252,255': 'ink-on-dark-muted', // near-white cone, hand, thumb, highlights → Primary 100
 };
-/** strokes are 1.17 units on a 256 canvas: ~0.8px at headline size without this */
-const STROKE_SCALE = 1.5;
+/** top-level layers whose strokes/fills take a token of their own instead of MAP */
+const LAYER_OVERRIDES = [{ match: /^sound wave/i, st: 'accent' }];
+/** strokes are 5 units on a 500 canvas: ~1.2px at headline size without this */
+const STROKE_SCALE = 1.2;
 
 const tokens = new Map();
 for (const m of fs
@@ -39,25 +40,28 @@ const key = (k) =>
     .slice(0, 3)
     .map((x) => Math.round(x * 255))
     .join(',');
+const tokenRgb = (token) => {
+  const hex = tokens.get(token);
+  if (!hex) throw new Error(`--color-${token} is not in styles/tokens.css`);
+  return rgb(hex);
+};
 
 const data = JSON.parse(fs.readFileSync(src, 'utf8'));
 const unmapped = new Set();
 let colours = 0;
 let strokes = 0;
-const walk = (node) => {
+const walk = (node, override) => {
   if (Array.isArray(node)) {
-    node.forEach(walk);
+    node.forEach((n) => walk(n, override));
     return;
   }
   if (!node || typeof node !== 'object') return;
   if ((node.ty === 'fl' || node.ty === 'st') && node.c) {
     if (node.c.a !== 0) throw new Error('animated colour found: extend the script');
-    const token = MAP[key(node.c.k)];
+    const token = (override && override[node.ty]) || MAP[key(node.c.k)];
     if (!token) unmapped.add(key(node.c.k));
     else {
-      const hex = tokens.get(token);
-      if (!hex) throw new Error(`--color-${token} is not in styles/tokens.css`);
-      node.c.k = [...rgb(hex), node.c.k[3] ?? 1];
+      node.c.k = [...tokenRgb(token), node.c.k[3] ?? 1];
       colours += 1;
     }
   }
@@ -66,13 +70,16 @@ const walk = (node) => {
     node.w.k = Math.round(node.w.k * STROKE_SCALE * 1000) / 1000;
     strokes += 1;
   }
-  Object.values(node).forEach(walk);
+  Object.values(node).forEach((v) => walk(v, override));
 };
-walk(data.layers);
+for (const layer of data.layers) {
+  const override = LAYER_OVERRIDES.find((o) => o.match.test(layer.nm ?? '')) ?? null;
+  walk(layer, override);
+}
 if (unmapped.size) {
   throw new Error(`source colours with no token mapping: ${[...unmapped].join(' | ')}`);
 }
-data.nm = 'walaone-hero-cart';
+data.nm = 'walaone-hero-megaphone';
 
 fs.writeFileSync(out, JSON.stringify(data));
 console.log(

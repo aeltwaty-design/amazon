@@ -29,17 +29,17 @@ export const APP_SCREEN: Record<Locale, Art> = {
 // its licence before launch.
 export const HERO_SURFACE: Art = { src: '/hero/spectral.jpg', width: 3840, height: 2160 };
 
-// The headline animation: the savings cart from the "Savings & Budgeting"
-// Lottie pack, recoloured to the palette by `npm run render:headline`
-// (scripts/render/recolor-lottie.mjs; the untouched source sits beside it).
-// `crop` is the region of its 256 × 256 canvas that is ever drawn on, measured
-// over every frame including the cart's sideways bounce and the thickened
-// strokes, so the headline box hugs the artwork instead of the canvas margins.
+// The headline animation: the design-supplied "Megaphone Loop" (a hand
+// raising a megaphone, two floating discs, three sound waves), recoloured to
+// the palette by `npm run render:headline` (scripts/render/recolor-lottie.mjs;
+// the untouched source sits beside it). `crop` is the region of its 500 × 500
+// canvas that is ever drawn on, measured over every frame including the discs'
+// bob and the sound waves' travel, so the headline box hugs the artwork.
 // The co-branded phone animation that `npm run render:lottie` assembles stays
 // at /lottie/hero-cobrand.json as an alternative: swap `src` and drop `crop`.
 export const HERO_LOTTIE = {
   src: '/lottie/hero-illustration.json',
-  crop: { x: 14, y: 37, w: 226, h: 168 },
+  crop: { x: 0, y: 0, w: 482, h: 475 },
 } as const;
 
 /** the five hero sector tiles, in row order (tile 1 becomes the tone-1 wide card) */

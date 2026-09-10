@@ -33,8 +33,8 @@ export const ar = {
     cta: 'اشترك الآن',
     ghostCta: 'ما هو ولاء ون؟',
     illustrationSlot: {
-      title: 'مدخرات تنمو من عربة التسوق', // authored: الاسم الوصفي لرسمة العنوان المتحركة
-      description: 'عربة تسوق متحركة تنبت منها عملة',
+      title: 'مكبر صوت يعلن العرض', // authored: الاسم الوصفي لرسمة العنوان المتحركة
+      description: 'يد تحمل مكبر صوت متحرك',
     },
     tiles: [
       { id: 'restaurants', label: 'مطاعم' },
