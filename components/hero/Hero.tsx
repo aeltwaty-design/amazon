@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import type { SiteContent } from '@/content/types';
 import { HeroCards } from '@/components/hero/HeroCards';
 import { HeroChoreography } from '@/components/hero/HeroChoreography';
@@ -6,7 +7,7 @@ import { HeroTiles } from '@/components/hero/HeroTiles';
 import { Button } from '@/components/ui/Button';
 import { Price } from '@/components/ui/Price';
 import { SECTION_IDS } from '@/lib/anchors';
-import { HERO_LOTTIE } from '@/lib/art';
+import { HERO_LOTTIE, HERO_SURFACE } from '@/lib/art';
 import { dirFor, fmt, type Locale } from '@/lib/i18n';
 import { WalaOneLockup } from '@/components/brand/WalaOneLockup';
 import { PRICE, PRICING, formatMoney, formatRiyals } from '@/lib/pricing';
@@ -33,10 +34,24 @@ export function Hero({ locale, content, benefits, lockupLabel }: Props) {
       data-surface="dark"
       className="relative z-10 min-h-svh bg-bg-page text-ink-on-dark"
     >
-      {/* The purple gradient is its own layer so the choreography can fade it
-          to the page background mid-pin (S6) — a background-image cannot be
-          tweened, an opacity can. */}
-      <div data-hero-surface aria-hidden className="surface-hero absolute inset-0" />
+      {/* The surface is its own layer so the choreography can fade it to the
+          page background mid-pin (S6): the Figma spectral image over a matching
+          underlay, preloaded because it is the first paint. */}
+      <div
+        data-hero-surface
+        aria-hidden
+        className="absolute inset-0 overflow-hidden bg-bg-hero-image"
+      >
+        <Image
+          src={HERO_SURFACE.src}
+          alt=""
+          fill
+          priority
+          sizes="100vw"
+          quality={85}
+          className="object-cover"
+        />
+      </div>
       <div className="gutter relative mx-auto flex min-h-svh max-w-content flex-col items-center justify-center pt-header pb-6">
         {/* The text block fades out at S3 while the tiles below must stay put
             until the pile hands over to the card, hence the two siblings. */}

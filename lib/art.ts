@@ -22,6 +22,13 @@ export const APP_SCREEN: Record<Locale, Art> = {
   en: { src: '/app/home-en.webp', width: 750, height: 1614 },
 };
 
+// The hero surface: the image fill of node 3:6 in the Figma community file
+// "Spectral Gradient Vol 2.0", exported as-is (a near-black indigo field with
+// one violet beam). It paints over --color-bg-hero-image until it loads and is
+// faded out by the choreography mid-pin (S6). Community file: attribute per
+// its licence before launch.
+export const HERO_SURFACE: Art = { src: '/hero/spectral.jpg', width: 3840, height: 2160 };
+
 // The headline animation: the savings cart from the "Savings & Budgeting"
 // Lottie pack, recoloured to the palette by `npm run render:headline`
 // (scripts/render/recolor-lottie.mjs; the untouched source sits beside it).

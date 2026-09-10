@@ -20,6 +20,7 @@
   --color-bg-hero: #403277; /* Primary 800 — hero gradient top */
   --color-bg-hero-deep: #31265b; /* Primary 900 — hero gradient bottom */
   --color-bg-hero-glow: rgb(117 91 216 / 55%); /* Primary 500 glow behind the headline */
+  --color-bg-hero-image: #090723; /* mean of public/hero/spectral.jpg: paints under the hero image until it loads */
   --color-bg-page: #ffffff;
   --color-bg-surface: #f8f9fc; /* Grey 100 */
   --color-bg-elevated: #ffffff;
