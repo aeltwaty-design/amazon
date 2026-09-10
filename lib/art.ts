@@ -15,6 +15,17 @@ const ill = (name: string, width: number, height: number): Art => ({
   height,
 });
 
+// The headline animation: the design-supplied "Share_Megaphone" sticker from
+// the Neo Brutalism Lottie pack. `crop` is the region of its 512 × 512 canvas
+// that is ever drawn on (measured over every frame, plus the 13px white halo
+// stroke), so the headline box hugs the artwork instead of the canvas margins.
+// The co-branded phone animation that `npm run render:lottie` assembles stays
+// at /lottie/hero-cobrand.json as an alternative: swap `src` and drop `crop`.
+export const HERO_LOTTIE = {
+  src: '/lottie/hero-illustration.json',
+  crop: { x: 49, y: 22, w: 463, h: 432 },
+} as const;
+
 /** the five hero sector tiles, in row order (tile 1 becomes the tone-1 wide card) */
 export type HeroTileId = 'restaurants' | 'shopping' | 'travel' | 'entertainment' | 'health';
 

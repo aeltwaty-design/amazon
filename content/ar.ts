@@ -33,8 +33,8 @@ export const ar = {
     cta: 'اشترك الآن',
     ghostCta: 'ما هو ولاء ون؟',
     illustrationSlot: {
-      title: 'نموذج التطبيق المشترك',
-      description: 'تطبيق ولاء ون بهوية أمازون × ولاء ون',
+      title: 'مكبر صوت يعلن العرض', // authored: الاسم الوصفي لرسمة العنوان المتحركة
+      description: 'ملصق مكبر صوت متحرك',
     },
     tiles: [
       { id: 'restaurants', label: 'مطاعم' },

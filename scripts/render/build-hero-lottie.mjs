@@ -1,4 +1,5 @@
-// Builds public/lottie/hero-illustration.json from the three hero sprites
+// Builds public/lottie/hero-cobrand.json (the co-branded phone animation, kept
+// as an alternative to the design-supplied headline animation) from the three hero sprites
 // rendered by render.mjs (hero-phone, hero-coin, hero-card): the co-branded
 // phone bobs while a coin and an Amazon × WalaOne card float around it.
 // Sprites are embedded as base64 WebP so the Lottie is one self-contained file.
@@ -11,7 +12,7 @@ import { fileURLToPath } from 'node:url';
 const here = path.dirname(fileURLToPath(import.meta.url));
 const root = path.resolve(here, '..', '..');
 const spriteDir = process.argv[2] || path.join(root, 'public', 'illustrations');
-const out = path.join(root, 'public', 'lottie', 'hero-illustration.json');
+const out = path.join(root, 'public', 'lottie', 'hero-cobrand.json');
 
 const W = 350;
 const H = 200;

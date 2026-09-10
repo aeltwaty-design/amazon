@@ -6,6 +6,7 @@ import { HeroTiles } from '@/components/hero/HeroTiles';
 import { Button } from '@/components/ui/Button';
 import { Price } from '@/components/ui/Price';
 import { SECTION_IDS } from '@/lib/anchors';
+import { HERO_LOTTIE } from '@/lib/art';
 import { dirFor, fmt, type Locale } from '@/lib/i18n';
 import { WalaOneLockup } from '@/components/brand/WalaOneLockup';
 import { PRICE, PRICING, formatMoney, formatRiyals } from '@/lib/pricing';
@@ -56,14 +57,18 @@ export function Hero({ locale, content, benefits, lockupLabel }: Props) {
                 {word}
               </span>
             ))}
+            {/* The box takes the artwork's own aspect; the sticker carries its
+                white halo, so it floats between the words with no backing. */}
             <span
               data-hero-art
-              className="inline-flex h-[0.95em] w-[1.75em] shrink-0 overflow-hidden rounded-[0.18em] align-middle"
+              style={{ aspectRatio: `${HERO_LOTTIE.crop.w} / ${HERO_LOTTIE.crop.h}` }}
+              className="inline-flex h-[0.95em] shrink-0 overflow-hidden align-middle"
             >
               <HeroLottie
-                src="/lottie/hero-illustration.json"
+                src={HERO_LOTTIE.src}
+                crop={HERO_LOTTIE.crop}
                 label={content.illustrationSlot.title}
-                className="size-full bg-cta-glow"
+                className="size-full"
               />
             </span>
             {words(content.h1Tail).map((word, i) => (

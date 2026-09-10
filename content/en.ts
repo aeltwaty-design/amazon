@@ -32,8 +32,8 @@ export const en = {
     cta: 'Subscribe Now',
     ghostCta: 'What is WalaOne?',
     illustrationSlot: {
-      title: 'Co-branded app mockup',
-      description: 'WalaOne app with the Amazon × WalaOne identity',
+      title: 'Megaphone announcing the offer', // authored: the headline animation's accessible name
+      description: 'animated megaphone sticker',
     },
     tiles: [
       { id: 'restaurants', label: 'Restaurants' },
