@@ -1,8 +1,11 @@
 import type { SiteContent } from '@/content/types';
 import { AppMockup } from '@/components/ui/AppMockup';
 import { SECTION_IDS } from '@/lib/anchors';
+import type { Locale } from '@/lib/i18n';
 
-export function About({ content }: { content: SiteContent['about'] }) {
+type Props = { content: SiteContent['about']; locale: Locale };
+
+export function About({ content, locale }: Props) {
   return (
     <section id={SECTION_IDS.about} className="section scroll-mt-header bg-bg-page">
       <div className="gutter mx-auto grid max-w-content items-center gap-12 lg:grid-cols-[1fr_minmax(0,400px)] lg:gap-20">
@@ -26,7 +29,7 @@ export function About({ content }: { content: SiteContent['about'] }) {
           </dl>
         </div>
         <div data-reveal className="mx-auto w-full max-w-[400px]">
-          <AppMockup copy={content.mockup} label={content.screenshotSlot.title} />
+          <AppMockup locale={locale} label={content.screenshotSlot.title} />
         </div>
       </div>
     </section>

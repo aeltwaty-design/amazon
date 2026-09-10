@@ -5,6 +5,7 @@
 //
 // The alt text lives in `content/*.ts` (each slot's `title`), not here.
 
+import type { Locale } from '@/lib/i18n';
 import type { PaymentMethod } from '@/lib/pricing';
 
 export type Art = { src: string; width: number; height: number };
@@ -14,6 +15,12 @@ const ill = (name: string, width: number, height: number): Art => ({
   width,
   height,
 });
+
+/** the real home-screen captures shown in the About phone, one per locale (design: Home - WO - AR/EN) */
+export const APP_SCREEN: Record<Locale, Art> = {
+  ar: { src: '/app/home-ar.webp', width: 750, height: 1624 },
+  en: { src: '/app/home-en.webp', width: 750, height: 1614 },
+};
 
 // The headline animation: the savings cart from the "Savings & Budgeting"
 // Lottie pack, recoloured to the palette by `npm run render:headline`

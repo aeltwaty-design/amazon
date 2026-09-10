@@ -34,7 +34,7 @@ export default async function Page({ params }: Props) {
           lockupLabel={content.a11y.lockup}
         />
         <Benefits content={content.benefits} />
-        <About content={content.about} />
+        <About content={content.about} locale={locale} />
         <Brands content={content.brands} />
         <HowTo content={content.howTo} locale={locale} />
         <Pricing content={content.pricing} locale={locale} />
