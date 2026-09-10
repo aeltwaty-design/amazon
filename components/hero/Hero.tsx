@@ -99,9 +99,6 @@ export function Hero({ locale, content, benefits, lockupLabel }: Props) {
               {content.ghostCta}
             </Button>
           </div>
-          <p data-hero-trust data-enter className="type-small mt-4 text-ink-on-dark-muted">
-            {content.trust.join(' · ')}
-          </p>
         </div>
         <HeroTiles tiles={content.tiles} />
       </div>

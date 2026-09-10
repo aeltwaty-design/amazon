@@ -265,7 +265,7 @@ function buildLoadSequence(hero: HTMLElement, desktop: boolean) {
 
   const ctaDuration = readSeconds('--hero-cta-enter');
   tl.fromTo(
-    all(hero, '[data-hero-ctas], [data-hero-trust]'),
+    all(hero, '[data-hero-ctas]'),
     { y: readPx('--hero-cta-enter-distance'), opacity: 0 },
     {
       keyframes: [

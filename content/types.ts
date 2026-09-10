@@ -43,7 +43,6 @@ export type SiteContent = {
     wasLabel: string;
     cta: string;
     ghostCta: string;
-    trust: readonly [string, string, string];
     illustrationSlot: SlotCopy;
     /** the five sector tiles under the CTA; tile 1 gathers the others and becomes the wide benefit card */
     tiles: readonly [HeroTile, HeroTile, HeroTile, HeroTile, HeroTile];

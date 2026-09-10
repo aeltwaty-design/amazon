@@ -31,7 +31,6 @@ export const en = {
     wasLabel: 'was', // authored
     cta: 'Subscribe Now',
     ghostCta: 'What is WalaOne?',
-    trust: ['Secure payment', 'mada, Visa or credit card', 'Activated instantly, no codes'],
     illustrationSlot: {
       title: 'Co-branded app mockup',
       description: 'WalaOne app with the Amazon × WalaOne identity',

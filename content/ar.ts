@@ -32,7 +32,6 @@ export const ar = {
     wasLabel: 'بدلًا من', // authored
     cta: 'اشترك الآن',
     ghostCta: 'ما هو ولاء ون؟',
-    trust: ['دفع آمن', 'مدى أو فيزا أو بطاقة ائتمانية', 'تفعيل فوري بدون أكواد'],
     illustrationSlot: {
       title: 'نموذج التطبيق المشترك',
       description: 'تطبيق ولاء ون بهوية أمازون × ولاء ون',
