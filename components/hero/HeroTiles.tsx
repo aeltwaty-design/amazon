@@ -49,7 +49,11 @@ export function HeroTiles({ tiles }: Props) {
               </div>
               {motion ? <TileLottie motion={motion} /> : null}
               <div className="hero-tile-label px-[4%] pb-3 text-center lg:absolute lg:inset-0 lg:flex lg:items-center lg:justify-center lg:p-[4%]">
-                <span className="text-ink">{tile.label}</span>
+                {/* one word per line: the label is set large enough that a
+                    two-word name needs both lines (whitespace-pre-line) */}
+                <span className="whitespace-pre-line text-ink">
+                  {tile.label.split(' ').join('\n')}
+                </span>
               </div>
             </div>
           </li>

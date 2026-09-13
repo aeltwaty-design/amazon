@@ -37,11 +37,11 @@ export const ar = {
       description: 'يد تحمل مكبر صوت متحرك',
     },
     tiles: [
-      { id: 'restaurants', label: 'مطاعم' },
+      { id: 'restaurants', label: 'استبدال النقاط' },
       { id: 'shopping', label: 'عروض وخصومات' },
       { id: 'travel', label: 'سفر' },
-      { id: 'entertainment', label: 'ترفيه' },
-      { id: 'health', label: 'صحة وفنادق' },
+      { id: 'entertainment', label: 'شراء قسائم' },
+      { id: 'health', label: 'طلب طعام' },
     ], // authored: sector names, mirrored from the About copy
   },
   benefits: {

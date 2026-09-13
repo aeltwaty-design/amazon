@@ -36,11 +36,11 @@ export const en = {
       description: 'animated hand holding a megaphone',
     },
     tiles: [
-      { id: 'restaurants', label: 'Restaurants' },
+      { id: 'restaurants', label: 'Redeem Points' },
       { id: 'shopping', label: 'Shopping' },
       { id: 'travel', label: 'Travel' },
-      { id: 'entertainment', label: 'Entertainment' },
-      { id: 'health', label: 'Health & Hotels' },
+      { id: 'entertainment', label: 'Buy Vouchers' },
+      { id: 'health', label: 'Order Food' },
     ], // authored: sector names, mirrored from the About copy
   },
   benefits: {
