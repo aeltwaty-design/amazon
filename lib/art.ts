@@ -45,6 +45,19 @@ export const HERO_LOTTIE = {
 /** the five hero sector tiles, in row order (tile 1 becomes the tone-1 wide card) */
 export type HeroTileId = 'restaurants' | 'shopping' | 'travel' | 'entertainment' | 'health';
 
+/** a Lottie a tile cross-fades to on hover in place of its label (components/hero/TileLottie.tsx) */
+export type TileMotion = { src: string; crop: { x: number; y: number; w: number; h: number } };
+
+// Only on a hover-capable desktop with motion allowed; touch and reduced
+// motion keep the still and the label. `crop` is the region of the canvas the
+// animation ever paints (measured over every frame, masks respected), so the
+// coin fills the tile the way its still does.
+export const TILE_MOTION: Partial<Record<HeroTileId, TileMotion>> = {
+  // design-supplied "WO coin — spin, glint, float": 1080 × 1080, 30 fps,
+  // 90 frames, a 3 s seamless loop on a transparent ground
+  restaurants: { src: '/lottie/wo-coin.json', crop: { x: 230, y: 120, w: 620, h: 754 } },
+};
+
 export const ART = {
   tiles: {
     // all five are design-supplied illustrations (public/tiles), not renders
