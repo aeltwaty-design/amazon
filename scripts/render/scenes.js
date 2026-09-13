@@ -552,7 +552,7 @@ export async function render(name) {
   const scene = new THREE.Scene();
   scene.environment = envTex;
   scene.environmentIntensity = 0.85;
-  const group = def.build({ img, font });
+  const group = def.build({ img });
   scene.add(group);
   scene.updateMatrixWorld(true);
   const box = new THREE.Box3().setFromObject(group);
