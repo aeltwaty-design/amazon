@@ -288,6 +288,22 @@ html[data-js]:not([data-fonts]) body {
   .hero-tile-surface {
     background-color: var(--card-base);
     transition: translate var(--card-hover) var(--ease-spring);
+    /* the label's cqi size resolves against the tile */
+    container-type: inline-size;
+  }
+  /* The sector name scales with its tile so every label fits on one line:
+     12% of the tile width puts the widest one ("عروض وخصومات", 7.45 em in
+     Cairo; "Health & Hotels" is 7.13 em in Figtree) at 90% of the tile, i.e.
+     19px on the 162px tiles at 1440 × 900 and 23px at 1920 × 1080; the 4%
+     label padding is the wrap threshold, so anything wider wraps balanced
+     (the 14px floor does that to the two widest labels on the 105px tiles at
+     1024 × 760). 28px is the noon size on a 216px tile. */
+  .hero-tile-label {
+    font-size: clamp(14px, 12cqi, 28px);
+    line-height: 1.15;
+    font-weight: 700;
+    letter-spacing: var(--tracking-h3);
+    text-wrap: balance;
   }
   .hero-tile-art,
   .hero-tile-label {

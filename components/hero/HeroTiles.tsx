@@ -15,7 +15,8 @@ const TONE_CLASS = ['card-tone-1', 'card-tone-2', 'card-tone-1', 'card-tone-2', 
 // in styles/globals.css (`.hero-tile*`); the choreography owns `transform` on
 // each <li> (gather into a pile) while hover moves the inner surface with
 // `translate`, so the two never fight. The label is always in the DOM, so
-// assistive tech reads the sector names whether or not they are shown.
+// assistive tech reads the sector names whether or not they are shown; its
+// type scales with the tile (`.hero-tile-label` in globals.css).
 export function HeroTiles({ tiles }: Props) {
   return (
     <ul data-hero-tiles className="hero-tiles mt-6 w-full lg:mt-6">
@@ -37,8 +38,8 @@ export function HeroTiles({ tiles }: Props) {
                   className="size-full object-contain"
                 />
               </div>
-              <div className="hero-tile-label px-3 pb-3 text-center lg:absolute lg:inset-0 lg:flex lg:items-center lg:justify-center lg:p-4">
-                <span className="type-h3 text-ink lg:text-[28px]">{tile.label}</span>
+              <div className="hero-tile-label px-[4%] pb-3 text-center lg:absolute lg:inset-0 lg:flex lg:items-center lg:justify-center lg:p-[4%]">
+                <span className="text-ink">{tile.label}</span>
               </div>
             </div>
           </li>
