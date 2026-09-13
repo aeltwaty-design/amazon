@@ -38,7 +38,7 @@ export const en = {
     tiles: [
       { id: 'restaurants', label: 'Redeem Points' },
       { id: 'shopping', label: 'Shopping' },
-      { id: 'travel', label: 'Travel' },
+      { id: 'travel', label: 'Exchange Points' },
       { id: 'entertainment', label: 'Buy Vouchers' },
       { id: 'health', label: 'Order Food' },
     ], // authored: sector names, mirrored from the About copy

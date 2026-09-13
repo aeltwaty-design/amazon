@@ -39,7 +39,7 @@ export const ar = {
     tiles: [
       { id: 'restaurants', label: 'استبدال النقاط' },
       { id: 'shopping', label: 'عروض وخصومات' },
-      { id: 'travel', label: 'سفر' },
+      { id: 'travel', label: 'استبدال نقاط' },
       { id: 'entertainment', label: 'شراء قسائم' },
       { id: 'health', label: 'طلب طعام' },
     ], // authored: sector names, mirrored from the About copy
