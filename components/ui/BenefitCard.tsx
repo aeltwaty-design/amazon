@@ -50,27 +50,11 @@ export function BenefitCard({ tone, title, body, slot, art, flipId, mode }: Prop
     >
       {/* data-card-inner: the choreography fades a mirror card's contents in
           after its box has arrived (S2d), so both inner layers carry it. */}
-      <div data-card-inner className="relative z-10 flex h-full flex-col p-6 lg:p-7">
-        <div className="flex items-start justify-between gap-4">
-          <h3 className="type-h3 max-w-[16ch]">{title}</h3>
-          <span
-            aria-hidden
-            className="flex size-9 shrink-0 items-center justify-center rounded-pill bg-ink/10"
-          >
-            <svg
-              width="16"
-              height="16"
-              viewBox="0 0 16 16"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="1.8"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              <path d="M3 8h10M9 4l4 4-4 4" />
-            </svg>
-          </span>
-        </div>
+      <div
+        data-card-inner
+        className="relative z-10 flex h-full flex-col items-center p-6 text-center lg:p-7"
+      >
+        <h3 className="type-h3 max-w-[16ch]">{title}</h3>
         <p className="type-body mt-3 max-w-[38ch] text-ink-muted">{body}</p>
       </div>
       {/* The 3D stills are transparent WebPs with their contact shadow baked in,
