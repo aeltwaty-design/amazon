@@ -357,6 +357,42 @@ html[data-js]:not([data-fonts]) body {
   --card-base: --value(--color-card-*);
 }
 
+/* The stepper connector of a reached step: a band twice the connector's
+   width carrying two identical primary → secondary cycles, translated by
+   exactly one cycle so the loop is seamless. Transform only, and the
+   direction is reversed in Arabic so the flow always points at the next
+   step. The band is clipped by the connector (`overflow-hidden`). */
+.stepper-flow {
+  background-image: linear-gradient(
+    to right,
+    var(--color-brand),
+    var(--color-accent),
+    var(--color-brand),
+    var(--color-accent),
+    var(--color-brand)
+  );
+  animation: stepper-flow var(--stepper-flow) linear infinite;
+}
+
+[dir='rtl'] .stepper-flow {
+  animation-direction: reverse;
+}
+
+@keyframes stepper-flow {
+  from {
+    translate: -50% 0;
+  }
+  to {
+    translate: 0 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .stepper-flow {
+    animation: none;
+  }
+}
+
 @keyframes fade-up {
   from {
     opacity: 0;

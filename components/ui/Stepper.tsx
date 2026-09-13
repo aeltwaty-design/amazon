@@ -34,21 +34,28 @@ export function Stepper({ steps, current, label, locale }: Props) {
               aria-current={state === 'current' ? 'step' : undefined}
               className="relative flex flex-col items-center gap-2 text-center"
             >
-              {/* Connector to the next step; start- keeps it pointing forward in RTL. */}
+              {/* Connector to the next step; start- keeps it pointing forward in RTL.
+                  Once its step has been reached it carries the flowing
+                  primary → secondary band (`.stepper-flow` in globals.css),
+                  which is why it clips. */}
               {i < steps.length - 1 ? (
                 <span
                   aria-hidden
                   className={cn(
-                    'absolute start-[calc(50%+20px)] top-4 h-px w-[calc(100%-40px)]',
-                    i < current ? 'bg-brand' : 'bg-line',
+                    'absolute start-[calc(50%+20px)] top-4 h-px w-[calc(100%-40px)] overflow-hidden',
+                    i > current && 'bg-line',
                   )}
-                />
+                >
+                  {i <= current ? <span className="stepper-flow block h-full w-[200%]" /> : null}
+                </span>
               ) : null}
               <span
                 className={cn(
                   'type-toggle num flex size-8 items-center justify-center rounded-pill border transition-colors duration-(--motion-300)',
-                  state === 'complete' && 'border-brand bg-brand text-ink-on-dark',
-                  state === 'current' && 'border-brand bg-bg-elevated text-brand',
+                  // done turns the number into a check on the success green;
+                  // the step you are on is the same filled shape in the brand purple
+                  state === 'complete' && 'border-ok bg-ok text-ink-on-dark',
+                  state === 'current' && 'border-brand bg-brand text-ink-on-dark',
                   state === 'upcoming' && 'border-line bg-bg-elevated text-ink-muted',
                 )}
               >
