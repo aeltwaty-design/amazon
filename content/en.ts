@@ -47,18 +47,18 @@ export const en = {
     title: 'Get More with WalaOne',
     cards: [
       {
+        title: 'Offers & Discounts',
+        body: 'Enjoy exclusive offers across a wide range of products and services.',
+        slot: { title: 'WalaOne map screen in a phone', description: 'phone mockup' }, // authored
+      },
+      {
         title: 'Redeem Your Points',
         body: 'Turn the points you earn from your purchases into vouchers and rewards from your favourite brands.',
-        slot: { title: 'WalaOne map screen in a phone', description: 'phone mockup' }, // authored
+        slot: { title: 'WalaOne points-transfer screen in a phone', description: 'phone mockup' }, // authored
       },
       {
         title: 'More Choices',
         body: 'Use your earned points across shopping, travel, restaurants, entertainment and more.',
-        slot: { title: 'WalaOne points-transfer screen in a phone', description: 'phone mockup' }, // authored
-      },
-      {
-        title: 'Exclusive Amazon employee rate',
-        body: '40% off the annual subscription.',
         slot: { title: 'WalaOne marketplace screen in a phone', description: 'phone mockup' }, // authored
       },
     ],
