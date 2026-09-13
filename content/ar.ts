@@ -38,7 +38,7 @@ export const ar = {
     },
     tiles: [
       { id: 'restaurants', label: 'مطاعم' },
-      { id: 'shopping', label: 'تسوق' },
+      { id: 'shopping', label: 'عروض وخصومات' },
       { id: 'travel', label: 'سفر' },
       { id: 'entertainment', label: 'ترفيه' },
       { id: 'health', label: 'صحة وفنادق' },
