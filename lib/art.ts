@@ -51,7 +51,7 @@ export const ART = {
     restaurants: { src: '/tiles/wo-coin.webp', width: 693, height: 640 },
     shopping: { src: '/tiles/discount-gift.webp', width: 700, height: 423 },
     travel: { src: '/tiles/currency-exchange.webp', width: 700, height: 599 },
-    entertainment: ill('tile-entertainment', 432, 432),
+    entertainment: { src: '/tiles/shopping-gifts.webp', width: 700, height: 530 },
     health: ill('tile-health', 432, 432),
   } satisfies Record<HeroTileId, Art>,
   benefits: {
