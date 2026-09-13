@@ -8,7 +8,7 @@ type Props = { content: SiteContent['about']; locale: Locale };
 export function About({ content, locale }: Props) {
   return (
     <section id={SECTION_IDS.about} className="section scroll-mt-header bg-bg-page">
-      <div className="gutter mx-auto grid max-w-content items-center gap-12 lg:grid-cols-[1fr_minmax(0,400px)] lg:gap-20">
+      <div className="gutter mx-auto grid max-w-content items-center gap-12 lg:grid-cols-[1fr_minmax(0,480px)] lg:gap-20">
         <div>
           <h2 data-reveal className="type-h2">
             {content.title}
@@ -28,7 +28,7 @@ export function About({ content, locale }: Props) {
             ))}
           </dl>
         </div>
-        <div data-reveal className="mx-auto w-full max-w-[400px]">
+        <div data-reveal className="mx-auto w-full max-w-[480px]">
           <AppMockup locale={locale} label={content.screenshotSlot.title} />
         </div>
       </div>

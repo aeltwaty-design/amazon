@@ -18,11 +18,32 @@ const ill = (name: string, width: number, height: number): Art => ({
   height,
 });
 
-/** the real home-screen captures shown in the About phone, one per locale (design: Home - WO - AR/EN) */
+/** the real home-screen captures inside the About phone, one per locale (design: Home - WO - AR/EN) */
 export const APP_SCREEN: Record<Locale, Art> = {
   ar: { src: '/app/home-ar.webp', width: 750, height: 1624 },
   en: { src: '/app/home-en.webp', width: 750, height: 1614 },
 };
+
+/**
+ * The About phone: the UI8 kit "Aganta - Mobile App Landing Website UI Kit"
+ * (Figma key 54gPLHdsJKLMMubB2NZjk7) node 8803:2881 "Mockup", an iPhone 14 Pro
+ * "Silver" frame over a rounded block of a gradient photo with the home capture
+ * inside, rebuilt in the DOM by AppMockup from the node's own two images
+ * (prepared by `npm run render:about`). `layout` is the node's geometry in its
+ * units: the composition, the glow block, the screen rect (rx = its corner
+ * radius) and the frame image. A purchased UI8 asset: keep within its licence.
+ */
+export const ABOUT_MOCKUP = {
+  frame: { src: '/about/iphone-14-pro-silver.webp', width: 904, height: 1837 },
+  glow: { src: '/about/mockup-glow.webp', width: 725, height: 771 },
+  layout: {
+    w: 550.186,
+    h: 738,
+    glow: { x: 67.391, y: 295.819, w: 415.401, h: 441.916 },
+    screen: { x: 120.081, y: 15.045, w: 310.458, h: 672.244, rx: 38.73 },
+    frame: { x: 102.745, y: 0, w: 345.491, h: 701.587 },
+  },
+} as const;
 
 // The hero surface: the image fill of node 3:6 in the Figma community file
 // "Spectral Gradient Vol 2.0", exported as-is (a near-black indigo field with
