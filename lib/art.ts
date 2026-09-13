@@ -77,15 +77,16 @@ export const ART = {
     health: { src: '/tiles/restaurant-delivery.webp', width: 569, height: 640 },
   } satisfies Record<HeroTileId, Art>,
   benefits: {
-    // Same order as `content.benefits.cards`. Card 1 is the Figma community
-    // mockup "Matte iPhone Mockups - 2021 Updated" (node 55977:6896: the matte
-    // iPhone 13 template with the WalaOne map screen placed in it), built by
-    // `npm run render:phone`: page background and shadow cut away, the body
-    // recoloured to --color-phone-frame, top three quarters kept. Attribute the
-    // community file per its licence before launch.
+    // Same order as `content.benefits.cards`. Cards 1 and 2 are Figma community
+    // mockups ("Matte iPhone Mockups - 2021 Updated": nodes 55977:6896, the map
+    // screen, and 55977:7434, the points-transfer screen, both on the matte
+    // iPhone 13 template), built by `npm run render:phone`: page background and
+    // shadow cut away, the body recoloured to --color-phone-frame /
+    // --color-phone-frame-warm, top three quarters kept. Attribute the community
+    // file per its licence before launch.
     cards: [
       { kind: 'phone', src: '/mockups/points-phone.webp', width: 848, height: 1283 },
-      { kind: 'still', ...ill('choices', 420, 340) },
+      { kind: 'phone', src: '/mockups/choices-phone.webp', width: 848, height: 1283 },
       { kind: 'still', ...ill('rate', 420, 340) },
     ] satisfies readonly BenefitArt[],
   },

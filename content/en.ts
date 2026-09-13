@@ -54,7 +54,7 @@ export const en = {
       {
         title: 'More Choices',
         body: 'Use your earned points across shopping, travel, restaurants, entertainment and more.',
-        slot: { title: 'Choices illustration', description: 'card artwork' },
+        slot: { title: 'WalaOne points-transfer screen in a phone', description: 'phone mockup' }, // authored
       },
       {
         title: 'Exclusive Amazon employee rate',

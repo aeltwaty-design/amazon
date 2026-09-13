@@ -1,33 +1,39 @@
-// The matte iPhone on the first Benefits card, from the Figma community file
-// "Matte iPhone Mockups - 2021 Updated" (key Jdseo7zT9YXYYms1gcm1ot, node
-// 55977:6896: the "[Template] iPhone 13" device with the WalaOne map screen
-// placed in it). Figma's PNG export composes the matte shading correctly but
-// bakes the page background and the drop shadow in, so this script:
+// The matte iPhones on the Benefits cards, from the Figma community file
+// "Matte iPhone Mockups - 2021 Updated" (key Jdseo7zT9YXYYms1gcm1ot): each
+// mockup is the "[Template] iPhone 13" device with a WalaOne screen placed in
+// it. Figma's PNG export composes the matte shading correctly but bakes the
+// page background and the drop shadow in, so for each mockup this script:
 //   1. cuts the phone out with its own silhouette path (the template's
 //      "[Change this color]" path from the SVG export, kept with the screen
-//      mask in src/phone-mockup.json),
+//      mask in src/<name>.json),
 //   2. recolours the body — inside the silhouette, outside the screen — from
-//      the template's light blue to --color-phone-frame, in OKLab so the
-//      matte shading and the neutral details (speaker slit, camera) survive;
-//      the target is a token NAME, so no colour literal lives here,
+//      the template's light blue to the mockup's token, in OKLab so the matte
+//      shading and the neutral details (speaker slit, camera) survive; the
+//      target is a token NAME, so no colour literal lives here,
 //   3. keeps the top three quarters (what the card shows) and writes
-//      public/mockups/points-phone.webp, printing the size for lib/art.ts.
-// Input, git-ignored (re-export when the Figma node changes): the Figma MCP
+//      public/mockups/<name>.webp, printing the size for lib/art.ts.
+// Inputs, git-ignored (re-export when a node changes): the Figma MCP
 // download_assets PNG export of the node at scale 2, saved as
-// .render/figma/phone-mockup@2x.png. Usage: npm run render:phone [-- export.png]
+// .render/figma/<name>@2x.png. Usage: npm run render:phone [-- name …]
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import sharp from 'sharp';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..');
-const input = process.argv[2] ?? path.join(root, '.render/figma/phone-mockup@2x.png');
-const geometryPath = path.join(root, 'scripts/render/src/phone-mockup.json');
 const tokensCss = path.join(root, 'styles/tokens.css');
+const inputDir = path.join(root, '.render/figma');
+const geometryDir = path.join(root, 'scripts/render/src');
 const outDir = path.join(root, 'public/mockups');
 const masterDir = path.join(root, '.render/mockups');
-const NAME = 'points-phone';
-const BODY_TOKEN = 'phone-frame';
+
+/** name → the card it serves; token → --color-<token> for the body */
+const MOCKUPS = [
+  // card 1 (purple 50): the map screen, lilac body
+  { name: 'points-phone', node: '55977:6896', token: 'phone-frame' },
+  // card 2 (yellow 50): the points-transfer screen, pale gold body
+  { name: 'choices-phone', node: '55977:7434', token: 'phone-frame-warm' },
+];
 /** share of the phone's height the card shows, from the top */
 const VISIBLE = 3 / 4;
 const WEBP = { quality: 82, alphaQuality: 90, effort: 6 };
@@ -105,16 +111,16 @@ async function rasterMask(d, box, scale) {
   return data;
 }
 
-async function main() {
-  const tokens = readTokens();
-  const bodyHex = tokens.get(BODY_TOKEN);
-  if (!bodyHex) throw new Error(`--color-${BODY_TOKEN} is not in styles/tokens.css`);
+async function build({ name, node, token }, tokens) {
+  const bodyHex = tokens.get(token);
+  if (!bodyHex) throw new Error(`--color-${token} is not in styles/tokens.css`);
+  const input = path.join(inputDir, `${name}@2x.png`);
   if (!fs.existsSync(input)) {
     throw new Error(
-      `${path.relative(root, input)} is missing: export Figma node 55977:6896 as PNG at scale 2 (see the header) and save it there`,
+      `${path.relative(root, input)} is missing: export Figma node ${node} as PNG at scale 2 (see the header) and save it there`,
     );
   }
-  const geometry = JSON.parse(fs.readFileSync(geometryPath, 'utf8'));
+  const geometry = JSON.parse(fs.readFileSync(path.join(geometryDir, `${name}.json`), 'utf8'));
   const [, , vbW, vbH] = geometry.viewBox;
   const [bx, by, bw, bh] = geometry.bbox;
 
@@ -177,7 +183,8 @@ async function main() {
     data[p + 3] = a;
     if (a === 255 && screen[i] === 0) bodyIdx.push(i);
   }
-  if (bodyIdx.length === 0) throw new Error('the silhouette mask matched no opaque pixels');
+  if (bodyIdx.length === 0)
+    throw new Error(`${name}: the silhouette mask matched no opaque pixels`);
 
   // The key colour: the mean of the chromatic body pixels (the neutral slit
   // and camera fall below half the median chroma and are left out).
@@ -206,7 +213,7 @@ async function main() {
   // Pass 2: recolour the body. Lightness keeps its shading (shifted so the
   // flat body lands on the token), chroma scales with the pixel's own, hue is
   // the token's; the weight fades out for neutral pixels and at the screen's
-  // anti-aliased edge, which keeps the map untouched.
+  // anti-aliased edge, which keeps the screen untouched.
   let oL = 0;
   let oA = 0;
   let oB = 0;
@@ -241,12 +248,14 @@ async function main() {
     }
   }
   const dE = 100 * Math.hypot(oL / oN - tL, oA / oN - tA, oB / oN - tB);
-  if (dE > 2) throw new Error(`recoloured body is ΔE ${dE.toFixed(2)} from --color-${BODY_TOKEN}`);
+  if (dE > 2)
+    throw new Error(`${name}: recoloured body is ΔE ${dE.toFixed(2)} from --color-${token}`);
 
   // Self-checks: the crop's corners lie outside the rounded silhouette, and
   // the screen is the export's pixels.
   const cornerAlpha = [0, W - 1, (H - 1) * W, H * W - 1].map((i) => data[i * 4 + 3]);
-  if (cornerAlpha.some((a) => a !== 0)) throw new Error(`corners not transparent: ${cornerAlpha}`);
+  if (cornerAlpha.some((a) => a !== 0))
+    throw new Error(`${name}: corners not transparent: ${cornerAlpha}`);
   const sc = Math.floor(H / 2) * W + Math.floor(W / 2);
   const original = await png
     .clone()
@@ -259,7 +268,7 @@ async function main() {
     .raw()
     .toBuffer();
   if (screen[sc] !== 255 || data[sc * 4] !== original[0] || data[sc * 4 + 1] !== original[1]) {
-    throw new Error('the screen centre changed');
+    throw new Error(`${name}: the screen centre changed`);
   }
 
   fs.mkdirSync(outDir, { recursive: true });
@@ -268,7 +277,7 @@ async function main() {
   await full
     .clone()
     .png()
-    .toFile(path.join(masterDir, `${NAME}.png`));
+    .toFile(path.join(masterDir, `${name}.png`));
   const visibleH = Math.round(H * VISIBLE);
   const cropped = full.clone().extract({ left: 0, top: 0, width: W, height: visibleH });
   let quality = WEBP.quality;
@@ -280,11 +289,22 @@ async function main() {
       .webp({ ...WEBP, quality })
       .toBuffer();
   }
-  const outPath = path.join(outDir, `${NAME}.webp`);
+  const outPath = path.join(outDir, `${name}.webp`);
   fs.writeFileSync(outPath, buf);
   console.log(
-    `${path.relative(root, outPath)}: ${W} × ${visibleH} (top ${Math.round(VISIBLE * 100)}% of the ${W} × ${H} phone at ${scale}×), ${(buf.length / 1024).toFixed(0)} kB at q${quality}; body #${rgbToHex(oklabToRgb(kL, kA, kB))} → --color-${BODY_TOKEN} #${bodyHex} (ΔE ${dE.toFixed(2)}); master ${path.relative(root, masterDir)}/${NAME}.png`,
+    `${path.relative(root, outPath)}: ${W} × ${visibleH} (top ${Math.round(VISIBLE * 100)}% of the ${W} × ${H} phone at ${scale}×), ${(buf.length / 1024).toFixed(0)} kB at q${quality}; body #${rgbToHex(oklabToRgb(kL, kA, kB))} → --color-${token} #${bodyHex} (ΔE ${dE.toFixed(2)}); master ${path.relative(root, masterDir)}/${name}.png`,
   );
+}
+
+async function main() {
+  const tokens = readTokens();
+  const wanted = process.argv.slice(2);
+  const unknown = wanted.filter((n) => !MOCKUPS.some((m) => m.name === n));
+  if (unknown.length) throw new Error(`unknown mockup(s): ${unknown.join(', ')}`);
+  for (const mockup of MOCKUPS) {
+    if (wanted.length && !wanted.includes(mockup.name)) continue;
+    await build(mockup, tokens);
+  }
 }
 
 main().catch((error) => {

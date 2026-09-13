@@ -108,70 +108,6 @@ export function coin(r = 0.5, t = 0.12) {
   return g;
 }
 
-export function giftBox(size = 1) {
-  const g = new THREE.Group();
-  g.add(rbox(size, size * 0.8, size, size * 0.06, clay(C.purple)));
-  const lid = rbox(size * 1.08, size * 0.22, size * 1.08, size * 0.05, clay(C.purpleDeep));
-  lid.position.y = size * 0.51;
-  g.add(lid);
-  const rib1 = rbox(size * 0.16, size * 1.06, size * 1.12, size * 0.01, gold());
-  rib1.position.y = size * 0.115;
-  const rib2 = rbox(size * 1.12, size * 1.06, size * 0.16, size * 0.01, gold());
-  rib2.position.y = size * 0.115;
-  g.add(rib1, rib2);
-  const bowMat = gold();
-  const loopGeo = new THREE.TorusGeometry(size * 0.13, size * 0.045, 12, 32);
-  const l1 = mesh(loopGeo, bowMat);
-  const l2 = mesh(loopGeo, bowMat);
-  l1.position.set(-size * 0.13, size * 0.7, 0);
-  l2.position.set(size * 0.13, size * 0.7, 0);
-  l1.rotation.set(0.3, 0.5, 0.2);
-  l2.rotation.set(0.3, -0.5, -0.2);
-  const knot = mesh(new THREE.SphereGeometry(size * 0.07, 24, 16), bowMat);
-  knot.position.y = size * 0.66;
-  g.add(l1, l2, knot);
-  return g;
-}
-
-export function ticket(w = 1.4, h = 0.8, mat = clay(C.white)) {
-  const s = new THREE.Shape();
-  const n = h * 0.14;
-  s.moveTo(-w / 2, -h / 2);
-  s.lineTo(-n, -h / 2);
-  s.absarc(0, -h / 2, n, Math.PI, 0, true);
-  s.lineTo(w / 2, -h / 2);
-  s.lineTo(w / 2, h / 2);
-  s.lineTo(n, h / 2);
-  s.absarc(0, h / 2, n, 0, Math.PI, true);
-  s.lineTo(-w / 2, h / 2);
-  s.closePath();
-  const g = new THREE.Group();
-  g.add(extrude(s, 0.06, mat, 0.015));
-  const st = star(h * 0.17, clay(C.purple), 0.04);
-  st.position.set(-w * 0.26, 0, 0.06);
-  g.add(st);
-  for (let i = 0; i < 3; i++) {
-    const line = rbox(w * 0.3, h * 0.06, 0.03, 0.01, clay(C.lilac));
-    line.position.set(w * 0.2, h * 0.2 - i * h * 0.2, 0.06);
-    g.add(line);
-  }
-  return g;
-}
-
-export function cup() {
-  const g = new THREE.Group();
-  const body = mesh(new THREE.CylinderGeometry(0.32, 0.26, 0.85, 48), clay(C.white));
-  g.add(body);
-  const lid = mesh(new THREE.CylinderGeometry(0.35, 0.35, 0.09, 48), clay(C.purple));
-  lid.position.y = 0.47;
-  const cap = mesh(new THREE.CylinderGeometry(0.2, 0.2, 0.05, 48), clay(C.purpleDeep));
-  cap.position.y = 0.54;
-  const sleeve = mesh(new THREE.CylinderGeometry(0.305, 0.283, 0.3, 48), gold());
-  sleeve.position.y = -0.14;
-  g.add(lid, cap, sleeve);
-  return g;
-}
-
 export function bag(w = 1.1, h = 1.3, d = 0.6) {
   const g = new THREE.Group();
   g.add(rbox(w, h, d, 0.08, clay(C.purple)));
@@ -583,33 +519,6 @@ const text3d = (font, str, size, depth, mat) =>
 // Each scene returns a THREE.Group. `img` holds decoded brand images, `font`
 // the loaded typeface. Coordinates are in "clay units": ~1 = a hero object.
 export const SCENES = {
-  choices: {
-    w: 420,
-    h: 340,
-    dir: [0.85, 0.8, 1.6],
-    pad: 1.02,
-    build() {
-      const g = new THREE.Group();
-      const gift = giftBox(0.95);
-      gift.position.set(0.05, 0, 0.1);
-      gift.rotation.y = -0.4;
-      g.add(gift);
-      const tk = ticket(1.25, 0.72);
-      tk.position.set(-0.95, 0.55, -0.55);
-      tk.rotation.set(-0.15, 0.55, 0.25);
-      g.add(tk);
-      const cp = cup();
-      cp.position.set(1.05, -0.02, 0.75);
-      cp.rotation.y = 0.4;
-      g.add(cp);
-      const s1 = sparkle(0.13);
-      s1.position.set(-0.25, 1.25, 0.2);
-      const s2 = sparkle(0.09, clay(C.white));
-      s2.position.set(1.35, 0.95, -0.3);
-      g.add(s1, s2);
-      return g;
-    },
-  },
   rate: {
     w: 420,
     h: 340,
