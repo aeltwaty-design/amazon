@@ -110,6 +110,7 @@
   --card-hover: 440ms;
   --tile-hover-lift: 18px;
   --tile-fade: 180ms; /* illustration ↔ label cross-fade on a tile */
+  --brands-marquee-travel: 480px; /* total x travel of a brand row while its section crosses the viewport; alternate rows go opposite ways; keep ≤ row width − widest viewport (3576 − 2560) */
   --plans-switch: 250ms;
 
   --scroll-arrow-bounce: 1.45s;

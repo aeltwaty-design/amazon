@@ -2,15 +2,14 @@
 
 import { useViewportKey } from '@/hooks/useViewportKey';
 import { dirX, type Locale } from '@/lib/i18n';
-import { ScrollTrigger, ease, gsap, readSeconds, useGSAP } from '@/lib/motion';
+import { ScrollTrigger, ease, gsap, readPx, readSeconds, useGSAP } from '@/lib/motion';
 
 const REVEAL_STAGGER_S = 0.06;
 const REVEAL_Y = 24;
-const BRAND_PARALLAX_PX = 24;
 const PRICING_TILT_DEG = 4;
 
 // Owns every ScrollTrigger outside the hero: section reveals, the brand-row
-// parallax and the pricing-card tilt. Rebuilt on locale change and resize.
+// marquee and the pricing-card tilt. Rebuilt on locale change and resize.
 export function PageMotion({ locale }: { locale: Locale }) {
   const viewportKey = useViewportKey(200);
 
@@ -47,12 +46,17 @@ export function PageMotion({ locale }: { locale: Locale }) {
             onEnterBack: reveal,
           });
 
-          gsap.utils.toArray<HTMLElement>('[data-parallax="brands-row"]').forEach((row) => {
+          // Brand rows: a scroll-scrubbed marquee, alternate rows in opposite
+          // directions, mirrored in Arabic. x is 0 at the section's midpoint, so
+          // the un-built and reduced-motion states show the same centred rows.
+          const travel = readPx('--brands-marquee-travel');
+          gsap.utils.toArray<HTMLElement>('[data-marquee]').forEach((row) => {
+            const dir = (row.dataset.marquee === 'reverse' ? -1 : 1) * sign;
             gsap.fromTo(
               row,
-              { x: -BRAND_PARALLAX_PX * sign },
+              { x: (-travel / 2) * dir },
               {
-                x: BRAND_PARALLAX_PX * sign,
+                x: (travel / 2) * dir,
                 ease: 'none',
                 scrollTrigger: {
                   trigger: row.closest('section') ?? row,
