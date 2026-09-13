@@ -905,29 +905,7 @@ export const SCENES = {
     },
   },
   // Hero sector tiles: square, framed tight, one or two props each. The
-  // first two tiles are design-supplied illustrations (public/tiles), not scenes.
-  'tile-travel': {
-    w: 432,
-    h: 432,
-    dir: [0.8, 0.8, 1.6],
-    pad: 1.06,
-    build() {
-      const g = new THREE.Group();
-      const s = suitcase();
-      s.position.set(-0.25, 0, 0);
-      s.rotation.y = 0.35;
-      g.add(s);
-      const p = plane();
-      p.position.set(0.8, 0.8, -0.2);
-      p.rotation.set(0.15, 0.4, 0.25);
-      p.scale.setScalar(0.75);
-      g.add(p);
-      const s1 = sparkle(0.1);
-      s1.position.set(0.45, -0.55, 0.6);
-      g.add(s1);
-      return g;
-    },
-  },
+  // first three tiles are design-supplied illustrations (public/tiles), not scenes.
   'tile-entertainment': {
     w: 432,
     h: 432,
