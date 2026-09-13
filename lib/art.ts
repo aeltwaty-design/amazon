@@ -85,9 +85,9 @@ export const ART = {
     // recoloured to the card's --color-phone-frame* token, top three quarters
     // kept. Attribute the community file per its licence before launch.
     cards: [
-      { kind: 'phone', src: '/mockups/points-phone.webp', width: 848, height: 1283 },
-      { kind: 'phone', src: '/mockups/choices-phone.webp', width: 848, height: 1283 },
-      { kind: 'phone', src: '/mockups/rate-phone.webp', width: 846, height: 1283 },
+      { kind: 'phone', src: '/mockups/map-phone.webp', width: 848, height: 1283 },
+      { kind: 'phone', src: '/mockups/transfer-phone.webp', width: 848, height: 1283 },
+      { kind: 'phone', src: '/mockups/market-phone.webp', width: 846, height: 1283 },
     ] satisfies readonly BenefitArt[],
   },
   howTo: [ill('step1', 640, 400), ill('step2', 640, 400), ill('step3', 640, 400)],

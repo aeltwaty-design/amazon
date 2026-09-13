@@ -30,11 +30,11 @@ const masterDir = path.join(root, '.render/mockups');
 /** name → the card it serves; token → --color-<token> for the body */
 const MOCKUPS = [
   // card 1 (purple 50): the map screen, lilac body
-  { name: 'points-phone', node: '55977:6896', token: 'phone-frame' },
+  { name: 'map-phone', node: '55977:6896', token: 'phone-frame' },
   // card 2 (yellow 50): the points-transfer screen, pale gold body
-  { name: 'choices-phone', node: '55977:7434', token: 'phone-frame-warm' },
+  { name: 'transfer-phone', node: '55977:7434', token: 'phone-frame-warm' },
   // card 3 (purple 100): the marketplace screen, Primary 300 body
-  { name: 'rate-phone', node: '55977:9066', token: 'phone-frame-deep' },
+  { name: 'market-phone', node: '55977:9066', token: 'phone-frame-deep' },
 ];
 /** share of the phone's height the card shows, from the top */
 const VISIBLE = 3 / 4;
