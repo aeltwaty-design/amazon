@@ -2,8 +2,8 @@
 // can reserve the box. Illustrations are the 3D stills produced by
 // `scripts/render/render.mjs` (see that file for the scene definitions), the
 // phone on the first Benefits card by `scripts/render/build-phone-mockup.mjs`
-// from a Figma community mockup; merchant logos are public-domain SVGs from
-// Wikimedia Commons.
+// from a Figma community mockup; merchant logos come from walaone.com
+// through `scripts/render/build-brands.mjs`.
 //
 // The alt text lives in `content/*.ts` (each slot's `title`), not here.
 
@@ -124,18 +124,34 @@ export const PAYMENT_MARKS: Record<PaymentMethod, Art> = {
 
 export type Brand = Art & { id: string; name: string };
 
-// Sample merchants across the six sectors. Public-domain geometry (simple
-// wordmarks/shapes are not copyrightable) but trademarks still apply: swap in
-// the confirmed WalaOne partner list before launch.
-export const BRANDS: readonly Brand[] = [
-  { id: 'mcdonalds', name: "McDonald's", src: '/brands/mcdonalds.svg', width: 273, height: 239 },
-  { id: 'kfc', name: 'KFC', src: '/brands/kfc.svg', width: 221, height: 70 },
-  { id: 'ikea', name: 'IKEA', src: '/brands/ikea.svg', width: 100, height: 40 },
-  { id: 'nike', name: 'Nike', src: '/brands/nike.svg', width: 1000, height: 356 },
-  { id: 'hm', name: 'H&M', src: '/brands/hm.svg', width: 709, height: 467 },
-  { id: 'adidas', name: 'adidas', src: '/brands/adidas.svg', width: 725, height: 500 },
-  { id: 'sephora', name: 'Sephora', src: '/brands/sephora.svg', width: 512, height: 66 },
-  { id: 'booking', name: 'Booking.com', src: '/brands/booking.svg', width: 119, height: 20 },
-  { id: 'marriott', name: 'Marriott', src: '/brands/marriott.svg', width: 744, height: 384 },
-  { id: 'uber', name: 'Uber', src: '/brands/uber.svg', width: 927, height: 322 },
+/** every merchant logo is normalised onto this canvas by `npm run render:brands` (2:1; the logo fills up to 85 % × 70 %) */
+export const BRAND_CANVAS = { width: 320, height: 160 } as const;
+
+const brand = (id: string, name: string): Brand => ({
+  id,
+  name,
+  src: `/brands/${id}.webp`,
+  ...BRAND_CANVAS,
+});
+
+// The twelve merchants of walaone.com's "3,500+ service providers" block, in
+// the site's DOM order (right to left on the Arabic page, which `dir` gives
+// the rows here for free), in colour: scripts/render/build-brands.mjs.
+export const BRAND_ROWS: readonly (readonly Brand[])[] = [
+  [
+    brand('baskin-robbins', 'Baskin Robbins'),
+    brand('ninja', 'Ninja'),
+    brand('noon', 'noon'),
+    brand('toyou', 'ToYou'),
+    brand('aliexpress', 'AliExpress'),
+    brand('dr-cafe', 'dr.CAFE Coffee'),
+  ],
+  [
+    brand('temu', 'TEMU'),
+    brand('dominos', "Domino's Pizza"),
+    brand('nana', 'nana'),
+    brand('deraah', 'Deraah'),
+    brand('amazon', 'Amazon'),
+    brand('tiko', 'Tiko'),
+  ],
 ];
