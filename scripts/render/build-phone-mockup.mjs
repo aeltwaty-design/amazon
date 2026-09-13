@@ -10,7 +10,7 @@
 //      the template's light blue to --color-phone-frame, in OKLab so the
 //      matte shading and the neutral details (speaker slit, camera) survive;
 //      the target is a token NAME, so no colour literal lives here,
-//   3. keeps the top two thirds (what the card shows) and writes
+//   3. keeps the top three quarters (what the card shows) and writes
 //      public/mockups/points-phone.webp, printing the size for lib/art.ts.
 // Input, git-ignored (re-export when the Figma node changes): the Figma MCP
 // download_assets PNG export of the node at scale 2, saved as
@@ -29,7 +29,7 @@ const masterDir = path.join(root, '.render/mockups');
 const NAME = 'points-phone';
 const BODY_TOKEN = 'phone-frame';
 /** share of the phone's height the card shows, from the top */
-const VISIBLE = 2 / 3;
+const VISIBLE = 3 / 4;
 const WEBP = { quality: 82, alphaQuality: 90, effort: 6 };
 const FALLBACK_QUALITY = 78;
 const BUDGET = 220 * 1024;

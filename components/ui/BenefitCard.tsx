@@ -43,8 +43,8 @@ export function BenefitCard({ tone, title, body, slot, art, flipId, mode }: Prop
       data-flip-id={flipId}
       className={cn(
         'benefit-card relative overflow-hidden rounded-card text-ink',
-        // stacked, a phone card holds the copy plus the visible two thirds of a 200px phone
-        phone ? 'min-h-[460px]' : 'min-h-[300px]',
+        // stacked, a phone card holds the copy plus a phone box 60% of its own height
+        phone ? 'min-h-[500px]' : 'min-h-[300px]',
         TONE_CLASS[tone],
       )}
     >
@@ -75,15 +75,17 @@ export function BenefitCard({ tone, title, body, slot, art, flipId, mode }: Prop
       </div>
       {/* The 3D stills are transparent WebPs with their contact shadow baked in,
           so they sit straight on the card fill; the placeholder keeps its tint.
-          A phone is already cropped to its top two thirds (npm run render:phone),
-          so anchoring it on the bottom edge shows exactly that; the card's
-          rounded corners stay clear of it, and below lg it is capped in px
-          because a stacked card can be far wider than a phone. */}
+          A phone is already cropped to its top three quarters (npm run
+          render:phone) and fits bottom-centred into a box that is a share of
+          the card's height as well as its width, so it scales with the card and
+          stays clear of the copy on short cards; the rounded corners never
+          reach it, and below lg the box is capped in px because a stacked card
+          can be far wider than a phone. */}
       <div
         data-card-inner
         className={
           phone
-            ? 'absolute inset-x-0 bottom-0 mx-auto w-[56%] max-w-[200px] lg:w-[64%] lg:max-w-none'
+            ? 'absolute inset-x-0 bottom-0 mx-auto h-[60%] w-[64%] max-w-[240px] lg:h-[56%] lg:w-[72%] lg:max-w-none'
             : 'absolute end-0 bottom-0 w-[64%]'
         }
       >
@@ -93,8 +95,12 @@ export function BenefitCard({ tone, title, body, slot, art, flipId, mode }: Prop
           width={art?.width ?? 210}
           height={art?.height ?? 170}
           src={art?.src}
-          sizes={phone ? '(min-width: 1024px) 222px, 200px' : '(min-width: 1024px) 280px, 64vw'}
-          className={cn('rounded-none', !art && 'rounded-ss-card border-0 bg-ink/5 text-ink')}
+          sizes={phone ? '(min-width: 1024px) 250px, 240px' : '(min-width: 1024px) 280px, 64vw'}
+          className={cn(
+            'rounded-none',
+            phone && 'h-full w-full object-contain object-bottom',
+            !art && 'rounded-ss-card border-0 bg-ink/5 text-ink',
+          )}
         />
       </div>
     </article>

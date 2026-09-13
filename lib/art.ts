@@ -62,8 +62,8 @@ export const TILE_MOTION: Partial<Record<HeroTileId, TileMotion>> = {
 
 /**
  * What a benefit card shows at its foot: a 3D still sitting at the inline end,
- * or a phone standing centred on the bottom edge with its top two thirds in
- * view (the asset is already cropped to that; BenefitCard only anchors it).
+ * or a phone standing centred on the bottom edge with its top three quarters
+ * in view (the asset is already cropped to that; BenefitCard fits it in a box).
  */
 export type BenefitArt = Art & { kind: 'still' | 'phone' };
 
@@ -81,10 +81,10 @@ export const ART = {
     // mockup "Matte iPhone Mockups - 2021 Updated" (node 55977:6896: the matte
     // iPhone 13 template with the WalaOne map screen placed in it), built by
     // `npm run render:phone`: page background and shadow cut away, the body
-    // recoloured to --color-phone-frame, top two thirds kept. Attribute the
+    // recoloured to --color-phone-frame, top three quarters kept. Attribute the
     // community file per its licence before launch.
     cards: [
-      { kind: 'phone', src: '/mockups/points-phone.webp', width: 848, height: 1140 },
+      { kind: 'phone', src: '/mockups/points-phone.webp', width: 848, height: 1283 },
       { kind: 'still', ...ill('choices', 420, 340) },
       { kind: 'still', ...ill('rate', 420, 340) },
     ] satisfies readonly BenefitArt[],
