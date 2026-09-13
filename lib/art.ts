@@ -47,7 +47,8 @@ export type HeroTileId = 'restaurants' | 'shopping' | 'travel' | 'entertainment'
 
 export const ART = {
   tiles: {
-    restaurants: ill('tile-restaurants', 432, 432),
+    // design-supplied WalaOne coin illustration on the tone-1 tile, not a render
+    restaurants: { src: '/tiles/wo-coin.webp', width: 693, height: 640 },
     shopping: ill('tile-shopping', 432, 432),
     travel: ill('tile-travel', 432, 432),
     entertainment: ill('tile-entertainment', 432, 432),

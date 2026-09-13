@@ -904,28 +904,8 @@ export const SCENES = {
       return g;
     },
   },
-  // Hero sector tiles: square, framed tight, one or two props each.
-  'tile-restaurants': {
-    w: 432,
-    h: 432,
-    dir: [0.8, 0.8, 1.6],
-    pad: 1.06,
-    build() {
-      const g = new THREE.Group();
-      const c = cup();
-      c.position.set(-0.55, 0, 0.1);
-      c.rotation.y = 0.3;
-      g.add(c);
-      const b = burger();
-      b.position.set(0.45, -0.335, 0.35);
-      b.rotation.y = -0.3;
-      g.add(b);
-      const s1 = sparkle(0.12);
-      s1.position.set(-0.05, 0.75, -0.2);
-      g.add(s1);
-      return g;
-    },
-  },
+  // Hero sector tiles: square, framed tight, one or two props each. The
+  // first tile is a design-supplied illustration (public/tiles), not a scene.
   'tile-shopping': {
     w: 432,
     h: 432,
