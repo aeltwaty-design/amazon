@@ -108,18 +108,6 @@ export function coin(r = 0.5, t = 0.12) {
   return g;
 }
 
-export function coinStack(n = 4, r = 0.55, t = 0.13) {
-  const g = new THREE.Group();
-  for (let i = 0; i < n; i++) {
-    const c = coin(r, t);
-    c.position.y = i * (t + 0.005);
-    c.position.x = Math.sin(i * 1.7) * 0.03;
-    c.rotation.y = i * 0.4;
-    g.add(c);
-  }
-  return g;
-}
-
 export function giftBox(size = 1) {
   const g = new THREE.Group();
   g.add(rbox(size, size * 0.8, size, size * 0.06, clay(C.purple)));
@@ -595,34 +583,6 @@ const text3d = (font, str, size, depth, mat) =>
 // Each scene returns a THREE.Group. `img` holds decoded brand images, `font`
 // the loaded typeface. Coordinates are in "clay units": ~1 = a hero object.
 export const SCENES = {
-  points: {
-    w: 420,
-    h: 340,
-    dir: [0.8, 0.8, 1.6],
-    pad: 1.02,
-    build() {
-      const g = new THREE.Group();
-      g.add(coinStack(4, 0.58, 0.14));
-      const top = coin(0.58, 0.14);
-      top.position.set(0.25, 0.72, 0.1);
-      top.rotation.set(0.35, 0.4, -0.25);
-      g.add(top);
-      const st = star(0.38, clay(C.purple));
-      st.position.set(-0.75, 1.15, -0.2);
-      st.rotation.set(0.1, 0.4, 0.2);
-      g.add(st);
-      const side = coin(0.5, 0.13);
-      side.rotation.set(Math.PI / 2, 0, -0.5);
-      side.position.set(1.05, 0.15, 0.55);
-      g.add(side);
-      const s1 = sparkle(0.13);
-      s1.position.set(0.95, 1.35, 0);
-      const s2 = sparkle(0.09, clay(C.white));
-      s2.position.set(-1.15, 0.35, 0.5);
-      g.add(s1, s2);
-      return g;
-    },
-  },
   choices: {
     w: 420,
     h: 340,

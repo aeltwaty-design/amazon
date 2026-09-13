@@ -1,7 +1,9 @@
 // Every rendered asset the page shows, with its intrinsic size so next/image
 // can reserve the box. Illustrations are the 3D stills produced by
-// `scripts/render/render.mjs` (see that file for the scene definitions);
-// merchant logos are public-domain SVGs from Wikimedia Commons.
+// `scripts/render/render.mjs` (see that file for the scene definitions), the
+// phone on the first Benefits card by `scripts/render/build-phone-mockup.mjs`
+// from a Figma community mockup; merchant logos are public-domain SVGs from
+// Wikimedia Commons.
 //
 // The alt text lives in `content/*.ts` (each slot's `title`), not here.
 
@@ -58,6 +60,13 @@ export const TILE_MOTION: Partial<Record<HeroTileId, TileMotion>> = {
   restaurants: { src: '/lottie/wo-coin.json', crop: { x: 230, y: 120, w: 620, h: 754 } },
 };
 
+/**
+ * What a benefit card shows at its foot: a 3D still sitting at the inline end,
+ * or a phone standing centred on the bottom edge with its top two thirds in
+ * view (the asset is already cropped to that; BenefitCard only anchors it).
+ */
+export type BenefitArt = Art & { kind: 'still' | 'phone' };
+
 export const ART = {
   tiles: {
     // all five are design-supplied illustrations (public/tiles), not renders
@@ -68,8 +77,17 @@ export const ART = {
     health: { src: '/tiles/restaurant-delivery.webp', width: 569, height: 640 },
   } satisfies Record<HeroTileId, Art>,
   benefits: {
-    // Same order as `content.benefits.cards`.
-    cards: [ill('points', 420, 340), ill('choices', 420, 340), ill('rate', 420, 340)],
+    // Same order as `content.benefits.cards`. Card 1 is the Figma community
+    // mockup "Matte iPhone Mockups - 2021 Updated" (node 55977:6896: the matte
+    // iPhone 13 template with the WalaOne map screen placed in it), built by
+    // `npm run render:phone`: page background and shadow cut away, the body
+    // recoloured to --color-phone-frame, top two thirds kept. Attribute the
+    // community file per its licence before launch.
+    cards: [
+      { kind: 'phone', src: '/mockups/points-phone.webp', width: 848, height: 1140 },
+      { kind: 'still', ...ill('choices', 420, 340) },
+      { kind: 'still', ...ill('rate', 420, 340) },
+    ] satisfies readonly BenefitArt[],
   },
   howTo: [ill('step1', 640, 400), ill('step2', 640, 400), ill('step3', 640, 400)],
 } as const;

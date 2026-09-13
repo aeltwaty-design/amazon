@@ -49,7 +49,7 @@ export const en = {
       {
         title: 'Redeem Your Points',
         body: 'Turn the points you earn from your purchases into vouchers and rewards from your favourite brands.',
-        slot: { title: 'Points illustration', description: 'card artwork' },
+        slot: { title: 'WalaOne map screen in a phone', description: 'phone mockup' }, // authored
       },
       {
         title: 'More Choices',

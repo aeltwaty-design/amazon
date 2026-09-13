@@ -50,6 +50,8 @@
   --color-card-3: #d9d2f4;
   --color-card-4: #fdecc0;
   --color-card-5: #c0b4ed;
+  /* the matte phone on the purple-50 benefit card: Primary 200 (built into the asset by `npm run render:phone`) */
+  --color-phone-frame: #c0b4ed;
 
   /* partner (Amazon smile) */
   --color-partner: #ff9900;

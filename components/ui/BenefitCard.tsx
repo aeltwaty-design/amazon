@@ -1,6 +1,6 @@
 import type { SlotCopy } from '@/content/types';
 import { ImageSlot } from '@/components/ui/ImageSlot';
-import type { Art } from '@/lib/art';
+import type { BenefitArt } from '@/lib/art';
 import { cn } from '@/lib/cn';
 
 export type CardTone = 1 | 2 | 3 | 4 | 5;
@@ -10,8 +10,8 @@ type Props = {
   title: string;
   body: string;
   slot: SlotCopy;
-  /** the rendered illustration; without it the slot stays a labelled placeholder */
-  art?: Art;
+  /** what the card shows at its foot; without it the slot stays a labelled placeholder */
+  art?: BenefitArt;
   flipId: string;
   /** mirror = the copy that flies inside the hero; grid = the real in-flow card */
   mode: 'mirror' | 'grid';
@@ -28,19 +28,23 @@ const TONE_CLASS: Record<CardTone, string> = {
 
 // A card has no height of its own on desktop: the grid row it sits in sizes
 // it, and both grids give that row their wrapper's full height, so a mirror
-// card and its in-flow twin are the same size by construction.
+// card and its in-flow twin are the same size by construction. A phone card
+// only raises the stacked minimum, so the copy and the phone never meet.
 export function BenefitCard({ tone, title, body, slot, art, flipId, mode }: Props) {
   const hooks =
     mode === 'mirror'
       ? { 'data-hero-card': '', 'data-enter': '' }
       : { 'data-grid-card': '', 'data-reveal-mobile': '' };
+  const phone = art?.kind === 'phone';
 
   return (
     <article
       {...hooks}
       data-flip-id={flipId}
       className={cn(
-        'benefit-card relative min-h-[300px] overflow-hidden rounded-card text-ink',
+        'benefit-card relative overflow-hidden rounded-card text-ink',
+        // stacked, a phone card holds the copy plus the visible two thirds of a 200px phone
+        phone ? 'min-h-[460px]' : 'min-h-[300px]',
         TONE_CLASS[tone],
       )}
     >
@@ -70,15 +74,26 @@ export function BenefitCard({ tone, title, body, slot, art, flipId, mode }: Prop
         <p className="type-body mt-3 max-w-[38ch] text-ink-muted">{body}</p>
       </div>
       {/* The 3D stills are transparent WebPs with their contact shadow baked in,
-          so they sit straight on the card fill; the placeholder keeps its tint. */}
-      <div data-card-inner className="absolute end-0 bottom-0 w-[64%]">
+          so they sit straight on the card fill; the placeholder keeps its tint.
+          A phone is already cropped to its top two thirds (npm run render:phone),
+          so anchoring it on the bottom edge shows exactly that; the card's
+          rounded corners stay clear of it, and below lg it is capped in px
+          because a stacked card can be far wider than a phone. */}
+      <div
+        data-card-inner
+        className={
+          phone
+            ? 'absolute inset-x-0 bottom-0 mx-auto w-[56%] max-w-[200px] lg:w-[64%] lg:max-w-none'
+            : 'absolute end-0 bottom-0 w-[64%]'
+        }
+      >
         <ImageSlot
           title={slot.title}
           description={slot.description}
           width={art?.width ?? 210}
           height={art?.height ?? 170}
           src={art?.src}
-          sizes="(min-width: 1024px) 280px, 64vw"
+          sizes={phone ? '(min-width: 1024px) 222px, 200px' : '(min-width: 1024px) 280px, 64vw'}
           className={cn('rounded-none', !art && 'rounded-ss-card border-0 bg-ink/5 text-ink')}
         />
       </div>
