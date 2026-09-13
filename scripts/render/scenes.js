@@ -595,43 +595,6 @@ const text3d = (font, str, size, depth, mat) =>
 // Each scene returns a THREE.Group. `img` holds decoded brand images, `font`
 // the loaded typeface. Coordinates are in "clay units": ~1 = a hero object.
 export const SCENES = {
-  offers: {
-    w: 840,
-    h: 400,
-    dir: [0.9, 0.75, 1.7],
-    pad: 1.02,
-    build({ font }) {
-      const g = new THREE.Group();
-      const b = bag(1.15, 1.35, 0.62);
-      b.position.set(-0.55, 0, 0);
-      b.rotation.y = 0.35;
-      g.add(b);
-      const badge = new THREE.Group();
-      const disc = coin(0.62, 0.14);
-      disc.rotation.x = Math.PI / 2;
-      badge.add(disc);
-      const pct = text3d(font, '%', 0.6, 0.08, clay(C.purple));
-      pct.position.z = 0.11;
-      badge.add(pct);
-      badge.position.set(0.95, 0.15, 0.35);
-      badge.rotation.set(0.1, -0.45, 0.12);
-      g.add(badge);
-      const t = tag(clay(C.white));
-      t.position.set(0.45, -0.5, 0.95);
-      t.rotation.set(-0.35, 0.3, -0.35);
-      t.scale.setScalar(0.85);
-      g.add(t);
-      const s1 = sparkle(0.16);
-      s1.position.set(-1.25, 0.9, 0.3);
-      s1.rotation.z = 0.3;
-      const s2 = sparkle(0.11);
-      s2.position.set(1.55, 0.95, -0.2);
-      const s3 = sparkle(0.09, clay(C.white));
-      s3.position.set(0.15, 1.05, 0.2);
-      g.add(s1, s2, s3);
-      return g;
-    },
-  },
   points: {
     w: 420,
     h: 340,
@@ -711,52 +674,6 @@ export const SCENES = {
       const s2 = sparkle(0.1);
       s2.position.set(1.05, -0.55, 0.8);
       g.add(s1, s2);
-      return g;
-    },
-  },
-  cobrand: {
-    w: 840,
-    h: 400,
-    dir: [0.35, 0.55, 1.8],
-    pad: 1.02,
-    build({ img }) {
-      const g = new THREE.Group();
-      const markTex = canvasTexture(512, 512, (ctx, w, h) => {
-        const s = w * 0.62;
-        const sh = s * (32 / 38);
-        ctx.drawImage(img.mark, (w - s) / 2, (h - sh) / 2, s, sh);
-      });
-      const smileTex = canvasTexture(512, 512, (ctx, w, h) => {
-        const s = w * 0.7;
-        const sh = s * (85 / 335);
-        ctx.drawImage(img.smile, (w - s) / 2, (h - sh) / 2 + h * 0.02, s, sh);
-      });
-      const a = tile(markTex, 1.4, 0.26);
-      a.position.set(-1.25, 0, 0);
-      a.rotation.set(0, 0.35, 0);
-      const b = tile(smileTex, 1.4, 0.26);
-      b.position.set(1.25, 0, 0);
-      b.rotation.set(0, -0.35, 0);
-      g.add(a, b);
-      const x = new THREE.Group();
-      const bar1 = rbox(0.9, 0.2, 0.2, 0.08, clay(C.purple));
-      bar1.rotation.z = Math.PI / 4;
-      const bar2 = bar1.clone();
-      bar2.rotation.z = -Math.PI / 4;
-      x.add(bar1, bar2);
-      x.position.set(0, 0.05, 0.4);
-      g.add(x);
-      const c1 = coin(0.3, 0.09);
-      c1.position.set(-0.55, -0.55, 0.85);
-      c1.rotation.set(0.6, 0.2, -0.3);
-      const c2 = coin(0.22, 0.08);
-      c2.position.set(2.0, 0.8, -0.2);
-      c2.rotation.set(0.4, 0.4, 0.5);
-      const s1 = sparkle(0.14);
-      s1.position.set(-1.95, 0.85, -0.1);
-      const s2 = sparkle(0.1);
-      s2.position.set(0.55, 0.95, 0.3);
-      g.add(c1, c2, s1, s2);
       return g;
     },
   },

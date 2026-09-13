@@ -42,7 +42,7 @@ export const HERO_LOTTIE = {
   crop: { x: 0, y: 0, w: 482, h: 475 },
 } as const;
 
-/** the five hero sector tiles, in row order (tile 1 becomes the tone-1 wide card) */
+/** the five hero sector tiles, in row order (tile 1 becomes the first benefit card, which shares its tone) */
 export type HeroTileId = 'restaurants' | 'shopping' | 'travel' | 'entertainment' | 'health';
 
 /** a Lottie a tile cross-fades to on hover in place of its label (components/hero/TileLottie.tsx) */
@@ -69,13 +69,7 @@ export const ART = {
   } satisfies Record<HeroTileId, Art>,
   benefits: {
     // Same order as `content.benefits.cards`.
-    cards: [
-      ill('offers', 840, 400),
-      ill('points', 420, 340),
-      ill('choices', 420, 340),
-      ill('rate', 420, 340),
-    ],
-    wide: ill('cobrand', 840, 400),
+    cards: [ill('points', 420, 340), ill('choices', 420, 340), ill('rate', 420, 340)],
   },
   howTo: [ill('step1', 640, 400), ill('step2', 640, 400), ill('step3', 640, 400)],
 } as const;

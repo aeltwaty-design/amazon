@@ -34,7 +34,7 @@ export const HERO = {
     text: [0.42, 0.58],
     /** purple surface fades to the page background */
     surface: [0.5, 0.72],
-    /** the square (now the wide card, clipped) stretches into a tall centred bar */
+    /** the square (now the first card, clipped) stretches into a tall centred bar */
     bar: [0.42, 0.6],
     /** the bar contracts to pill 1; the other pills emerge from behind it into a stack */
     split: [0.6, 0.72],
@@ -52,8 +52,8 @@ export const HERO = {
   PILE: { fanX: 8, fanY: 0 },
   /** bar = the card scaled vertically; capped so the bar height ≤ 0.58 × viewport */
   BAR: { scaleY: 1.5, maxViewportFrac: 0.58 },
-  /** pill heights (px) for wide / small cards and the stack gap; pill width = tile width */
-  PILL: { wideH: 88, smallH: 60, gap: 12 },
+  /** pill height (px) and the stack gap; pill width = tile width */
+  PILL: { h: 60, gap: 12 },
   LOAD: { headlineStartMs: 50, wordStaggerMs: 40, subMs: 280, subStartMs: 300, tileStaggerMs: 70 },
   TEXT_EXIT_Y: -40,
   MOBILE_ART_PARALLAX_PX: 12,
@@ -88,16 +88,16 @@ type CardGeo = {
   /** y that puts the pill at its stacked position */
   pillToY: number;
 };
-/** transform + clip insets that make the wide card's visible square coincide with tile 1 */
+/** transform + clip insets that make the first card's visible square coincide with tile 1 */
 type Square = { x: number; y: number; insetX: number; insetY: number };
 type Geometry = {
   /** per tile: to the row centre (+ fan for i ≥ 1) */
   gather: Point[];
   /** per tile: to the row centre, no fan */
   tucked: Point[];
-  /** wide card clipped to tile 1's square at the row centre */
+  /** first card clipped to tile 1's square at the row centre */
   square: Square | null;
-  /** wide card y that centres it on the pinned viewport's vertical centre */
+  /** first card y that centres it on the pinned viewport's vertical centre */
   barY: number;
   /** scaleY for the bar */
   barScale: number;
@@ -151,9 +151,7 @@ function measure(
   const viewportMidY = heroRect.top + pinDistance / 2;
 
   // The pill stack: one pill per card, centred as a block on the viewport.
-  const heights = heroCards.map((card) =>
-    card.dataset.wide === 'true' ? HERO.PILL.wideH : HERO.PILL.smallH,
-  );
+  const heights = heroCards.map(() => HERO.PILL.h);
   const total =
     heights.reduce((sum, h) => sum + h, 0) + HERO.PILL.gap * Math.max(0, heights.length - 1);
   let pillTop = viewportMidY - total / 2;
@@ -173,7 +171,7 @@ function measure(
     const end = { x: vars?.x ?? 0, y: (vars?.y ?? 0) - pinDistance };
 
     const c = cardRects[i];
-    const h = heights[i] ?? HERO.PILL.smallH;
+    const h = heights[i] ?? HERO.PILL.h;
     const pillMid = pillTop + h / 2;
     pillTop += h + HERO.PILL.gap;
     if (!c) {
@@ -191,7 +189,7 @@ function measure(
     };
   });
 
-  // The wide card starts clipped to a tile-sized square centred in its box,
+  // The first card starts clipped to a tile-sized square centred in its box,
   // translated so that square sits exactly over tile 1 after the gather
   // (tile 1 carries no fan, so it is centred on the row).
   const c0 = cardRects[0];
@@ -340,7 +338,7 @@ function buildPinnedScrub(
   const inner = all(hero, '[data-hero-card] [data-card-inner]');
   const art = hero.querySelector<HTMLElement>('[data-hero-art]');
   const text = hero.querySelector<HTMLElement>('[data-hero-text]');
-  const [wide, ...rest] = heroCards;
+  const [lead, ...rest] = heroCards;
 
   // Radii are tokens; read at render time so a token edit survives a refresh.
   const rTile = () => readPx('--radius-tile');
@@ -349,12 +347,12 @@ function buildPinnedScrub(
 
   // The mirror cards exist only for the scrub: hidden until it shows them,
   // their contents hidden separately so a revealed box is empty at first
-  // (noon shows the pastel boxes, then their contents). The wide card paints
+  // (noon shows the pastel boxes, then their contents). The first card paints
   // above the others so the pills emerge from behind it.
   gsap.set(heroCards, { opacity: 0 });
   gsap.set(inner, { opacity: 0 });
   gsap.set(gridCards, { visibility: 'hidden' });
-  if (wide) gsap.set(wide, { zIndex: 2 });
+  if (lead) gsap.set(lead, { zIndex: 2 });
 
   // With pinSpacing off, ScrollTrigger leaves the released hero overlapping the
   // section beneath for one more viewport of scroll. Hiding it at the unpin
@@ -487,16 +485,16 @@ function buildPinnedScrub(
     );
   }
 
-  // S2b — handover: in one tick the tile row vanishes and the wide card
+  // S2b — handover: in one tick the tile row vanishes and the first card
   // appears clipped to the identical square at the row centre (tile 1 sits
   // there with x = gather[0].x). Then the square stretches into a tall bar
   // centred on the viewport: the card scales vertically while `--clip-y`
   // opens to 0; `--clip-x` stays at the square inset, so the bar is exactly
   // tile-wide, and ry is divided by the scale so the corners stay round.
   if (tilesRow) tl.set(tilesRow, { autoAlpha: 0 }, P.bar[0]);
-  if (wide) {
+  if (lead) {
     tl.set(
-      wide,
+      lead,
       {
         autoAlpha: 1,
         x: () => geometry.square?.x ?? 0,
@@ -510,7 +508,7 @@ function buildPinnedScrub(
       P.bar[0],
     );
     tl.to(
-      wide,
+      lead,
       {
         y: () => geometry.barY,
         scaleY: () => geometry.barScale,
@@ -524,7 +522,7 @@ function buildPinnedScrub(
 
     // S2c — the bar contracts into the first pill at the top of the stack…
     tl.to(
-      wide,
+      lead,
       {
         y: () => geometry.cards[0]?.pillToY ?? 0,
         scaleY: 1,
@@ -539,7 +537,7 @@ function buildPinnedScrub(
   }
 
   // …while the other cards appear as pills behind the bar's centre (hidden by
-  // it: the wide card paints on top) and slide down to their stacked places.
+  // it: the first card paints on top) and slide down to their stacked places.
   rest.forEach((card, j) => {
     const i = j + 1;
     tl.set(

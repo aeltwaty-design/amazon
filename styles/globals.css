@@ -213,7 +213,7 @@ html[data-js]:not([data-fonts]) body {
   }
 
   /* Mirror cards: every card is clipped by the choreography through these
-     insets — the wide one to tile 1's square, then a bar (S2b); all five to
+     insets — the first one to tile 1's square, then a bar (S2b); all three to
      pills that expand into their slots (S2c–S2d). The defaults clip nothing. */
   .benefit-card[data-hero-card] {
     --clip-x: 0px;

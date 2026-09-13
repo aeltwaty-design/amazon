@@ -1,62 +1,53 @@
 import type { SiteContent } from '@/content/types';
 import { BenefitCard, type CardTone } from '@/components/ui/BenefitCard';
 import { SECTION_IDS } from '@/lib/anchors';
-import { ART, type Art } from '@/lib/art';
+import { ART } from '@/lib/art';
 
 type GridProps = { content: SiteContent['benefits']; mode: 'mirror' | 'grid' };
 
-// One grid definition rendered twice (hero mirror + in-flow section) so every
-// flying card has, by construction, the exact size of its landing slot.
-export function BenefitGrid({ content, mode }: GridProps) {
-  const [first, second, third, fourth] = content.cards;
-  const items: {
-    title?: string;
-    body?: string;
-    slot: SiteContent['benefits']['illustrationSlot'];
-    art: Art;
-    wide: boolean;
-    tone: CardTone;
-  }[] = [
-    { ...first, art: ART.benefits.cards[0], wide: true, tone: 1 },
-    { ...second, art: ART.benefits.cards[1], wide: false, tone: 2 },
-    { ...third, art: ART.benefits.cards[2], wide: false, tone: 3 },
-    { ...fourth, art: ART.benefits.cards[3], wide: false, tone: 4 },
-    { slot: content.illustrationSlot, art: ART.benefits.wide, wide: true, tone: 5 },
-  ];
+// Card fills in row order: purple 50 (the tone tile 1 carries into the
+// hand-over, see HeroChoreography S2b), yellow 50, purple 100.
+const TONES: readonly CardTone[] = [1, 2, 3];
 
+// One grid definition rendered twice (hero mirror + in-flow section) so every
+// flying card has, by construction, the exact size of its landing slot: three
+// cards beside each other that fill whatever height their wrapper gives them
+// (one viewport less the section rhythm on desktop, see `Benefits` and
+// `HeroCards`; their minimum height when stacked below 1024).
+export function BenefitGrid({ content, mode }: GridProps) {
   return (
     <div
       data-benefits-grid={mode === 'grid' ? '' : undefined}
-      className="grid grid-cols-1 gap-[14px] lg:grid-cols-3"
+      className="grid grid-cols-1 gap-[14px] lg:flex-1 lg:auto-rows-fr lg:grid-cols-3"
     >
-      {items.map((item, index) => (
+      {content.cards.map((card, index) => (
         <BenefitCard
           key={index}
           mode={mode}
           flipId={`benefit-${index}`}
-          tone={item.tone}
-          wide={item.wide}
-          title={item.title}
-          body={item.body}
-          slot={item.slot}
-          art={item.art}
+          tone={TONES[index] ?? 1}
+          title={card.title}
+          body={card.body}
+          slot={card.slot}
+          art={ART.benefits.cards[index]}
         />
       ))}
     </div>
   );
 }
 
+// One viewport tall on desktop with the section rhythm as its padding, so the
+// three cards fill what is left; the heading serves the outline and the nav
+// anchor only. `HeroCards` wraps the mirror grid in the same box.
 export function Benefits({ content }: { content: SiteContent['benefits'] }) {
   return (
     <section
       id={SECTION_IDS.benefits}
       data-benefits
-      className="section relative z-0 scroll-mt-header bg-bg-page"
+      className="section relative z-0 scroll-mt-header bg-bg-page lg:flex lg:min-h-svh lg:flex-col"
     >
-      <div className="gutter mx-auto max-w-content">
-        <h2 data-reveal className="type-h2 mb-10 text-center lg:mb-14">
-          {content.title}
-        </h2>
+      <div className="gutter mx-auto w-full max-w-content lg:flex lg:flex-1 lg:flex-col">
+        <h2 className="sr-only">{content.title}</h2>
         <BenefitGrid content={content} mode="grid" />
       </div>
     </section>

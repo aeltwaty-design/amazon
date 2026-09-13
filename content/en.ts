@@ -47,11 +47,6 @@ export const en = {
     title: 'Get More with WalaOne',
     cards: [
       {
-        title: 'Offers & Discounts',
-        body: 'Enjoy exclusive offers across a wide range of products and services.',
-        slot: { title: 'Offers illustration', description: 'wide card artwork' },
-      },
-      {
         title: 'Redeem Your Points',
         body: 'Turn the points you earn from your purchases into vouchers and rewards from your favourite brands.',
         slot: { title: 'Points illustration', description: 'card artwork' },
@@ -67,7 +62,6 @@ export const en = {
         slot: { title: 'Employee rate illustration', description: 'card artwork' },
       },
     ],
-    illustrationSlot: { title: 'Benefits illustration', description: 'wide card artwork' },
   },
   about: {
     title: 'WalaOne… More Benefits in One Place',

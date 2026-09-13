@@ -44,13 +44,12 @@ export type SiteContent = {
     cta: string;
     ghostCta: string;
     illustrationSlot: SlotCopy;
-    /** the five sector tiles under the CTA; tile 1 gathers the others and becomes the wide benefit card */
+    /** the five sector tiles under the CTA; tile 1 gathers the others and becomes the first benefit card */
     tiles: readonly [HeroTile, HeroTile, HeroTile, HeroTile, HeroTile];
   };
   benefits: {
     title: string;
-    cards: readonly [BenefitCopy, BenefitCopy, BenefitCopy, BenefitCopy];
-    illustrationSlot: SlotCopy;
+    cards: readonly [BenefitCopy, BenefitCopy, BenefitCopy];
   };
   about: {
     title: string;
