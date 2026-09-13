@@ -47,12 +47,12 @@ export type HeroTileId = 'restaurants' | 'shopping' | 'travel' | 'entertainment'
 
 export const ART = {
   tiles: {
-    // design-supplied illustrations (public/tiles), not renders
+    // all five are design-supplied illustrations (public/tiles), not renders
     restaurants: { src: '/tiles/wo-coin.webp', width: 693, height: 640 },
     shopping: { src: '/tiles/discount-gift.webp', width: 700, height: 423 },
     travel: { src: '/tiles/currency-exchange.webp', width: 700, height: 599 },
     entertainment: { src: '/tiles/shopping-gifts.webp', width: 700, height: 530 },
-    health: ill('tile-health', 432, 432),
+    health: { src: '/tiles/restaurant-delivery.webp', width: 569, height: 640 },
   } satisfies Record<HeroTileId, Art>,
   benefits: {
     // Same order as `content.benefits.cards`.

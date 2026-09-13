@@ -6,9 +6,9 @@ import { cn } from '@/lib/cn';
 type Props = { tiles: SiteContent['hero']['tiles'] };
 
 // Literal class names: Tailwind only generates what it can read in source.
-// Design-specified tile washes: purple 50 and yellow 50 alternating, then the
-// last benefit-card tone. Independent of the Benefits cards' tones.
-const TONE_CLASS = ['card-tone-1', 'card-tone-2', 'card-tone-1', 'card-tone-2', 'card-tone-5'];
+// Design-specified tile washes: purple 50 and yellow 50 alternating.
+// Independent of the Benefits cards' tones.
+const TONE_CLASS = ['card-tone-1', 'card-tone-2', 'card-tone-1', 'card-tone-2', 'card-tone-1'];
 
 // noon One's marketplace row: five square tiles under the CTA, an illustration
 // at rest and the sector name on hover. Layout, hover and the mobile strip are

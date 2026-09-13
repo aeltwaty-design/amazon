@@ -904,29 +904,6 @@ export const SCENES = {
       return g;
     },
   },
-  // Hero sector tiles: square, framed tight, one or two props each. The
-  // first four tiles are design-supplied illustrations (public/tiles), not scenes.
-  'tile-health': {
-    w: 432,
-    h: 432,
-    dir: [0.8, 0.8, 1.6],
-    pad: 1.06,
-    build() {
-      const g = new THREE.Group();
-      const h = heart(0.7);
-      h.position.set(-0.35, 0.3, 0.1);
-      h.rotation.y = 0.3;
-      g.add(h);
-      const f = firstAid();
-      f.position.set(0.55, -0.4, 0.4);
-      f.rotation.y = -0.3;
-      g.add(f);
-      const s1 = sparkle(0.12);
-      s1.position.set(0.55, 0.75, -0.2);
-      g.add(s1);
-      return g;
-    },
-  },
 };
 
 // ---------- renderer ----------
