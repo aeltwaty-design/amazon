@@ -39,7 +39,6 @@ export function Footer({ content, wordmark, locale }: Props) {
         </div>
         <div className="mt-12 flex flex-wrap items-center justify-between gap-4 border-t border-line pt-6">
           <p className="type-small">{content.partnership}</p>
-          <p className="type-small text-ink-muted">{content.draftNote}</p>
         </div>
       </div>
     </footer>

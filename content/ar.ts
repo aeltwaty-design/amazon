@@ -277,6 +277,5 @@ export const ar = {
       },
     ],
     partnership: 'ولاء ون · بالشراكة مع أمازون',
-    draftNote: 'نسخة تجريبية — شعارات العلامات التجارية نماذج بانتظار تأكيد الشركاء.', // authored
   },
 } satisfies SiteContent;

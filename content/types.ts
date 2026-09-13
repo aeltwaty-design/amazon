@@ -83,7 +83,6 @@ export type SiteContent = {
     blurb: string;
     columns: readonly [FooterColumn, FooterColumn, FooterColumn];
     partnership: string;
-    draftNote: string;
   };
 };
 

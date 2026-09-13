@@ -279,6 +279,5 @@ export const en = {
       },
     ],
     partnership: 'WalaOne · in partnership with Amazon',
-    draftNote: 'Preview — merchant logos are samples pending partner confirmation.', // authored
   },
 } satisfies SiteContent;
