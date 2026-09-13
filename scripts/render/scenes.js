@@ -5,8 +5,6 @@
 import * as THREE from 'three';
 import { RoundedBoxGeometry } from 'three/addons/geometries/RoundedBoxGeometry.js';
 import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
-import { FontLoader } from 'three/addons/loaders/FontLoader.js';
-import { TextGeometry } from 'three/addons/geometries/TextGeometry.js';
 
 const C = {
   purple: '#755BD8',
@@ -105,37 +103,6 @@ export function coin(r = 0.5, t = 0.12) {
   const ring2 = ring.clone();
   ring2.position.y = -t / 2;
   g.add(ring2);
-  return g;
-}
-
-export function bag(w = 1.1, h = 1.3, d = 0.6) {
-  const g = new THREE.Group();
-  g.add(rbox(w, h, d, 0.08, clay(C.purple)));
-  const hGeo = new THREE.TorusGeometry(w * 0.3, 0.045, 12, 48, Math.PI);
-  for (const z of [-d * 0.28, d * 0.28]) {
-    const handle = mesh(hGeo, gold());
-    handle.position.set(0, h / 2 - 0.02, z);
-    g.add(handle);
-  }
-  const st = star(0.22, gold(), 0.05);
-  st.position.set(0, h * 0.05, d / 2 + 0.03);
-  g.add(st);
-  return g;
-}
-
-export function tag(mat = clay(C.white)) {
-  const s = new THREE.Shape();
-  s.moveTo(-0.6, -0.35);
-  s.lineTo(0.3, -0.35);
-  s.lineTo(0.68, 0);
-  s.lineTo(0.3, 0.35);
-  s.lineTo(-0.6, 0.35);
-  s.closePath();
-  const hole = new THREE.Path();
-  hole.absarc(0.44, 0, 0.08, 0, Math.PI * 2, false);
-  s.holes.push(hole);
-  const g = new THREE.Group();
-  g.add(extrude(s, 0.06, mat, 0.02));
   return g;
 }
 
@@ -245,144 +212,6 @@ export function pill() {
   return g;
 }
 
-// ---------- sector tile props ----------
-export function burger() {
-  const g = new THREE.Group();
-  const bun = clay(C.yellowDeep);
-  const bottom = mesh(new THREE.CylinderGeometry(0.5, 0.46, 0.18, 48), bun);
-  const patty = mesh(new THREE.CylinderGeometry(0.5, 0.5, 0.14, 48), clay(C.ink));
-  patty.position.y = 0.16;
-  const cheese = rbox(0.98, 0.04, 0.98, 0.01, gold());
-  cheese.position.y = 0.25;
-  cheese.rotation.y = 0.5;
-  const lettuce = mesh(new THREE.TorusGeometry(0.46, 0.07, 12, 48), clay(C.green));
-  lettuce.rotation.x = Math.PI / 2;
-  lettuce.position.y = 0.3;
-  const top = mesh(new THREE.SphereGeometry(0.52, 48, 24, 0, Math.PI * 2, 0, Math.PI / 2), bun);
-  top.position.y = 0.34;
-  top.scale.y = 0.62;
-  g.add(bottom, patty, cheese, lettuce, top);
-  for (let i = 0; i < 7; i++) {
-    const a = i * 0.9 + 0.3;
-    const d = 0.18 + (i % 3) * 0.09;
-    const seed = mesh(new THREE.SphereGeometry(0.035, 12, 8), clay(C.white));
-    seed.position.set(
-      Math.cos(a) * d,
-      0.34 + 0.62 * Math.sqrt(0.52 * 0.52 - d * d),
-      Math.sin(a) * d,
-    );
-    g.add(seed);
-  }
-  return g;
-}
-
-export function suitcase() {
-  const g = new THREE.Group();
-  g.add(rbox(1.1, 1.4, 0.5, 0.12, gloss(C.purple), 8));
-  const handle = mesh(new THREE.TorusGeometry(0.22, 0.05, 12, 32, Math.PI), gold());
-  handle.position.y = 0.72;
-  g.add(handle);
-  const band = rbox(1.12, 0.12, 0.52, 0.02, gold());
-  band.position.y = 0.1;
-  g.add(band);
-  const badge = rbox(0.3, 0.2, 0.04, 0.03, clay(C.white));
-  badge.position.set(-0.25, 0.42, 0.26);
-  g.add(badge);
-  for (const x of [-0.35, 0.35]) {
-    const wheel = mesh(new THREE.CylinderGeometry(0.1, 0.1, 0.08, 24), clay(C.ink));
-    wheel.rotation.x = Math.PI / 2;
-    wheel.position.set(x, -0.72, 0);
-    g.add(wheel);
-  }
-  return g;
-}
-
-export function plane() {
-  const g = new THREE.Group();
-  const body = mesh(new THREE.CapsuleGeometry(0.16, 0.9, 8, 24), clay(C.white));
-  body.rotation.z = Math.PI / 2;
-  g.add(body);
-  const wing = rbox(0.42, 0.04, 1.3, 0.02, clay(C.white));
-  wing.position.x = 0.02;
-  g.add(wing);
-  const fin = rbox(0.28, 0.32, 0.04, 0.02, clay(C.purple));
-  fin.position.set(-0.55, 0.2, 0);
-  const tail = rbox(0.24, 0.03, 0.5, 0.02, clay(C.purple));
-  tail.position.set(-0.55, 0.02, 0);
-  g.add(fin, tail);
-  for (let i = 0; i < 3; i++) {
-    const win = mesh(new THREE.SphereGeometry(0.035, 12, 8), clay(C.purple));
-    win.position.set(0.05 + i * 0.16, 0.05, 0.155);
-    g.add(win);
-  }
-  return g;
-}
-
-export function popcorn() {
-  const g = new THREE.Group();
-  g.add(mesh(new THREE.CylinderGeometry(0.42, 0.32, 0.9, 48), clay(C.white)));
-  for (let i = 0; i < 8; i++) {
-    const a = (i * Math.PI) / 4;
-    const stripe = rbox(0.09, 0.84, 0.04, 0.01, clay(C.purple));
-    stripe.position.set(Math.cos(a) * 0.365, 0, Math.sin(a) * 0.365);
-    stripe.rotation.set(0.11, Math.PI / 2 - a, 0, 'YXZ');
-    g.add(stripe);
-  }
-  const kernels = [
-    C.white,
-    C.lilacLight,
-    C.yellow,
-    C.white,
-    C.lilacLight,
-    C.white,
-    C.yellow,
-    C.white,
-    C.lilacLight,
-    C.white,
-  ];
-  kernels.forEach((color, i) => {
-    const a = i * 1.9;
-    const d = i < 4 ? 0.12 : 0.28;
-    const k = mesh(new THREE.SphereGeometry(0.11 + (i % 3) * 0.02, 20, 14), clay(color));
-    k.position.set(Math.cos(a) * d, 0.52 + (i < 4 ? 0.12 : 0) - (i % 2) * 0.03, Math.sin(a) * d);
-    k.scale.set(1, 0.85, 1.1);
-    g.add(k);
-  });
-  return g;
-}
-
-// The classic three.js heart shape, drawn tip-up and turned over.
-export function heart(size = 0.6, mat = clay(C.purple)) {
-  const s = new THREE.Shape();
-  const x = -0.8;
-  const y = -0.95;
-  s.moveTo(x + 0.5, y + 0.5);
-  s.bezierCurveTo(x + 0.5, y + 0.5, x + 0.4, y, x, y);
-  s.bezierCurveTo(x - 0.6, y, x - 0.6, y + 0.7, x - 0.6, y + 0.7);
-  s.bezierCurveTo(x - 0.6, y + 1.1, x - 0.3, y + 1.54, x + 0.5, y + 1.9);
-  s.bezierCurveTo(x + 1.2, y + 1.54, x + 1.6, y + 1.1, x + 1.6, y + 0.7);
-  s.bezierCurveTo(x + 1.6, y + 0.7, x + 1.6, y, x + 1, y);
-  s.bezierCurveTo(x + 0.7, y, x + 0.5, y + 0.5, x + 0.5, y + 0.5);
-  const h = extrude(s, 0.3, mat, 0.05);
-  h.rotation.z = Math.PI;
-  h.scale.setScalar(size);
-  return h;
-}
-
-export function firstAid() {
-  const g = new THREE.Group();
-  g.add(rbox(1.0, 0.8, 0.45, 0.1, clay(C.white), 8));
-  const handle = mesh(new THREE.TorusGeometry(0.16, 0.04, 10, 24, Math.PI), clay(C.lilac));
-  handle.position.y = 0.42;
-  g.add(handle);
-  const bar1 = rbox(0.42, 0.13, 0.06, 0.03, clay(C.purple));
-  bar1.position.z = 0.24;
-  const bar2 = rbox(0.13, 0.42, 0.06, 0.03, clay(C.purple));
-  bar2.position.z = 0.24;
-  g.add(bar1, bar2);
-  return g;
-}
-
 export function phone(screenTex, w = 1, h = 2.1, d = 0.1) {
   const g = new THREE.Group();
   g.add(rbox(w, h, d, 0.16, gloss(C.ink), 8));
@@ -392,18 +221,6 @@ export function phone(screenTex, w = 1, h = 2.1, d = 0.1) {
   );
   screen.position.z = d / 2 + 0.002;
   g.add(screen);
-  return g;
-}
-
-export function tile(tex, size = 1.4, depth = 0.24) {
-  const g = new THREE.Group();
-  g.add(rbox(size, size, depth, 0.16, clay(C.white), 8));
-  const face = new THREE.Mesh(
-    shapeGeo(roundedRect(size - 0.06, size - 0.06, 0.13)),
-    new THREE.MeshBasicMaterial({ map: tex, transparent: true, toneMapped: false }),
-  );
-  face.position.z = depth / 2 + 0.002;
-  g.add(face);
   return g;
 }
 
@@ -501,51 +318,10 @@ export function drawAppScreen(ctx, w, h, img) {
   rr(ctx, w * 0.36, h * 0.985, w * 0.28, h * 0.008, 4);
 }
 
-const text3d = (font, str, size, depth, mat) =>
-  mesh(
-    new TextGeometry(str, {
-      font,
-      size,
-      depth,
-      bevelEnabled: true,
-      bevelSize: size * 0.03,
-      bevelThickness: size * 0.03,
-      curveSegments: 12,
-    }).center(),
-    mat,
-  );
-
 // ---------- scenes ----------
-// Each scene returns a THREE.Group. `img` holds decoded brand images, `font`
-// the loaded typeface. Coordinates are in "clay units": ~1 = a hero object.
+// Each scene returns a THREE.Group. `img` holds decoded brand images.
+// Coordinates are in "clay units": ~1 = a hero object.
 export const SCENES = {
-  rate: {
-    w: 420,
-    h: 340,
-    dir: [0.55, 0.75, 1.7],
-    pad: 1.03,
-    build({ font }) {
-      const g = new THREE.Group();
-      const plate = rbox(2.3, 1.25, 0.16, 0.18, clay(C.white), 8);
-      plate.rotation.set(-0.35, 0.25, 0.08);
-      g.add(plate);
-      const txt = text3d(font, '40%', 0.62, 0.14, clay(C.purple));
-      txt.position.set(0.04, 0.12, 0.35);
-      txt.rotation.set(-0.35, 0.25, 0.08);
-      g.add(txt);
-      const c = coin(0.34, 0.1);
-      c.position.set(1.15, 0.75, 0.3);
-      c.rotation.set(0.5, 0.3, -0.4);
-      g.add(c);
-      const s1 = sparkle(0.16);
-      s1.position.set(-1.25, 0.85, 0.25);
-      s1.rotation.z = 0.2;
-      const s2 = sparkle(0.1);
-      s2.position.set(1.05, -0.55, 0.8);
-      g.add(s1, s2);
-      return g;
-    },
-  },
   step1: {
     w: 640,
     h: 400,
@@ -695,7 +471,6 @@ export const SCENES = {
 // ---------- renderer ----------
 let renderer;
 let envTex;
-let font;
 const img = {};
 
 const loadImage = (src) =>
@@ -706,7 +481,7 @@ const loadImage = (src) =>
     i.src = src;
   });
 
-export async function setup(assets, fontUrl) {
+export async function setup(assets) {
   renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, preserveDrawingBuffer: true });
   renderer.setPixelRatio(1);
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
@@ -717,7 +492,6 @@ export async function setup(assets, fontUrl) {
   document.body.appendChild(renderer.domElement);
   envTex = new THREE.PMREMGenerator(renderer).fromScene(new RoomEnvironment(), 0.04).texture;
   for (const [k, v] of Object.entries(assets)) img[k] = await loadImage(v);
-  font = await new FontLoader().loadAsync(fontUrl);
 }
 
 // Sample every mesh's vertices in world space so the frame hugs the objects

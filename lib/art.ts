@@ -77,17 +77,17 @@ export const ART = {
     health: { src: '/tiles/restaurant-delivery.webp', width: 569, height: 640 },
   } satisfies Record<HeroTileId, Art>,
   benefits: {
-    // Same order as `content.benefits.cards`. Cards 1 and 2 are Figma community
-    // mockups ("Matte iPhone Mockups - 2021 Updated": nodes 55977:6896, the map
-    // screen, and 55977:7434, the points-transfer screen, both on the matte
-    // iPhone 13 template), built by `npm run render:phone`: page background and
-    // shadow cut away, the body recoloured to --color-phone-frame /
-    // --color-phone-frame-warm, top three quarters kept. Attribute the community
-    // file per its licence before launch.
+    // Same order as `content.benefits.cards`. All three are Figma community
+    // mockups ("Matte iPhone Mockups - 2021 Updated", the matte iPhone 13
+    // template: node 55977:6896 with the map screen, 55977:7434 with the
+    // points-transfer screen, 55977:9066 with the marketplace screen), built by
+    // `npm run render:phone`: page background and shadow cut away, the body
+    // recoloured to the card's --color-phone-frame* token, top three quarters
+    // kept. Attribute the community file per its licence before launch.
     cards: [
       { kind: 'phone', src: '/mockups/points-phone.webp', width: 848, height: 1283 },
       { kind: 'phone', src: '/mockups/choices-phone.webp', width: 848, height: 1283 },
-      { kind: 'still', ...ill('rate', 420, 340) },
+      { kind: 'phone', src: '/mockups/rate-phone.webp', width: 846, height: 1283 },
     ] satisfies readonly BenefitArt[],
   },
   howTo: [ill('step1', 640, 400), ill('step2', 640, 400), ill('step3', 640, 400)],

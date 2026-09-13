@@ -54,6 +54,8 @@
   --color-phone-frame: #c0b4ed;
   /* the matte phone on the yellow-50 benefit card: Secondary 500 at 60 % over white (derived; there is no Secondary 200 variable) */
   --color-phone-frame-warm: #fcdb85;
+  /* the matte phone on the purple-100 benefit card: Primary 300 (derived: Primary 500 at 36 % toward white, the scale's step; there is no Primary 300 variable) */
+  --color-phone-frame-deep: #a796e6;
 
   /* partner (Amazon smile) */
   --color-partner: #ff9900;

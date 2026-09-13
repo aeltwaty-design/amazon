@@ -59,7 +59,7 @@ export const en = {
       {
         title: 'Exclusive Amazon employee rate',
         body: '40% off the annual subscription.',
-        slot: { title: 'Employee rate illustration', description: 'card artwork' },
+        slot: { title: 'WalaOne marketplace screen in a phone', description: 'phone mockup' }, // authored
       },
     ],
   },

@@ -39,7 +39,7 @@ const html = `<!doctype html><html><body style="margin:0;background:transparent"
 ${scenesSrc.replace(/^export /gm, '')}
 window.__scenes = Object.keys(SCENES);
 window.__render = render;
-await setup(${JSON.stringify(assets)}, '${cdn}/examples/fonts/helvetiker_bold.typeface.json');
+await setup(${JSON.stringify(assets)});
 window.__ready = true;
 </script></body></html>`;
 
