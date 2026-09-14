@@ -27,12 +27,7 @@ export default async function Page({ params }: Props) {
   return (
     <>
       <main id={SECTION_IDS.main}>
-        <Hero
-          locale={locale}
-          content={content.hero}
-          benefits={content.benefits}
-          lockupLabel={content.a11y.lockup}
-        />
+        <Hero locale={locale} content={content.hero} benefits={content.benefits} />
         <Benefits content={content.benefits} />
         <About content={content.about} locale={locale} />
         <Brands content={content.brands} />

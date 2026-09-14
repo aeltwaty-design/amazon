@@ -13,7 +13,6 @@ export const en = {
     scrollDown: 'Scroll to the next section', // authored
     scrollUp: 'Back to top', // authored
     localeSwitch: 'Language', // authored
-    lockup: 'WalaOne × Amazon', // authored
   },
   header: {
     wordmark: 'WalaOne',

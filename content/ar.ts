@@ -13,7 +13,6 @@ export const ar = {
     scrollDown: 'الانتقال إلى القسم التالي', // authored
     scrollUp: 'العودة إلى الأعلى', // authored
     localeSwitch: 'اللغة', // authored
-    lockup: 'ولاء ون × أمازون', // authored
   },
   header: {
     wordmark: 'ولاء ون',

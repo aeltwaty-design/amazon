@@ -238,12 +238,6 @@ function buildLoadSequence(hero: HTMLElement, desktop: boolean) {
   const tl = gsap.timeline({ defaults: { ease: out } });
 
   tl.fromTo(
-    all(hero, '[data-hero-lockup]'),
-    { opacity: 0, scale: 0.92 },
-    { opacity: 1, scale: 1, duration: readSeconds('--hero-logo-enter') },
-    0,
-  );
-  tl.fromTo(
     all(hero, '[data-hero-word]'),
     { y: 24, opacity: 0 },
     {

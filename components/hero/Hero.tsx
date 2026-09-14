@@ -10,20 +10,18 @@ import { Interpolate } from '@/components/ui/Interpolate';
 import { Price } from '@/components/ui/Price';
 import { SECTION_IDS } from '@/lib/anchors';
 import { HERO_LOTTIE, HERO_SURFACE } from '@/lib/art';
-import { dirFor, type Locale } from '@/lib/i18n';
-import { WalaOneLockup } from '@/components/brand/WalaOneLockup';
+import type { Locale } from '@/lib/i18n';
 import { PRICE, PRICING, formatMoney, formatRiyals } from '@/lib/pricing';
 
 type Props = {
   locale: Locale;
   content: SiteContent['hero'];
   benefits: SiteContent['benefits'];
-  lockupLabel: string;
 };
 
 const words = (text: string) => text.split(' ').filter(Boolean);
 
-export function Hero({ locale, content, benefits, lockupLabel }: Props) {
+export function Hero({ locale, content, benefits }: Props) {
   return (
     <section
       data-hero
@@ -52,10 +50,7 @@ export function Hero({ locale, content, benefits, lockupLabel }: Props) {
         {/* The text block fades out at S3 while the tiles below must stay put
             until the pile hands over to the card, hence the two siblings. */}
         <div data-hero-text className="flex flex-col items-center text-center">
-          <div data-hero-lockup data-enter className="mb-3">
-            <WalaOneLockup dir={dirFor(locale)} title={lockupLabel} className="h-12 w-auto" />
-          </div>
-          <h1 className="type-display mt-3 flex flex-wrap items-center justify-center gap-x-[0.25em]">
+          <h1 className="type-display flex flex-wrap items-center justify-center gap-x-[0.25em]">
             {words(content.h1Lead).map((word, i) => (
               <span key={`lead-${i}`} data-hero-word data-enter className="inline-block">
                 {word}

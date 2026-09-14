@@ -30,7 +30,6 @@ export type SiteContent = {
     scrollDown: string;
     scrollUp: string;
     localeSwitch: string;
-    lockup: string;
   };
   header: {
     wordmark: string;
