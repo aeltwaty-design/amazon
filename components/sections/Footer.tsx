@@ -22,12 +22,13 @@ export function Footer({ content, wordmark, locale }: Props) {
           {content.columns.map((column) => (
             <nav key={column.title} aria-label={column.title}>
               <p className="type-body font-bold">{column.title}</p>
-              <ul className="mt-4 grid gap-2">
+              <ul className="mt-3 grid gap-1">
                 {column.links.map((link) => (
                   <li key={link.id}>
                     <a
                       href={FOOTER_HREFS[link.id]}
-                      className="type-body text-ink-muted underline-offset-4 hover:text-ink hover:underline"
+                      // py-2 gives a bare text link a 40px hit box on a phone
+                      className="type-body inline-block py-2 text-ink-muted underline-offset-4 hover:text-ink hover:underline"
                     >
                       {link.label}
                     </a>

@@ -81,6 +81,9 @@ export function OtpInput({
       role="group"
       aria-label={label}
       dir="ltr"
+      // Below sm the boxes take a sixth of the row less the gaps, so six of them
+      // fit the flow card on a 360px phone (39px) as on a 390 (44px); the fixed
+      // sizes only return at sm, where the card is wide enough for them.
       className={cn('flex justify-center gap-2 sm:gap-3', className)}
     >
       {Array.from({ length }, (_, i) => (
@@ -104,7 +107,7 @@ export function OtpInput({
           onKeyDown={onKeyDown(i)}
           onFocus={(event) => event.currentTarget.select()}
           className={cn(
-            'type-h3 num h-14 w-11 rounded-field border bg-bg-elevated text-center text-ink transition-colors duration-(--motion-300) sm:h-16 sm:w-12',
+            'type-h3 num h-14 w-[calc((100%-5*8px)/6)] max-w-11 rounded-field border bg-bg-elevated text-center text-ink transition-colors duration-(--motion-300) sm:h-16 sm:w-12 sm:max-w-none',
             'focus-visible:outline-[2.5px] focus-visible:outline-offset-2 focus-visible:outline-brand disabled:opacity-60',
             invalid ? 'border-err' : 'border-field-border',
           )}

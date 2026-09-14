@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import { cn } from '@/lib/cn';
 import type { SiteContent } from '@/content/types';
 import { SECTION_IDS } from '@/lib/anchors';
 import { BRAND_ROWS } from '@/lib/art';
@@ -14,6 +15,9 @@ import { BRAND_ROWS } from '@/lib/art';
 // assistive tech. Tile widths are fixed so nothing is ever measured.
 const COPIES = 5;
 const EXPOSED_COPY = Math.floor(COPIES / 2);
+// Below lg the outer two copies are not rendered: three copies (18 tiles,
+// ~1856px) already overflow a 360px viewport by ~750px a side against 240px
+// of travel, and a phone has no use for 60 images in two rows.
 
 export function Brands({ content }: { content: SiteContent['brands'] }) {
   return (
@@ -46,7 +50,11 @@ export function Brands({ content }: { content: SiteContent['brands'] }) {
                   <li
                     key={`${copy}-${brand.id}`}
                     aria-hidden={exposed ? undefined : true}
-                    className="flex size-[88px] flex-none items-center justify-center rounded-btn bg-bg-page lg:size-[104px]"
+                    className={cn(
+                      'flex size-[88px] flex-none items-center justify-center rounded-btn bg-bg-page lg:size-[104px]',
+                      // a phone needs three copies to overflow both edges by more than the travel; the outer two are desktop's
+                      (copy === 0 || copy === COPIES - 1) && 'hidden lg:flex',
+                    )}
                   >
                     <Image
                       src={brand.src}

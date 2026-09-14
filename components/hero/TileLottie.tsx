@@ -7,7 +7,7 @@ import type { TileMotion } from '@/lib/art';
 
 // Loaded on demand like the headline's Lottie (HeroLottie); the same chunk
 // serves both, so this costs nothing extra on the wire.
-const Lottie = dynamic(() => import('lottie-react').then((m) => m.Lottie), { ssr: false });
+const LottiePlayer = dynamic(() => import('@/components/ui/LottiePlayer'), { ssr: false });
 
 /**
  * When a tile plays its animation instead of showing its label: a hover-capable
@@ -74,11 +74,11 @@ export function TileLottie({ motion }: Props) {
   return (
     <div ref={box} aria-hidden className="hero-tile-motion absolute inset-0 p-[8%]">
       {active ? (
-        <Lottie
+        <LottiePlayer
           lottieRef={handle}
           src={motion.src}
           loop
-          autoplay={false}
+          playback="off"
           subscriptions={{ ready }}
           rendererSettings={{
             viewBoxSize: `${x} ${y} ${w} ${h}`,
