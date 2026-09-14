@@ -34,6 +34,13 @@ export function IdentityStep({ state, onCodeChange, onVerify, onResend, onEdit }
   }, [state.session.issuedAt]);
 
   const busy = state.status === 'verifying' || state.status === 'resending';
+  // The CTA is live only once all six digits are in. The guard in submit()
+  // stays as a backstop rather than dead weight: it is the schema, not the
+  // button, that decides what gets sent. It is no longer reachable through
+  // the UI, though, because a disabled default button also blocks the form's
+  // implicit submission, so 'otp.incomplete' now only guards a programmatic
+  // submit.
+  const complete = otpSchema.safeParse(state.code).success;
   const serverError =
     state.status === 'wrong' ? 'otp.wrong' : state.status === 'expired' ? 'otp.expired' : null;
   const errorCode = localError ?? serverError;
@@ -105,7 +112,7 @@ export function IdentityStep({ state, onCodeChange, onVerify, onResend, onEdit }
       </div>
 
       <div className="grid gap-3">
-        <Button type="submit" fullWidth loading={state.status === 'verifying'}>
+        <Button type="submit" fullWidth loading={state.status === 'verifying'} disabled={!complete}>
           {state.status === 'verifying' ? copy.verifying : copy.cta}
         </Button>
         <button
