@@ -34,17 +34,19 @@ export function Stepper({ steps, current, label, locale }: Props) {
               aria-current={state === 'current' ? 'step' : undefined}
               className="relative flex flex-col items-center gap-2 text-center"
             >
-              {/* Connector to the next step; start- keeps it pointing forward in
-                  RTL. The whole line is drawn whatever the step: it carries the
-                  flowing primary → secondary band (`.stepper-flow` in
-                  globals.css), which is why it clips, and only the gradient
-                  inside it moves. */}
+              {/* Connector to the next step; start- keeps it pointing forward in RTL.
+                  Once its step has been reached it carries the flowing
+                  primary → secondary band (`.stepper-flow` in globals.css),
+                  which is why it clips. */}
               {i < steps.length - 1 ? (
                 <span
                   aria-hidden
-                  className="absolute start-[calc(50%+20px)] top-4 h-px w-[calc(100%-40px)] overflow-hidden"
+                  className={cn(
+                    'absolute start-[calc(50%+20px)] top-4 h-px w-[calc(100%-40px)] overflow-hidden',
+                    i > current && 'bg-line',
+                  )}
                 >
-                  <span className="stepper-flow block h-full w-[200%]" />
+                  {i <= current ? <span className="stepper-flow block h-full w-[200%]" /> : null}
                 </span>
               ) : null}
               <span
