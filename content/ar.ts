@@ -10,7 +10,6 @@ export const ar = {
   },
   a11y: {
     skipToContent: 'الانتقال إلى المحتوى', // authored
-    scrollDown: 'الانتقال إلى القسم التالي', // authored
     scrollUp: 'العودة إلى الأعلى', // authored
     localeSwitch: 'اللغة', // authored
   },

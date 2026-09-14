@@ -27,7 +27,6 @@ export type SiteContent = {
   meta: { title: string; description: string };
   a11y: {
     skipToContent: string;
-    scrollDown: string;
     scrollUp: string;
     localeSwitch: string;
   };

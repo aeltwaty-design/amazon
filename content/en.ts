@@ -10,7 +10,6 @@ export const en = {
   },
   a11y: {
     skipToContent: 'Skip to content', // authored
-    scrollDown: 'Scroll to the next section', // authored
     scrollUp: 'Back to top', // authored
     localeSwitch: 'Language', // authored
   },

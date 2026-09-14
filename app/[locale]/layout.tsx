@@ -64,7 +64,7 @@ export default async function LocaleLayout({ children, params }: Props) {
           localeSwitchLabel={content.a11y.localeSwitch}
         />
         {children}
-        <ScrollHint labels={{ down: content.a11y.scrollDown, up: content.a11y.scrollUp }} />
+        <ScrollHint label={content.a11y.scrollUp} />
         {process.env.NODE_ENV === 'development' ? <LayoutShiftProbe /> : null}
       </body>
     </html>
