@@ -111,8 +111,6 @@
   --hero-cta-enter-start: 550ms;
   --hero-cta-enter-distance: 28px;
   --hero-cta-settle: -3px;
-  --hero-illustration-exit: 900ms;
-  --hero-illustration-exit-start: 100ms;
   --hero-tile-enter: 530ms;
   --hero-tile-enter-start: 950ms; /* after the CTA has landed (550 + 420) */
   --hero-tile-enter-distance: 300px;

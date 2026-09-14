@@ -9,6 +9,11 @@ import { Flip } from 'gsap/Flip';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 gsap.registerPlugin(useGSAP, ScrollTrigger, Flip, CustomEase);
+// No ScrollTrigger.config here on purpose: on a touch-only device the plugin
+// already ignores height-only resizes (the address bar) and defers refreshes
+// to scroll end, and config() cannot raise ignoreMobileResize beyond that.
+// hooks/useViewportKey.ts keeps the React rebuild key width-only on touch for
+// the same reason.
 
 export { gsap, useGSAP, ScrollTrigger, Flip };
 

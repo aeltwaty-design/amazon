@@ -13,12 +13,14 @@ const TONE_CLASS = ['card-tone-1', 'card-tone-2', 'card-tone-1', 'card-tone-2', 
 
 // noon One's marketplace row: five square tiles under the CTA, an illustration
 // at rest and the sector name on hover (or, for a tile in TILE_MOTION, its
-// animation; see TileLottie). Layout, hover and the mobile strip are
-// in styles/globals.css (`.hero-tile*`); the choreography owns `transform` on
-// each <li> (gather into a pile) while hover moves the inner surface with
-// `translate`, so the two never fight. The label is always in the DOM, so
-// assistive tech reads the sector names whether or not they are shown; its
-// type scales with the tile (`.hero-tile-label` in globals.css).
+// animation; see TileLottie). The row exists from 1024 up only — a phone has
+// no room for it under the headline and hands the scroll to the first benefit
+// card instead (M6 in MOTION.md). Layout and hover are in styles/globals.css
+// (`.hero-tile*`); the choreography owns `transform` on each <li> (gather
+// into a pile) while hover moves the inner surface with `translate`, so the
+// two never fight. The label is always in the DOM, so assistive tech reads
+// the sector names whether or not they are shown; its type scales with the
+// tile (`.hero-tile-label` in globals.css).
 export function HeroTiles({ tiles }: Props) {
   return (
     <ul data-hero-tiles className="hero-tiles mt-6 w-full lg:mt-6">
@@ -33,22 +35,19 @@ export function HeroTiles({ tiles }: Props) {
             data-motion={motion ? '' : undefined}
             className={cn('hero-tile', TONE_CLASS[i])}
           >
-            <div className="hero-tile-surface absolute inset-0 flex flex-col overflow-hidden rounded-tile">
-              <div
-                aria-hidden
-                className="hero-tile-art relative min-h-0 flex-1 p-[12%] lg:absolute lg:inset-0"
-              >
+            <div className="hero-tile-surface absolute inset-0 overflow-hidden rounded-tile">
+              <div aria-hidden className="hero-tile-art absolute inset-0 p-[12%]">
                 <Image
                   src={art.src}
                   alt=""
                   width={art.width}
                   height={art.height}
-                  sizes="(min-width: 1024px) 216px, 160px"
+                  sizes="216px"
                   className="size-full object-contain"
                 />
               </div>
               {motion ? <TileLottie motion={motion} /> : null}
-              <div className="hero-tile-label px-[4%] pb-3 text-center lg:absolute lg:inset-0 lg:flex lg:items-center lg:justify-center lg:p-[4%]">
+              <div className="hero-tile-label absolute inset-0 flex items-center justify-center p-[4%] text-center">
                 {/* one word per line: the label is set large enough that a
                     two-word name needs both lines (whitespace-pre-line) */}
                 <span className="whitespace-pre-line text-ink">

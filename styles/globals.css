@@ -254,28 +254,17 @@ html[data-js]:not([data-fonts]) body {
     );
   }
 
-  /* Hero sector tiles (noon One's marketplace row): a scroll-snap strip below
-     1024, a five-up grid above. GSAP owns `transform` on the <li>; hover lifts
-     the inner surface with `translate`, so the two never fight. The strip's
-     block padding is where the mobile rise (24px) happens without creating
-     scrollable overflow inside the row. */
+  /* Hero sector tiles (noon One's marketplace row): a five-up grid from 1024
+     up, and not rendered below it — a phone shows the headline, the price and
+     the CTAs, then hands the scroll to the first benefit card (M6 in
+     MOTION.md). GSAP owns `transform` on the <li>; hover lifts the inner
+     surface with `translate`, so the two never fight. */
   .hero-tiles {
-    display: flex;
-    gap: 15px;
-    overflow-x: auto;
-    scroll-snap-type: x mandatory;
-    scrollbar-width: none;
-    padding-block: 28px;
-    margin-block: -28px;
-  }
-  .hero-tiles::-webkit-scrollbar {
     display: none;
   }
   .hero-tile {
     position: relative;
-    flex: 0 0 160px;
-    height: 200px;
-    scroll-snap-align: start;
+    aspect-ratio: 1;
   }
   /* Tile 1 is the top of the pile; later tiles slide under it in DOM order. */
   .hero-tile:nth-child(1) {
@@ -296,21 +285,14 @@ html[data-js]:not([data-fonts]) body {
   @media (min-width: 1024px) {
     .hero-tiles {
       display: grid;
+      gap: 15px;
       grid-template-columns: repeat(5, minmax(0, 1fr));
-      overflow: visible;
-      padding-block: 0;
-      margin-block: 0;
       /* 216px tiles (measured on noon) once the viewport is tall enough;
          otherwise they shrink with its height so headline, price, CTA and
          tiles share one pinned viewport, and with its width because the
          headline wraps to more lines when narrow (162px at 1440 × 900, which
          leaves room for the 1.5em headline animation). */
       max-width: calc(5 * min(216px, 18svh, 20vw - 100px) + 4 * 15px);
-    }
-    .hero-tile {
-      flex: none;
-      height: auto;
-      aspect-ratio: 1;
     }
   }
   .hero-tile-surface {

@@ -62,7 +62,9 @@ export function ScrollHint({ labels }: Props) {
       onClick={onClick}
       aria-label={direction === 'down' ? labels.down : labels.up}
       className={cn(
-        'fixed end-6 bottom-6 z-40 flex size-[60px] items-center justify-center rounded-pill shadow-lg',
+        // Desktop only: it exists to flip after the pin, which a phone does not
+        // have, and it would sit on the corner every full-width CTA lands in.
+        'fixed end-6 bottom-6 z-40 hidden size-[60px] items-center justify-center rounded-pill shadow-lg lg:flex',
         'transition-colors duration-(--motion-300) ease-out-cubic',
         'focus-visible:outline-[2.5px] focus-visible:outline-offset-2',
         onDark

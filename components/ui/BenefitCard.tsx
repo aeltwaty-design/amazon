@@ -15,6 +15,13 @@ type Props = {
   flipId: string;
   /** mirror = the copy that flies inside the hero; grid = the real in-flow card */
   mode: 'mirror' | 'grid';
+  /**
+   * How a grid card arrives below 1024: `reveal` through PageMotion's batch,
+   * `hero` lifted by the hero's own scroll (the first card, M6 in MOTION.md).
+   * One owner per card: PageMotion's reveal overwrites every tween on its
+   * targets, so a card the hero animates must never be in its batch.
+   */
+  entrance?: 'reveal' | 'hero';
 };
 
 // Literal class names: Tailwind only generates what it can read in source.
@@ -30,11 +37,22 @@ const TONE_CLASS: Record<CardTone, string> = {
 // it, and both grids give that row their wrapper's full height, so a mirror
 // card and its in-flow twin are the same size by construction. A phone card
 // only raises the stacked minimum, so the copy and the phone never meet.
-export function BenefitCard({ tone, title, body, slot, art, flipId, mode }: Props) {
+export function BenefitCard({
+  tone,
+  title,
+  body,
+  slot,
+  art,
+  flipId,
+  mode,
+  entrance = 'reveal',
+}: Props) {
   const hooks =
     mode === 'mirror'
       ? { 'data-hero-card': '', 'data-enter': '' }
-      : { 'data-grid-card': '', 'data-reveal-mobile': '' };
+      : entrance === 'hero'
+        ? { 'data-grid-card': '', 'data-hero-lift': '' }
+        : { 'data-grid-card': '', 'data-reveal-mobile': '' };
   const phone = art?.kind === 'phone';
 
   return (

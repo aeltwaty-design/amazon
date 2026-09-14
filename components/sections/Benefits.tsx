@@ -15,7 +15,10 @@ const TONES: readonly CardTone[] = [1, 2, 3];
 // flying hero card with the grid card at the same index (HeroChoreography,
 // Flip.fit) and measures the live box, so the lead card lands in the first
 // column — travelling there from the bar, which is centred on the viewport,
-// is the one sideways move in the sequence.
+// is the one sideways move in the sequence. Stacked (below 1024) the first
+// card is the hero's to lift as it scrolls out (M6); the other two reveal in
+// flow like every other section.
+//
 // One grid definition rendered twice (hero mirror + in-flow section) so every
 // flying card has, by construction, the exact size of its landing slot: three
 // cards beside each other that fill whatever height their wrapper gives them
@@ -37,6 +40,7 @@ export function BenefitGrid({ content, mode }: GridProps) {
           body={card.body}
           slot={card.slot}
           art={ART.benefits.cards[index]}
+          entrance={index === 0 ? 'hero' : 'reveal'}
         />
       ))}
     </div>

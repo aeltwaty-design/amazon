@@ -56,13 +56,37 @@ export const HERO = {
   PILL: { h: 60, gap: 12 },
   LOAD: { headlineStartMs: 50, wordStaggerMs: 40, subMs: 280, subStartMs: 300, tileStaggerMs: 70 },
   TEXT_EXIT_Y: -40,
+  /**
+   * The no-pin exit (stacked and short layouts, MOTION.md M1–M6): fractions
+   * of the hero's own height scrolled out — 0 with its top at the viewport
+   * top, 1 with its bottom there.
+   */
+  M: {
+    /** the illustration bobs down as the hero leaves */
+    parallax: [0, 1],
+    /** headline illustration collapses, the H1 halves close */
+    art: [0.05, 0.22],
+    /** the first stacked benefit card rises into place */
+    lift: [0.1, 0.6],
+    /** hero text block lifts and fades — early, since the header is transparent while the tone is dark */
+    text: [0.18, 0.45],
+    /** purple surface fades to the page background, once the text has gone */
+    surface: [0.45, 0.85],
+    /** header and scroll hint switch to light-surface tones */
+    tone: 0.62,
+  },
   MOBILE_ART_PARALLAX_PX: 12,
-  /** the tile strip is a scroll container below 1024: a 300px rise would overflow it */
-  MOBILE_TILE_ENTER_PX: 24,
+  /** where the first stacked card waits before M6 lifts it into place */
+  LIFT_FROM: { y: 56, scale: 0.96 },
+  /** the short layout's tile grid sits at the hero's bottom edge with no clip: a 300px rise would paint over Benefits */
+  TILE_ENTER_PX_UNPINNED: 24,
   MQ: {
     // The 3-column landing grid only exists at ≥1024, and a short viewport
     // cannot fit headline, price, CTA and the tile row in one pinned screen.
     desktop: '(min-width: 1024px) and (min-height: 760px)',
+    // Wide enough for the tile grid and the three-column cards even when too
+    // short to pin — the "short" layout; below it the cards stack.
+    lg: '(min-width: 1024px)',
     reduce: '(prefers-reduced-motion: reduce)',
     // gsap.matchMedia only invokes the callback while at least one condition
     // matches; without this always-true-unless-reduced query the mobile
@@ -73,6 +97,8 @@ export const HERO = {
 } as const;
 
 type Revertable = { revert: (revert: boolean, temp: boolean) => void };
+/** the hero a viewport gets: the pin, the short desktop, or a stacked phone */
+type HeroLayout = 'pinned' | 'short' | 'stacked';
 type Point = { x: number; y: number };
 type CardGeo = {
   /** Flip.fit x/y − pinDistance: the transform that puts the mirror on its grid twin */
@@ -105,6 +131,8 @@ type Geometry = {
   /** signed x each headline word travels as the illustration closes (0 off its line) */
   wordShift: Map<HTMLElement, number>;
 };
+/** all the no-pin exit needs to measure */
+type WordGeometry = Pick<Geometry, 'wordShift'>;
 
 const all = <T extends Element = HTMLElement>(root: ParentNode, selector: string): T[] =>
   Array.from(root.querySelectorAll<T>(selector));
@@ -209,31 +237,34 @@ function measure(
     barY = viewportMidY - midY(c0);
   }
 
-  // The illustration exit must not reflow the headline (a scroll-driven
-  // reflow is a layout shift), so it is scaleX on the art plus translateX on
-  // the words that share its line. offsetTop ignores transforms, which is
-  // what makes this measurement stable mid-animation.
-  const wordShift = new Map<HTMLElement, number>();
-  if (art) {
-    const h1 = art.parentElement;
-    const words = h1 ? all(h1, '[data-hero-word]') : [];
-    const gap = h1 ? parseFloat(getComputedStyle(h1).columnGap) || 0 : 0;
-    const shift = (art.offsetWidth + gap) / 2;
-    const artMid = art.offsetTop + art.offsetHeight / 2;
-    for (const word of words) {
-      const mid = word.offsetTop + word.offsetHeight / 2;
-      if (Math.abs(mid - artMid) >= word.offsetHeight * 0.5) continue;
-      // Words on the inline-start side close toward the inline-end and vice
-      // versa; the sign keeps "toward the art" correct in RTL.
-      const before = Boolean(word.compareDocumentPosition(art) & Node.DOCUMENT_POSITION_FOLLOWING);
-      wordShift.set(word, (before ? shift : -shift) * sign);
-    }
-  }
-
-  return { gather, tucked, square, barY, barScale, cards, wordShift };
+  return { gather, tucked, square, barY, barScale, cards, wordShift: measureWordShift(art, sign) };
 }
 
-function buildLoadSequence(hero: HTMLElement, desktop: boolean) {
+// The illustration exit must not reflow the headline (a scroll-driven reflow
+// is a layout shift), so it is scaleX on the art plus translateX on the words
+// that share its line. offsetTop ignores transforms, which is what makes this
+// measurement stable mid-animation — and lets the no-pin exit measure it
+// without clearing anything first.
+function measureWordShift(art: HTMLElement | null, sign: 1 | -1): Map<HTMLElement, number> {
+  const wordShift = new Map<HTMLElement, number>();
+  if (!art) return wordShift;
+  const h1 = art.parentElement;
+  const words = h1 ? all(h1, '[data-hero-word]') : [];
+  const gap = h1 ? parseFloat(getComputedStyle(h1).columnGap) || 0 : 0;
+  const shift = (art.offsetWidth + gap) / 2;
+  const artMid = art.offsetTop + art.offsetHeight / 2;
+  for (const word of words) {
+    const mid = word.offsetTop + word.offsetHeight / 2;
+    if (Math.abs(mid - artMid) >= word.offsetHeight * 0.5) continue;
+    // Words on the inline-start side close toward the inline-end and vice
+    // versa; the sign keeps "toward the art" correct in RTL.
+    const before = Boolean(word.compareDocumentPosition(art) & Node.DOCUMENT_POSITION_FOLLOWING);
+    wordShift.set(word, (before ? shift : -shift) * sign);
+  }
+  return wordShift;
+}
+
+function buildLoadSequence(hero: HTMLElement, layout: HeroLayout) {
   const out = ease('outCubic');
   const tl = gsap.timeline({ defaults: { ease: out } });
 
@@ -268,12 +299,13 @@ function buildLoadSequence(hero: HTMLElement, desktop: boolean) {
     readSeconds('--hero-cta-enter-start'),
   );
 
-  const tiles = all(hero, '[data-hero-tile]');
+  // No tile row below 1024 (`.hero-tiles` is display: none), so nothing rises.
+  const tiles = layout === 'stacked' ? [] : all(hero, '[data-hero-tile]');
   if (tiles.length) {
     tl.fromTo(
       tiles,
       {
-        y: desktop ? readPx('--hero-tile-enter-distance') : HERO.MOBILE_TILE_ENTER_PX,
+        y: layout === 'pinned' ? readPx('--hero-tile-enter-distance') : HERO.TILE_ENTER_PX_UNPINNED,
         opacity: 0,
       },
       {
@@ -294,7 +326,7 @@ function buildLoadSequence(hero: HTMLElement, desktop: boolean) {
 function addArtExit(
   tl: gsap.core.Timeline,
   art: HTMLElement,
-  geometry: Geometry,
+  geometry: WordGeometry,
   at: number,
   duration: number,
 ) {
@@ -315,6 +347,18 @@ function addArtExit(
     },
     at,
   );
+}
+
+// Published for the header and the scroll hint; written once per flip. The
+// pin (S7) and the no-pin exit (M5) both publish through this.
+function toneWriter(threshold: number) {
+  let tone: HeroTone | null = null;
+  return (progress: number) => {
+    const next: HeroTone = progress >= threshold ? 'light' : 'dark';
+    if (next === tone) return;
+    tone = next;
+    setHeroTone(next);
+  };
 }
 
 function buildPinnedScrub(
@@ -357,14 +401,7 @@ function buildPinnedScrub(
     gsap.set(gridCards, { visibility: to === 'grid' ? 'visible' : 'hidden' });
   };
 
-  // Published for the header and the scroll hint; written once per flip.
-  let tone: HeroTone | null = null;
-  const applyTone = (progress: number) => {
-    const next: HeroTone = progress >= HERO.P.tone ? 'light' : 'dark';
-    if (next === tone) return;
-    tone = next;
-    setHeroTone(next);
-  };
+  const applyTone = toneWriter(HERO.P.tone);
 
   const { P } = HERO;
   const tl = gsap.timeline({
@@ -609,31 +646,95 @@ function buildPinnedScrub(
   return tl;
 }
 
-function buildMobile(hero: HTMLElement, geometry: Geometry) {
+// The no-pin exit (MOTION.md M1–M6): one timeline scrubbed by the hero's own
+// height, so a phone scrolls straight through — the illustration bobs and
+// closes, the text lifts and fades, the surface fades to the page, and on a
+// stacked layout the first benefit card rises out of it. `end: 'bottom top'`
+// depends on nothing but the hero's height, which is svh, so the address bar
+// moves neither the mapping nor the trigger (GSAP already ignores height-only
+// resizes on touch-only devices; see lib/motion.ts). `scrub: true`, not a
+// number: the card is a real in-flow element, and smoothing would read as it
+// detaching from the page.
+function buildMobile(
+  hero: HTMLElement,
+  geometry: WordGeometry,
+  load: gsap.core.Timeline,
+  lift: HTMLElement | null,
+  sign: 1 | -1,
+) {
   const art = hero.querySelector<HTMLElement>('[data-hero-art]');
+  const text = hero.querySelector<HTMLElement>('[data-hero-text]');
+  const surface = hero.querySelector<HTMLElement>('[data-hero-surface]');
   const mirror = hero.querySelector<HTMLElement>('[data-hero-mirror]');
+  // CSS hides the mirror below 1024; the short layout has it on and no pin to use it.
   if (mirror) gsap.set(mirror, { display: 'none' });
-  if (!art) return;
 
-  gsap.to(art, {
-    y: HERO.MOBILE_ART_PARALLAX_PX,
-    ease: 'none',
-    scrollTrigger: { trigger: hero, start: 'top top', end: 'bottom top', scrub: true },
+  const applyTone = toneWriter(HERO.M.tone);
+  const { M } = HERO;
+  const tl = gsap.timeline({
+    defaults: { ease: 'none' },
+    scrollTrigger: {
+      trigger: hero,
+      start: 'top top',
+      end: 'bottom top',
+      scrub: true,
+      invalidateOnRefresh: true,
+      onRefreshInit: () => {
+        geometry.wordShift = measureWordShift(art, sign);
+      },
+      onRefresh: (self) => applyTone(self.progress),
+      onUpdate: (self) => {
+        // Scrolling before the load sequence ends hands control to the scrub.
+        // A refresh also fires this: at the top it is 0 → 0 and the entrance
+        // still plays; a reload mid-page lands at p > 0 and skips it instead
+        // of playing it off-screen. Read progress, not isActive(): a timeline
+        // that has not rendered a frame yet — the reload case — is not active.
+        if (self.progress > 0 && load.progress() < 1) load.progress(1);
+        applyTone(self.progress);
+      },
+      onLeave: () => applyTone(1),
+      onEnterBack: (self) => applyTone(self.progress),
+    },
   });
+  // Span exactly 1 so the M windows read as scroll fractions (as the pin does).
+  tl.set({}, {}, 1);
 
-  // Without a pin the illustration exits on a clock: the ms tokens apply here.
-  const exit = gsap.timeline({
-    paused: true,
-    defaults: { ease: ease('outExpo') },
-    delay: readSeconds('--hero-illustration-exit-start'),
-  });
-  addArtExit(exit, art, geometry, 0, readSeconds('--hero-illustration-exit'));
-  ScrollTrigger.create({
-    trigger: hero,
-    start: 'bottom 40%',
-    onEnter: () => exit.play(),
-    onLeaveBack: () => exit.reverse(),
-  });
+  if (art) {
+    tl.fromTo(
+      art,
+      { y: 0 },
+      { y: HERO.MOBILE_ART_PARALLAX_PX, duration: M.parallax[1] - M.parallax[0] },
+      M.parallax[0],
+    );
+    addArtExit(tl, art, geometry, M.art[0], M.art[1] - M.art[0]);
+  }
+  // fromTo renders its start state at build, before first paint: that is what
+  // hides the card until the scroll lifts it, with no CSS pre-hide to undo.
+  if (lift) {
+    tl.fromTo(
+      lift,
+      { y: HERO.LIFT_FROM.y, scale: HERO.LIFT_FROM.scale, opacity: 0, transformOrigin: '50% 50%' },
+      { y: 0, scale: 1, opacity: 1, duration: M.lift[1] - M.lift[0] },
+      M.lift[0],
+    );
+  }
+  if (text) {
+    tl.fromTo(
+      text,
+      { y: 0, opacity: 1 },
+      { y: HERO.TEXT_EXIT_Y, opacity: 0, duration: M.text[1] - M.text[0] },
+      M.text[0],
+    );
+  }
+  if (surface) {
+    tl.fromTo(
+      surface,
+      { opacity: 1 },
+      { opacity: 0, duration: M.surface[1] - M.surface[0] },
+      M.surface[0],
+    );
+  }
+  return tl;
 }
 
 export function HeroChoreography({ locale }: { locale: Locale }) {
@@ -652,33 +753,45 @@ export function HeroChoreography({ locale }: { locale: Locale }) {
       // every measurement below depends on the final headline wrap.
       const build = contextSafe(() => {
         mm.add(
-          { desktop: HERO.MQ.desktop, reduce: HERO.MQ.reduce, motionOk: HERO.MQ.motionOk },
+          {
+            desktop: HERO.MQ.desktop,
+            lg: HERO.MQ.lg,
+            reduce: HERO.MQ.reduce,
+            motionOk: HERO.MQ.motionOk,
+          },
           (ctx) => {
             const conditions = (ctx.conditions ?? {}) as Record<string, boolean>;
             // CSS already shows everything and hides the mirror; nothing to animate.
             if (conditions.reduce) return;
-            const desktop = Boolean(conditions.desktop) && Boolean(benefits);
-            const tiles = all(hero, '[data-hero-tile]');
-            const heroCards = all(hero, '[data-hero-card]');
-            const gridCards = benefits ? all(benefits, '[data-grid-card]') : [];
+            const layout: HeroLayout =
+              conditions.desktop && benefits ? 'pinned' : conditions.lg ? 'short' : 'stacked';
             const art = hero.querySelector<HTMLElement>('[data-hero-art]');
-            const geometry = measure(
-              hero,
-              tiles,
-              heroCards,
-              gridCards,
-              art,
-              sign,
-              window.innerHeight,
-            );
-            const load = buildLoadSequence(hero, desktop);
-            if (desktop && benefits) {
-              setHeroTone('dark');
+            const load = buildLoadSequence(hero, layout);
+            // Both exits publish the tone; set before any refresh so the
+            // header never reads "absent" mid-build.
+            setHeroTone('dark');
+            if (layout === 'pinned' && benefits) {
+              const geometry = measure(
+                hero,
+                all(hero, '[data-hero-tile]'),
+                all(hero, '[data-hero-card]'),
+                all(benefits, '[data-grid-card]'),
+                art,
+                sign,
+                window.innerHeight,
+              );
               buildPinnedScrub(hero, benefits, geometry, load, sign);
-              // The attribute lives outside GSAP, so revert() cannot clear it.
-              return () => setHeroTone(null);
+            } else {
+              // Only a stacked layout hands its first card to the hero (M6);
+              // the short desktop's three-column cards reveal in flow.
+              const lift =
+                layout === 'stacked' && benefits
+                  ? benefits.querySelector<HTMLElement>('[data-hero-lift]')
+                  : null;
+              buildMobile(hero, { wordShift: measureWordShift(art, sign) }, load, lift, sign);
             }
-            buildMobile(hero, geometry);
+            // The attribute lives outside GSAP, so revert() cannot clear it.
+            return () => setHeroTone(null);
           },
         );
         ScrollTrigger.refresh();
