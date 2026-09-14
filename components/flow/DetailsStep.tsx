@@ -7,6 +7,7 @@ import { useErrorMessage, useFlowContent } from '@/components/flow/FlowContentCo
 import { Button } from '@/components/ui/Button';
 import { Callout } from '@/components/ui/Callout';
 import { CheckboxField, Field } from '@/components/ui/Field';
+import { MobileIcon, SmsIcon, UserIcon } from '@/components/ui/Icon';
 import { Interpolate } from '@/components/ui/Interpolate';
 import { FOOTER_HREFS } from '@/lib/anchors';
 import type { FlowState } from '@/lib/flow';
@@ -81,6 +82,7 @@ export function DetailsStep({ state, onSubmit }: Props) {
       <Field
         id="details-fullName"
         label={copy.name.label}
+        icon={UserIcon}
         hint={copy.name.hint}
         autoComplete="name"
         required
@@ -90,6 +92,7 @@ export function DetailsStep({ state, onSubmit }: Props) {
       <Field
         id="details-mobile"
         label={copy.mobile.label}
+        icon={MobileIcon}
         hint={copy.mobile.hint}
         type="tel"
         inputMode="tel"
@@ -102,6 +105,7 @@ export function DetailsStep({ state, onSubmit }: Props) {
       <Field
         id="details-email"
         label={copy.email.label}
+        icon={SmsIcon}
         hint={copy.email.hint}
         type="email"
         inputMode="email"

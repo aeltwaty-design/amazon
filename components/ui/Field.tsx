@@ -1,6 +1,6 @@
 'use client';
 
-import type { HTMLInputAutoCompleteAttribute, ReactNode } from 'react';
+import type { ComponentType, HTMLInputAutoCompleteAttribute, ReactNode } from 'react';
 import type { UseFormRegisterReturn } from 'react-hook-form';
 import { useErrorMessage } from '@/components/flow/FlowContentContext';
 import { cn } from '@/lib/cn';
@@ -15,6 +15,8 @@ type BaseProps = {
 
 type TextProps = BaseProps & {
   label: string;
+  /** an Iconsax glyph from components/ui/Icon, shown before the title */
+  icon?: ComponentType<{ className?: string }>;
   hint?: string;
   type?: 'text' | 'email' | 'tel';
   inputMode?: 'text' | 'email' | 'tel' | 'numeric';
@@ -38,6 +40,7 @@ function ErrorText({ id, message }: { id: string; message: string }) {
 export function Field({
   id,
   label,
+  icon: LabelIcon,
   hint,
   error,
   registration,
@@ -55,7 +58,10 @@ export function Field({
 
   return (
     <div className={className}>
-      <label htmlFor={id} className="type-body block font-bold">
+      {/* the glyph sits inside the label, so tapping it still focuses the
+          input; it is aria-hidden, so the title is read on its own */}
+      <label htmlFor={id} className="type-body flex items-center gap-2 font-bold">
+        {LabelIcon ? <LabelIcon className="text-brand" /> : null}
         {label}
       </label>
       {hint ? (
