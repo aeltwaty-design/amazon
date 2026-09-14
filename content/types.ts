@@ -5,7 +5,7 @@ import type { FlowErrorCode } from '@/lib/validation';
 
 export type SlotCopy = { title: string; description: string };
 export type HeroTile = { id: HeroTileId; label: string };
-export type FieldCopy = { label: string; hint?: string };
+export type FieldCopy = { label: string; hint?: string; placeholder?: string };
 export type Stat = { value: string; label: string };
 export type Step = { title: string; body: string; slot: SlotCopy };
 export type FaqItem = { q: string; a: string };

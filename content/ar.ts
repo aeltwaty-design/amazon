@@ -126,14 +126,16 @@ export const ar = {
     },
     details: {
       heading: 'أدخل بياناتك', // authored
-      name: { label: 'الاسم الكامل' },
+      name: { label: 'الاسم الكامل', placeholder: 'مثال: محمد الحربي' }, // authored
       mobile: {
         label: 'رقم الجوال',
         hint: 'ستستخدم هذا الرقم لتسجيل الدخول إلى تطبيق ولاء ون بعد الدفع',
+        placeholder: '05XXXXXXXX', // authored
       },
       email: {
         label: 'البريد الوظيفي',
         hint: 'يجب أن ينتهي بنطاق أمازون المعتمد — هذا ما يثبت أهليتك',
+        placeholder: 'name@amazon.com', // authored
       },
       consent: 'أوافق على {terms} و{privacy} الخاصة بولاء ون.',
       termsLabel: 'الشروط والأحكام',

@@ -125,14 +125,16 @@ export const en = {
     },
     details: {
       heading: 'Enter your details', // authored
-      name: { label: 'Full name' },
+      name: { label: 'Full name', placeholder: 'Ex, Mohammed Alharbi' }, // authored
       mobile: {
         label: 'Mobile number',
         hint: "You'll use this number to sign in to the WalaOne app after payment",
+        placeholder: '05XXXXXXXX', // authored
       },
       email: {
         label: 'Work email',
         hint: 'Must end in an approved Amazon domain — this is what proves your eligibility',
+        placeholder: 'name@amazon.com', // authored
       },
       consent: 'I agree to the WalaOne {terms} and {privacy}.',
       termsLabel: 'Terms & Conditions',
