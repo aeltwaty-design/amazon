@@ -357,33 +357,45 @@ html[data-js]:not([data-fonts]) body {
   --card-base: --value(--color-card-*);
 }
 
-/* The stepper connector of a reached step: a band twice the connector's
-   width carrying two identical primary → secondary cycles, translated by
-   exactly one cycle so the loop is seamless. Transform only, and the
-   direction is reversed in Arabic so the flow always points at the next
-   step. The band is clipped by the connector (`overflow-hidden`). */
+/* The stepper connector of a reached step. The line itself never breaks: the
+   band is half again as wide as the connector and is brand purple at both
+   ends, so whatever it is doing the connector is covered by a colour that
+   holds up on white (the accent yellow alone is 1.6:1 there, which reads as a
+   gap). Only the yellow middle moves: the band slides half a connector and
+   back, so the highlight sweeps along the line. Transform only. The band is
+   laid out from the connector's inline start, so the slide has to go the
+   other way in Arabic or it would leave the line uncovered. Clipped by the
+   connector. */
 .stepper-flow {
   background-image: linear-gradient(
     to right,
     var(--color-brand),
-    var(--color-accent),
-    var(--color-brand),
-    var(--color-accent),
+    var(--color-accent) 50%,
     var(--color-brand)
   );
-  animation: stepper-flow var(--stepper-flow) linear infinite;
+  animation: stepper-sweep var(--stepper-flow) ease-in-out infinite alternate;
 }
 
 [dir='rtl'] .stepper-flow {
-  animation-direction: reverse;
+  animation-name: stepper-sweep-rtl;
 }
 
-@keyframes stepper-flow {
+/* a third of the band = half the connector */
+@keyframes stepper-sweep {
   from {
-    translate: -50% 0;
+    translate: 0 0;
   }
   to {
+    translate: -33.3333% 0;
+  }
+}
+
+@keyframes stepper-sweep-rtl {
+  from {
     translate: 0 0;
+  }
+  to {
+    translate: 33.3333% 0;
   }
 }
 

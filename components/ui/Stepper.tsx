@@ -34,10 +34,10 @@ export function Stepper({ steps, current, label, locale }: Props) {
               aria-current={state === 'current' ? 'step' : undefined}
               className="relative flex flex-col items-center gap-2 text-center"
             >
-              {/* Connector to the next step; start- keeps it pointing forward in RTL.
-                  Once its step has been reached it carries the flowing
-                  primary → secondary band (`.stepper-flow` in globals.css),
-                  which is why it clips. */}
+              {/* Connector to the next step; start- keeps it pointing forward in
+                  RTL. Once its step has been reached the line carries the
+                  sweeping highlight (`.stepper-flow` in globals.css), which is
+                  why it clips; before that it is a hairline. */}
               {i < steps.length - 1 ? (
                 <span
                   aria-hidden
@@ -46,7 +46,7 @@ export function Stepper({ steps, current, label, locale }: Props) {
                     i > current && 'bg-line',
                   )}
                 >
-                  {i <= current ? <span className="stepper-flow block h-full w-[200%]" /> : null}
+                  {i <= current ? <span className="stepper-flow block h-full w-[150%]" /> : null}
                 </span>
               ) : null}
               <span
