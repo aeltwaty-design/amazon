@@ -21,14 +21,14 @@ export function PaymentMethods({ label, marks }: Props) {
         {marks.map((entry) => (
           // Fixed-height row: the scheme marks have very different aspect
           // ratios, so each image scales to the height and keeps its own width.
-          <li key={entry.id} className="flex h-8 items-center">
+          <li key={entry.id} className="flex h-6 items-center">
             <ImageSlot
               title={entry.slot.title}
               width={entry.mark?.width ?? 96}
-              height={entry.mark?.height ?? 32}
+              height={entry.mark?.height ?? 24}
               src={entry.mark?.src}
               sizes="96px"
-              className={entry.mark ? 'h-8 w-auto max-w-[96px] object-contain' : 'rounded-btn'}
+              className={entry.mark ? 'h-6 w-auto max-w-[72px] object-contain' : 'rounded-btn'}
             />
           </li>
         ))}

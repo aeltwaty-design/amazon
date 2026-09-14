@@ -166,7 +166,7 @@ export const en = {
         vat: 'VAT 15%',
         total: 'Total due',
       },
-      methodsLabel: 'Payment method', // authored
+      methodsLabel: 'Payment methods', // authored
       methodSlot: {
         mada: { title: 'mada logo', description: 'payment mark' },
         visa: { title: 'Visa logo', description: 'payment mark' },

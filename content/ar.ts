@@ -167,7 +167,7 @@ export const ar = {
         vat: 'ضريبة القيمة المضافة ١٥٪',
         total: 'الإجمالي المستحق',
       },
-      methodsLabel: 'طريقة الدفع', // authored
+      methodsLabel: 'طرق الدفع', // authored
       methodSlot: {
         mada: { title: 'شعار مدى', description: 'علامة الدفع' },
         visa: { title: 'شعار فيزا', description: 'علامة الدفع' },
