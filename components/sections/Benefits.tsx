@@ -9,15 +9,13 @@ type GridProps = { content: SiteContent['benefits']; mode: 'mirror' | 'grid' };
 // hand-over, see HeroChoreography S2b), yellow 50, purple 100.
 const TONES: readonly CardTone[] = [1, 2, 3];
 
-// Card 1 sits in the middle column and the other two fall either side of it.
-// Only the columns move: the DOM order is untouched, because the hand-over
-// pairs each flying hero card with the grid card at the same index
-// (HeroChoreography, Flip.fit) and measures the live box, so the lead simply
-// flies to the middle slot — and with the bar already centred on the viewport
-// it now lands without a sideways slide. Literal classes: Tailwind only
-// generates what it can read. Stacked, the cards keep their reading order.
-const ORDER = ['lg:order-2', 'lg:order-1', 'lg:order-3'] as const;
-
+// The cards sit in the order they are written, card 2 in the middle column,
+// in both languages: RTL fills the same three columns from the other end, so
+// the middle one holds the same card either way. The hand-over pairs each
+// flying hero card with the grid card at the same index (HeroChoreography,
+// Flip.fit) and measures the live box, so the lead card lands in the first
+// column — travelling there from the bar, which is centred on the viewport,
+// is the one sideways move in the sequence.
 // One grid definition rendered twice (hero mirror + in-flow section) so every
 // flying card has, by construction, the exact size of its landing slot: three
 // cards beside each other that fill whatever height their wrapper gives them
@@ -39,7 +37,6 @@ export function BenefitGrid({ content, mode }: GridProps) {
           body={card.body}
           slot={card.slot}
           art={ART.benefits.cards[index]}
-          className={ORDER[index]}
         />
       ))}
     </div>
