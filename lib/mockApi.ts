@@ -20,9 +20,9 @@ export class MockApiError extends Error {
 export const isMockApiError = (error: unknown): error is MockApiError =>
   error instanceof MockApiError;
 
-/** Code lifetime. */
-export const OTP_TTL_MS = 60_000;
-/** Separate from the TTL: product may later want a 5-minute code with a 60s cooldown. */
+/** Code lifetime: an hour, so a user who steps away can still finish. */
+export const OTP_TTL_MS = 60 * 60_000;
+/** Separate from the TTL, and far shorter: how soon a new code can be asked for. */
 export const RESEND_COOLDOWN_S = 60;
 export const MOCK_LATENCY_MS = 700;
 
