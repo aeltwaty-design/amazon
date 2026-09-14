@@ -8,7 +8,8 @@ import { Interpolate } from '@/components/ui/Interpolate';
 import { PillToggle } from '@/components/ui/PillToggle';
 import { Price } from '@/components/ui/Price';
 import { SECTION_IDS } from '@/lib/anchors';
-import { type Locale } from '@/lib/i18n';
+import { cn } from '@/lib/cn';
+import { dirFor, type Locale } from '@/lib/i18n';
 import { PRICE, formatMoney } from '@/lib/pricing';
 
 type Props = { locale: Locale; content: SiteContent['pricing'] };
@@ -35,66 +36,102 @@ function Check() {
   );
 }
 
+/**
+ * The reference puts a chevron at the end of its plan button. It has to point
+ * the way the page reads, and Tailwind's `rtl:` variant does not resolve in
+ * this build, so the direction comes from `dirFor` the way the rest of the
+ * codebase passes it.
+ */
+function Chevron({ locale }: { locale: Locale }) {
+  return (
+    <svg
+      aria-hidden
+      width="18"
+      height="18"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className={cn('shrink-0', dirFor(locale) === 'rtl' && '-scale-x-100')}
+    >
+      <path d="M9 6l6 6-6 6" />
+    </svg>
+  );
+}
+
+// The plan card follows the Vanguard kit's pricing card: flat on the section's
+// grey rather than lifted on a shadow, everything above the feature list
+// centred, the price a large numeral with its qualifiers as a small muted
+// stack beside it, a rule before the list, and a full-width pill button that
+// ends in a chevron. The discount, which used to be a full-bleed bar across
+// the card's head, keeps its words but becomes the badge the reference's calm
+// front would allow. The toggle stays a segmented radiogroup — the reference
+// draws a switch, but that is a control, not a look, and this one is already
+// keyboard- and screen-reader-correct.
 export function PlanCard({ locale, content }: Props) {
   const [view, setView] = useState<View>('beforeVat');
   return (
     <article
       data-tilt
-      className="w-full max-w-plan overflow-hidden rounded-plan bg-bg-elevated shadow-[0_24px_60px_-30px_var(--color-ink)]"
+      className="w-full max-w-plan rounded-plan border border-line bg-bg-elevated p-6 text-center lg:p-8"
     >
-      <div className="type-ribbon flex h-[55px] items-center justify-center bg-brand px-6 text-center text-ink-on-dark">
+      <p className="type-toggle inline-flex rounded-pill bg-brand-wash px-4 py-2 text-brand">
         {content.ribbon}
+      </p>
+      <h3 className="type-h3 mt-4">{content.planTitle}</h3>
+      <div className="mt-4 flex justify-center">
+        <PillToggle
+          label={content.toggle.label}
+          value={view}
+          onChange={setView}
+          options={[
+            { value: 'beforeVat', label: content.toggle.beforeVat },
+            { value: 'total', label: content.toggle.total },
+          ]}
+        />
       </div>
-      <div className="p-6">
-        <div className="flex flex-wrap items-start justify-between gap-4">
-          <h3 className="type-h3">{content.planTitle}</h3>
-          <PillToggle
-            label={content.toggle.label}
-            value={view}
-            onChange={setView}
-            options={[
-              { value: 'beforeVat', label: content.toggle.beforeVat },
-              { value: 'total', label: content.toggle.total },
-            ]}
-          />
-        </div>
-        <p className="mt-6 flex flex-wrap items-baseline gap-x-2">
-          {/* Remounting on view change replays the switch animation. */}
-          <span
-            key={view}
-            className="animate-[fade-up_var(--plans-switch)_var(--ease-out-cubic)] motion-reduce:animate-none"
-          >
-            <Price halalas={AMOUNT[view]} locale={locale} size="plan" />
-          </span>
-          <span className="type-body text-ink-muted">{content.perYear}</span>
-        </p>
-        <p className="type-body mt-2 text-ink-muted">
+      <p className="mt-6 flex flex-wrap items-center justify-center gap-x-3">
+        {/* Remounting on view change replays the switch animation. */}
+        <span
+          key={view}
+          className="animate-[fade-up_var(--plans-switch)_var(--ease-out-cubic)] motion-reduce:animate-none"
+        >
+          <Price halalas={AMOUNT[view]} locale={locale} size="plan" />
+        </span>
+        <span className="type-small max-w-[12ch] text-start text-ink-muted">
+          {content.perYear}
+          <br />
           {content.wasLabel} <Price halalas={PRICE.list} locale={locale} strike />
-        </p>
-        {/* Always visible, whichever view is selected. */}
-        <p className="type-small mt-3 text-ink-muted">
-          <Interpolate
-            template={content.vatLine}
-            vars={{
-              vat: formatMoney(PRICE.vat),
-              total: formatMoney(PRICE.total),
-              sar: <Currency locale={locale} />,
-            }}
-          />
-        </p>
-        <ul className="mt-6 grid gap-3">
-          {content.features.map((feature) => (
-            <li key={feature} className="type-body flex items-start gap-3">
-              <Check />
-              <span>{feature}</span>
-            </li>
-          ))}
-        </ul>
-        <Button href={`#${SECTION_IDS.flow}`} fullWidth className="mt-8">
-          {content.cta}
-        </Button>
-        <p className="type-small mt-4 text-center text-ink-muted">{content.finePrint}</p>
-      </div>
+        </span>
+      </p>
+      {/* Always visible, whichever view is selected. */}
+      <p className="type-small mt-3 text-ink-muted">
+        <Interpolate
+          template={content.vatLine}
+          vars={{
+            vat: formatMoney(PRICE.vat),
+            total: formatMoney(PRICE.total),
+            sar: <Currency locale={locale} />,
+          }}
+        />
+      </p>
+      <hr className="mt-6 border-line" />
+      <p className="type-body mt-6 text-start font-bold">{content.includesLabel}</p>
+      <ul className="mt-4 grid gap-3 text-start">
+        {content.features.map((feature) => (
+          <li key={feature} className="type-body flex items-start gap-3">
+            <Check />
+            <span>{feature}</span>
+          </li>
+        ))}
+      </ul>
+      <Button href={`#${SECTION_IDS.flow}`} fullWidth className="mt-8 rounded-pill">
+        {content.cta}
+        <Chevron locale={locale} />
+      </Button>
+      <p className="type-small mt-4 text-ink-muted">{content.finePrint}</p>
     </article>
   );
 }

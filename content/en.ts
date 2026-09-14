@@ -103,6 +103,7 @@ export const en = {
     perYear: '/ year',
     wasLabel: 'was', // authored
     vatLine: 'Price excludes VAT — {vat} {sar} VAT is added, making the total due {total} {sar}.', // authored
+    includesLabel: 'This subscription includes:', // authored
     features: [
       'Enjoy WalaOne benefits for a full year',
       'More than 4,000 offers and discounts across 6 sectors',

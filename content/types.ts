@@ -75,6 +75,8 @@ export type SiteContent = {
     wasLabel: string;
     /** {vat} {total} */
     vatLine: string;
+    /** the label over the feature list */
+    includesLabel: string;
     features: readonly [string, string, string, string];
     cta: string;
     finePrint: string;

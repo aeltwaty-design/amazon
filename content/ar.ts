@@ -105,6 +105,7 @@ export const ar = {
     wasLabel: 'بدلًا من', // authored
     vatLine:
       'السعر غير شامل الضريبة — تُضاف {vat} {sar} ضريبة قيمة مضافة، ليصبح الإجمالي المستحق {total} {sar}.', // authored
+    includesLabel: 'يشمل هذا الاشتراك:', // authored
     features: [
       'استفد من مزايا ولاء ون لمدة عام كامل',
       'أكثر من ٤٠٠٠ عرض وخصم في ٦ قطاعات',
