@@ -24,8 +24,7 @@ export const ar = {
     h1Lead: 'ميزة حصرية لموظفي أمازون',
     h1Tail: 'مع ولاء ون',
     sub: 'استمتع بعالم من العروض والخصومات والمكافآت مع اشتراك ولاء ون بسعر خاص لموظفي أمازون.',
-    priceLead:
-      '+ ضريبة القيمة المضافة · الإجمالي {total} {sar} · توفير {saving} {sar} (خصم {discountPct}%)', // authored
+    priceLead: '+ ضريبة القيمة المضافة · الإجمالي {total} · توفير {saving} (خصم {discountPct}%)', // authored
     perYear: '/ سنويًا',
     wasLabel: 'بدلًا من', // authored
     cta: 'اشترك الآن',
@@ -104,7 +103,7 @@ export const ar = {
     perYear: '/ سنويًا',
     wasLabel: 'بدلًا من', // authored
     vatLine:
-      'السعر غير شامل الضريبة — تُضاف {vat} {sar} ضريبة قيمة مضافة، ليصبح الإجمالي المستحق {total} {sar}.', // authored
+      'السعر غير شامل الضريبة — تُضاف {vat} ضريبة قيمة مضافة، ليصبح الإجمالي المستحق {total}.', // authored
     includesLabel: 'يشمل هذا الاشتراك:', // authored
     features: [
       'استفد من مزايا ولاء ون لمدة عام كامل',
@@ -172,7 +171,7 @@ export const ar = {
         visa: { title: 'شعار فيزا', description: 'علامة الدفع' },
         card: { title: 'أيقونة البطاقة', description: 'علامة الدفع' },
       },
-      payCta: 'ادفع {amount} {sar}',
+      payCta: 'ادفع {amount}',
       paying: 'جارٍ معالجة الدفع…', // authored
       secureNote: 'تتم عملية الدفع على صفحة البوابة المؤمّنة — بيانات بطاقتك لا تمر عبر خوادمنا.',
       retry: 'حاول مرة أخرى', // authored

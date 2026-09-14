@@ -5,13 +5,12 @@ import { HeroChoreography } from '@/components/hero/HeroChoreography';
 import { HeroLottie } from '@/components/hero/HeroLottie';
 import { HeroTiles } from '@/components/hero/HeroTiles';
 import { Button } from '@/components/ui/Button';
-import { Currency } from '@/components/ui/Currency';
 import { Interpolate } from '@/components/ui/Interpolate';
 import { Price } from '@/components/ui/Price';
 import { SECTION_IDS } from '@/lib/anchors';
 import { HERO_LOTTIE, HERO_SURFACE } from '@/lib/art';
 import type { Locale } from '@/lib/i18n';
-import { PRICE, PRICING, formatMoney, formatRiyals } from '@/lib/pricing';
+import { PRICE, PRICING } from '@/lib/pricing';
 
 type Props = {
   locale: Locale;
@@ -97,10 +96,9 @@ export function Hero({ locale, content, benefits }: Props) {
               <Interpolate
                 template={content.priceLead}
                 vars={{
-                  total: formatMoney(PRICE.total),
-                  saving: formatRiyals(PRICE.discount),
+                  total: <Price halalas={PRICE.total} locale={locale} />,
+                  saving: <Price halalas={PRICE.discount} locale={locale} format="riyals" />,
                   discountPct: PRICING.discountPct,
-                  sar: <Currency locale={locale} />,
                 }}
               />
             </span>

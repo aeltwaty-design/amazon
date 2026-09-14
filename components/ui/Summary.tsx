@@ -38,11 +38,9 @@ export function Summary({ rows, locale, className }: Props) {
               )}
             >
               <bdi dir="ltr" className="inline-flex items-baseline gap-1">
-                <span>
-                  {negative ? '−' : ''}
-                  {formatMoney(Math.abs(row.halalas))}
-                </span>
+                {negative ? <span>−</span> : null}
                 <Currency locale={locale} />
+                <span>{formatMoney(Math.abs(row.halalas))}</span>
               </bdi>
             </dd>
           </div>

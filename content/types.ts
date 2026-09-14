@@ -41,7 +41,7 @@ export type SiteContent = {
     h1Lead: string;
     h1Tail: string;
     sub: string;
-    /** {total} {saving} {discountPct} {sar} */
+    /** {total} {saving} {discountPct} */
     priceLead: string;
     perYear: string;
     wasLabel: string;

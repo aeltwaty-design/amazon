@@ -3,14 +3,13 @@
 import { useState } from 'react';
 import type { SiteContent } from '@/content/types';
 import { Button } from '@/components/ui/Button';
-import { Currency } from '@/components/ui/Currency';
 import { Interpolate } from '@/components/ui/Interpolate';
 import { PillToggle } from '@/components/ui/PillToggle';
 import { Price } from '@/components/ui/Price';
 import { SECTION_IDS } from '@/lib/anchors';
 import { cn } from '@/lib/cn';
 import { dirFor, type Locale } from '@/lib/i18n';
-import { PRICE, formatMoney } from '@/lib/pricing';
+import { PRICE } from '@/lib/pricing';
 
 type Props = { locale: Locale; content: SiteContent['pricing'] };
 type View = 'beforeVat' | 'total';
@@ -111,9 +110,8 @@ export function PlanCard({ locale, content }: Props) {
         <Interpolate
           template={content.vatLine}
           vars={{
-            vat: formatMoney(PRICE.vat),
-            total: formatMoney(PRICE.total),
-            sar: <Currency locale={locale} />,
+            vat: <Price halalas={PRICE.vat} locale={locale} />,
+            total: <Price halalas={PRICE.total} locale={locale} />,
           }}
         />
       </p>

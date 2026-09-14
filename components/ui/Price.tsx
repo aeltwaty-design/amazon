@@ -1,7 +1,7 @@
 import { Currency } from '@/components/ui/Currency';
 import { cn } from '@/lib/cn';
 import type { Locale } from '@/lib/i18n';
-import { formatMoney } from '@/lib/pricing';
+import { formatMoney, formatRiyals } from '@/lib/pricing';
 
 type Props = {
   halalas: number;
@@ -9,6 +9,8 @@ type Props = {
   size?: 'plan' | 'lead' | 'inline';
   strike?: boolean;
   className?: string;
+  /** whole riyals, the way prose says them ("save 148"); the default is two decimals */
+  format?: 'money' | 'riyals';
 };
 
 const SIZE = {
@@ -17,8 +19,18 @@ const SIZE = {
   inline: '',
 } as const;
 
-// Always LTR: "255.30" must never reorder inside an Arabic sentence.
-export function Price({ halalas, locale, size = 'inline', strike = false, className }: Props) {
+// Always LTR: "255.30" must never reorder inside an Arabic sentence, and the
+// riyal symbol leads the figure in both locales, which only holds if the pair
+// is isolated — in an RTL sentence a symbol written first would otherwise be
+// laid out to the right of the digits.
+export function Price({
+  halalas,
+  locale,
+  size = 'inline',
+  strike = false,
+  className,
+  format = 'money',
+}: Props) {
   return (
     <span
       dir="ltr"
@@ -31,8 +43,8 @@ export function Price({ halalas, locale, size = 'inline', strike = false, classN
         className,
       )}
     >
-      <span>{formatMoney(halalas)}</span>
       <Currency locale={locale} />
+      <span>{format === 'riyals' ? formatRiyals(halalas) : formatMoney(halalas)}</span>
     </span>
   );
 }

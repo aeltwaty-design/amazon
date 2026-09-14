@@ -3,13 +3,13 @@
 import { useErrorMessage, useFlowContent } from '@/components/flow/FlowContentContext';
 import { Button } from '@/components/ui/Button';
 import { Callout } from '@/components/ui/Callout';
-import { Currency } from '@/components/ui/Currency';
 import { Interpolate } from '@/components/ui/Interpolate';
 import { PaymentMethods } from '@/components/ui/PaymentMethods';
 import { PAYMENT_MARKS } from '@/lib/art';
+import { Price } from '@/components/ui/Price';
 import { Summary, type SummaryRow } from '@/components/ui/Summary';
 import type { FlowState } from '@/lib/flow';
-import { PAYMENT_METHODS, PRICE, formatMoney } from '@/lib/pricing';
+import { PAYMENT_METHODS, PRICE } from '@/lib/pricing';
 
 type Props = {
   state: Extract<FlowState, { step: 'payment' }>;
@@ -68,7 +68,7 @@ export function PaymentStep({ state, onPay }: Props) {
         ) : (
           <Interpolate
             template={copy.payCta}
-            vars={{ amount: formatMoney(PRICE.total), sar: <Currency locale={locale} /> }}
+            vars={{ amount: <Price halalas={PRICE.total} locale={locale} /> }}
           />
         )}
       </Button>
