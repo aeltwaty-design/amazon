@@ -196,7 +196,7 @@ export const ar = {
       required: 'هذا الحقل مطلوب.', // authored
       invalid: 'القيمة غير صالحة.', // authored
       'name.full': 'أدخل الاسم الكامل (الاسم الأول واسم العائلة).', // authored
-      'mobile.invalid': 'أدخل رقم جوال سعودي صحيح.',
+      'mobile.invalid': 'أدخل رقم جوال سعودي من 9 أرقام يبدأ بالرقم 5.', // authored
       'email.invalid': 'أدخل بريدًا إلكترونيًا صحيحًا.',
       'email.domain': 'هذا العرض متاح لموظفي أمازون فقط. النطاقات المقبولة: {domains}',
       'email.pending': 'يوجد اشتراك قائم أو قيد المعالجة بهذا البريد.',

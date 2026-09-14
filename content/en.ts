@@ -197,7 +197,7 @@ export const en = {
       required: 'This field is required.', // authored
       invalid: 'This value is not valid.', // authored
       'name.full': 'Enter your full name (first and last name).', // authored
-      'mobile.invalid': 'Enter a valid Saudi mobile number.',
+      'mobile.invalid': 'Enter a 9-digit Saudi mobile number starting with 5.', // authored
       'email.invalid': 'Enter a valid email address.',
       'email.domain': 'This offer is for Amazon employees only. Accepted domains: {domains}',
       'email.pending': 'There is already an active or pending subscription for this email.',

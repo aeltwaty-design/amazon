@@ -25,6 +25,8 @@ type TextProps = BaseProps & {
   dialCode?: string;
   hint?: string;
   placeholder?: string;
+  /** caps what can be typed or pasted, in characters */
+  maxLength?: number;
   type?: 'text' | 'email' | 'tel';
   inputMode?: 'text' | 'email' | 'tel' | 'numeric';
   autoComplete?: HTMLInputAutoCompleteAttribute;
@@ -61,6 +63,7 @@ export function Field({
   dialCode,
   hint,
   placeholder,
+  maxLength,
   error,
   registration,
   type = 'text',
@@ -110,6 +113,7 @@ export function Field({
             inputMode={inputMode}
             autoComplete={autoComplete}
             placeholder={placeholder}
+            maxLength={maxLength}
             dir={dir}
             required={required}
             aria-required={required || undefined}

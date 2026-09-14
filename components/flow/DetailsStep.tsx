@@ -2,7 +2,7 @@
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useEffect, useRef } from 'react';
-import { useForm } from 'react-hook-form';
+import { useForm, useWatch } from 'react-hook-form';
 import { useErrorMessage, useFlowContent } from '@/components/flow/FlowContentContext';
 import { Button } from '@/components/ui/Button';
 import { Callout } from '@/components/ui/Callout';
@@ -11,7 +11,7 @@ import { MobileIcon, SmsIcon, UserIcon } from '@/components/ui/Icon';
 import { Interpolate } from '@/components/ui/Interpolate';
 import { FOOTER_HREFS } from '@/lib/anchors';
 import type { FlowState } from '@/lib/flow';
-import { detailsSchema, type Details, type DetailsInput } from '@/lib/validation';
+import { detailsSchema, MOBILE_DIGITS, type Details, type DetailsInput } from '@/lib/validation';
 
 type Props = {
   state: Extract<FlowState, { step: 'details' }>;
@@ -34,8 +34,16 @@ export function DetailsStep({ state, onSubmit }: Props) {
     defaultValues: state.draft ?? EMPTY,
     mode: 'onTouched',
   });
-  const { register, handleSubmit, setError, getValues, formState } = form;
+  const { register, handleSubmit, setError, getValues, control, formState } = form;
   const { errors, submitCount } = formState;
+
+  // The CTA is live only once every field would pass. react-hook-form's own
+  // isValid lags a mode behind — with onTouched it does not settle until the
+  // last field is blurred, which would leave the button dead under a finished
+  // form — so ask the schema itself about what is currently typed. Four fields
+  // per keystroke is nothing, and the rule cannot drift from the resolver's.
+  const typed = useWatch({ control });
+  const complete = detailsSchema.safeParse(typed).success;
 
   // A rejection from the (mock) server is not a schema error: it lands under
   // the email field like any other and clears on the next edit.
@@ -99,7 +107,9 @@ export function DetailsStep({ state, onSubmit }: Props) {
         hint={copy.mobile.hint}
         type="tel"
         inputMode="tel"
-        autoComplete="tel"
+        // the country block carries +966, so the field is the national part
+        autoComplete="tel-national"
+        maxLength={MOBILE_DIGITS}
         dir="ltr"
         required
         error={errors.mobile?.message}
@@ -141,7 +151,7 @@ export function DetailsStep({ state, onSubmit }: Props) {
         />
       </CheckboxField>
 
-      <Button type="submit" fullWidth loading={state.submitting}>
+      <Button type="submit" fullWidth loading={state.submitting} disabled={!complete}>
         {state.submitting ? copy.submitting : copy.cta}
       </Button>
     </form>

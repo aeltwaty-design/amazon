@@ -30,14 +30,18 @@ export const toWesternDigits = (input: string): string =>
     .replace(/[٠-٩]/g, (d) => String(d.charCodeAt(0) - 0x0660))
     .replace(/[۰-۹]/g, (d) => String(d.charCodeAt(0) - 0x06f0));
 
-// 05XXXXXXXX, +9665XXXXXXXX, 009665XXXXXXXX, 9665XXXXXXXX and bare 5XXXXXXXX
-// all denote the same subscriber; spaces, dashes and parens are formatting noise.
-const KSA_MOBILE = /^(?:\+966|00966|966|0)?(5\d{8})$/;
+// The field holds the national number only: the country block beside it shows
+// +966 and the input is capped at nine characters, so a subscriber number is
+// nine digits opening with 5, and the prefixes a user could once type no
+// longer fit. Spaces, dashes and parens stay formatting noise.
+const KSA_MOBILE = /^5\d{8}$/;
+
+/** how many characters the mobile field accepts, and so how long a number is */
+export const MOBILE_DIGITS = 9;
 
 export function normaliseKsaMobile(raw: string): string | null {
   const compact = toWesternDigits(raw).replace(/[\s\-().]/g, '');
-  const match = KSA_MOBILE.exec(compact);
-  return match?.[1] ? `+966${match[1]}` : null;
+  return KSA_MOBILE.test(compact) ? `+966${compact}` : null;
 }
 
 export const formatMobileForDisplay = (e164: string): string =>
