@@ -3,10 +3,11 @@
 import Image from 'next/image';
 import type { ComponentType, HTMLInputAutoCompleteAttribute, ReactNode } from 'react';
 import type { UseFormRegisterReturn } from 'react-hook-form';
-import { useErrorMessage } from '@/components/flow/FlowContentContext';
+import { useErrorMessage, useFlowContent } from '@/components/flow/FlowContentContext';
 import { CheckIcon } from '@/components/ui/Icon';
 import { DIAL_FLAG } from '@/lib/art';
 import { cn } from '@/lib/cn';
+import { dirFor } from '@/lib/i18n';
 
 type BaseProps = {
   id: string;
@@ -69,6 +70,7 @@ export function Field({
   required,
   className,
 }: TextProps) {
+  const { locale } = useFlowContent();
   const message = useErrorMessage()(error);
   const hintId = hint ? `${id}-hint` : undefined;
   const errorId = message ? `${id}-error` : undefined;
@@ -79,9 +81,11 @@ export function Field({
       <label htmlFor={id} className="type-body block font-bold">
         {label}
       </label>
-      {/* A phone number is left-to-right data: the box itself is LTR so the
-          country block sits on the same side in both locales, the way the
-          design draws it, and the digits run away from it. */}
+      {/* A phone number is left-to-right data. The box is LTR so the country
+          block sits on the physical left in both locales, the way the design
+          draws it, and so the block's divider falls on its trailing edge. What
+          follows the block goes back into the page direction, so its glyph
+          leads the text on the same side as every other field's. */}
       <div className={BOX} dir={dialCode ? 'ltr' : undefined}>
         {dialCode ? (
           <span className="flex items-center gap-2 border-e border-field-border bg-field-prefix px-4">
@@ -95,7 +99,10 @@ export function Field({
             />
           </span>
         ) : null}
-        <span className="flex min-w-0 flex-1 items-center gap-3 px-4">
+        <span
+          className="flex min-w-0 flex-1 items-center gap-3 px-4"
+          dir={dialCode ? dirFor(locale) : undefined}
+        >
           {LeadingIcon ? <LeadingIcon className="size-5 text-ink" /> : null}
           <input
             id={id}
