@@ -81,7 +81,7 @@ export const HERO_LOTTIE = {
   crop: { x: 0, y: 0, w: 482, h: 475 },
 } as const;
 
-/** the five hero sector tiles, in row order (tile 1 becomes the first benefit card, which shares its tone) */
+/** the five hero sector tiles, in DOM order — tile 1 becomes the first benefit card, which shares its tone, and sits in the middle column (CSS `order`) */
 export type HeroTileId = 'restaurants' | 'shopping' | 'travel' | 'entertainment' | 'health';
 
 /** a Lottie a tile cross-fades to on hover in place of its label (components/hero/TileLottie.tsx) */

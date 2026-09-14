@@ -266,21 +266,30 @@ html[data-js]:not([data-fonts]) body {
     position: relative;
     aspect-ratio: 1;
   }
-  /* Tile 1 is the top of the pile; later tiles slide under it in DOM order. */
+  /* Tile 1 is the top of the pile; later tiles slide under it in DOM order.
+     It sits in the middle column (visual order 2, 3, 1, 4, 5): `order` counts
+     along the grid's inline axis, so the same values mirror in RTL, while
+     nth-child keeps matching document order, so the ladder still puts tile 1
+     on top — and with explicit z-indexes, `order` never touches paint order. */
   .hero-tile:nth-child(1) {
     z-index: 5;
+    order: 3;
   }
   .hero-tile:nth-child(2) {
     z-index: 4;
+    order: 1;
   }
   .hero-tile:nth-child(3) {
     z-index: 3;
+    order: 2;
   }
   .hero-tile:nth-child(4) {
     z-index: 2;
+    order: 4;
   }
   .hero-tile:nth-child(5) {
     z-index: 1;
+    order: 5;
   }
   @media (min-width: 1024px) {
     .hero-tiles {

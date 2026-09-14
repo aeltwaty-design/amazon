@@ -47,7 +47,7 @@ export type SiteContent = {
     cta: string;
     ghostCta: string;
     illustrationSlot: SlotCopy;
-    /** the five sector tiles under the CTA; tile 1 gathers the others and becomes the first benefit card */
+    /** the five sector tiles under the CTA, in DOM order; tile 1 sits in the middle column, gathers the others and becomes the first benefit card */
     tiles: readonly [HeroTile, HeroTile, HeroTile, HeroTile, HeroTile];
   };
   benefits: {

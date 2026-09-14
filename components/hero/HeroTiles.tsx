@@ -7,9 +7,12 @@ import { cn } from '@/lib/cn';
 type Props = { tiles: SiteContent['hero']['tiles'] };
 
 // Literal class names: Tailwind only generates what it can read in source.
-// Design-specified tile washes: purple 50 and yellow 50 alternating.
-// Independent of the Benefits cards' tones.
-const TONE_CLASS = ['card-tone-1', 'card-tone-2', 'card-tone-1', 'card-tone-2', 'card-tone-1'];
+// Design-specified tile washes: purple 50 and yellow 50 alternating across the
+// columns. Indexed by DOM order, which is not column order — tile 1 takes the
+// middle column (`order` in globals.css) and must stay purple 50, the tone it
+// carries into the first benefit card — so the alternation is authored around
+// it: columns read purple, yellow, purple, yellow, purple.
+const TONE_CLASS = ['card-tone-1', 'card-tone-1', 'card-tone-2', 'card-tone-2', 'card-tone-1'];
 
 // The reference design's marketplace row: five square tiles under the CTA, an illustration
 // at rest and the sector name on hover (or, for a tile in TILE_MOTION, its

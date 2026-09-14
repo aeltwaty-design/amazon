@@ -163,10 +163,13 @@ function measure(
   const t = rects[0];
   const last = rects[rects.length - 1];
 
-  // The row centre. The first tile is at the inline-start and the last at the
-  // inline-end, and every tile has the same width, so the average is the same
-  // number in LTR and RTL.
-  const centreX = t && last ? (t.left + last.right) / 2 : 0;
+  // The row centre, from the row's outer edges: DOM order is not column order
+  // (tile 1 sits in the middle column through CSS `order`), so neither the
+  // first nor the last rect can be trusted to be an end of the row.
+  const centreX =
+    t && last
+      ? (Math.min(...rects.map((r) => r.left)) + Math.max(...rects.map((r) => r.right))) / 2
+      : 0;
   const gather = rects.map((rect, i) => ({
     x: centreX - midX(rect) + i * HERO.PILE.fanX * sign,
     y: i * HERO.PILE.fanY,
@@ -264,7 +267,7 @@ function measureWordShift(art: HTMLElement | null, sign: 1 | -1): Map<HTMLElemen
   return wordShift;
 }
 
-function buildLoadSequence(hero: HTMLElement, layout: HeroLayout) {
+function buildLoadSequence(hero: HTMLElement, layout: HeroLayout, sign: 1 | -1) {
   const out = ease('outCubic');
   const tl = gsap.timeline({ defaults: { ease: out } });
 
@@ -300,7 +303,15 @@ function buildLoadSequence(hero: HTMLElement, layout: HeroLayout) {
   );
 
   // No tile row below 1024 (`.hero-tiles` is display: none), so nothing rises.
-  const tiles = layout === 'stacked' ? [] : all(hero, '[data-hero-tile]');
+  // The stagger runs by target index, and DOM order is not column order (tile
+  // 1 is the middle column), so the targets are sorted by column: the rise
+  // still sweeps from the inline start in either direction.
+  const tiles =
+    layout === 'stacked'
+      ? []
+      : all(hero, '[data-hero-tile]').sort(
+          (a, b) => (a.getBoundingClientRect().left - b.getBoundingClientRect().left) * sign,
+        );
   if (tiles.length) {
     tl.fromTo(
       tiles,
@@ -766,7 +777,7 @@ export function HeroChoreography({ locale }: { locale: Locale }) {
             const layout: HeroLayout =
               conditions.desktop && benefits ? 'pinned' : conditions.lg ? 'short' : 'stacked';
             const art = hero.querySelector<HTMLElement>('[data-hero-art]');
-            const load = buildLoadSequence(hero, layout);
+            const load = buildLoadSequence(hero, layout, sign);
             // Both exits publish the tone; set before any refresh so the
             // header never reads "absent" mid-build.
             setHeroTone('dark');
