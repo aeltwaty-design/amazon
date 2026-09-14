@@ -11,7 +11,7 @@ type Props = { tiles: SiteContent['hero']['tiles'] };
 // Independent of the Benefits cards' tones.
 const TONE_CLASS = ['card-tone-1', 'card-tone-2', 'card-tone-1', 'card-tone-2', 'card-tone-1'];
 
-// noon One's marketplace row: five square tiles under the CTA, an illustration
+// The reference design's marketplace row: five square tiles under the CTA, an illustration
 // at rest and the sector name on hover (or, for a tile in TILE_MOTION, its
 // animation; see TileLottie). The row exists from 1024 up only — a phone has
 // no room for it under the headline and hands the scroll to the first benefit

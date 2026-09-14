@@ -90,7 +90,7 @@ html[data-js]:not([data-fonts]) body {
 }
 
 @layer components {
-  /* Type scale measured on noon One at 1440 × 900 (brief §3). rem values carry the px. */
+  /* Type scale measured on the reference design at 1440 × 900 (brief §3). rem values carry the px. */
   .type-display {
     /* The measured 7.4vw/107px is for a four-word headline; capped against the
        viewport height so a long headline, the price block and the peeking
@@ -254,7 +254,7 @@ html[data-js]:not([data-fonts]) body {
     );
   }
 
-  /* Hero sector tiles (noon One's marketplace row): a five-up grid from 1024
+  /* Hero sector tiles (the reference design's marketplace row): a five-up grid from 1024
      up, and not rendered below it — a phone shows the headline, the price and
      the CTAs, then hands the scroll to the first benefit card (M6 in
      MOTION.md). GSAP owns `transform` on the <li>; hover lifts the inner
@@ -287,7 +287,7 @@ html[data-js]:not([data-fonts]) body {
       display: grid;
       gap: 15px;
       grid-template-columns: repeat(5, minmax(0, 1fr));
-      /* 216px tiles (measured on noon) once the viewport is tall enough;
+      /* 216px tiles (measured on the reference) once the viewport is tall enough;
          otherwise they shrink with its height so headline, price, CTA and
          tiles share one pinned viewport, and with its width because the
          headline wraps to more lines when narrow (162px at 1440 × 900, which

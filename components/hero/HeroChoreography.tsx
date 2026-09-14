@@ -15,7 +15,7 @@ import {
   useGSAP,
 } from '@/lib/motion';
 
-// noon One's hero sequence, measured (see MOTION.md). Durations, distances and
+// The hero sequence, measured on the reference design (see MOTION.md). Durations, distances and
 // easings are NOT here: they are read from styles/tokens.css at init so design
 // can tune without code. Progress windows are fractions of the 100vh pin.
 export const HERO = {
@@ -385,7 +385,7 @@ function buildPinnedScrub(
 
   // The mirror cards exist only for the scrub: hidden until it shows them,
   // their contents hidden separately so a revealed box is empty at first
-  // (noon shows the pastel boxes, then their contents). The first card paints
+  // (the reference shows the pastel boxes, then their contents). The first card paints
   // above the others so the pills emerge from behind it.
   gsap.set(heroCards, { opacity: 0 });
   gsap.set(inner, { opacity: 0 });
