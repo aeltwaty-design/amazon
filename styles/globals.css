@@ -185,6 +185,43 @@ html[data-js]:not([data-fonts]) body {
     }
   }
 
+  /* Closing CTA band (Aganta 6818:22068): a near-black field with one bloom in
+     its inline-start top corner. Measured off the node's own render, the light
+     is still at full violet halfway across the band and gone by the far edge,
+     and it reaches about 1.75 band-heights down, which is the ellipse below.
+     The corner follows the page, not the screen, so the bloom sits behind the
+     copy in both languages; `rtl:` does not resolve in this build, so the flip
+     comes from the document's own dir. */
+  .surface-band {
+    --band-bloom-x: 0%;
+    background-color: var(--color-bg-band);
+    /* A narrow band sits the copy right under the light, so the bloom is kept
+       to the corner there. */
+    background-image: radial-gradient(
+      ellipse 75% 40% at var(--band-bloom-x) 0%,
+      var(--color-bg-band-bloom) 0%,
+      var(--color-bg-band-glow) 18%,
+      var(--color-bg-band) 88%
+    );
+  }
+  @media (min-width: 1024px) {
+    /* 48.6% of 1440 and 140% of 500 are the same length: the kit's light is
+       round on its own band and stretches with ours. The lavender core stays
+       inside the first fifth of it, because the words start a sixth of the way
+       in and body copy owes 4.5:1 — the kit's own sub-copy is nearer 4.2. */
+    .surface-band {
+      background-image: radial-gradient(
+        ellipse 48.6% 140% at var(--band-bloom-x) 0%,
+        var(--color-bg-band-bloom) 0%,
+        var(--color-bg-band-glow) 18%,
+        var(--color-bg-band) 88%
+      );
+    }
+  }
+  [dir='rtl'] .surface-band {
+    --band-bloom-x: 100%;
+  }
+
   /* Benefit card: fill from the tone utility, hover shifts toward ink by the token. */
   .benefit-card {
     background-color: var(--card-base);

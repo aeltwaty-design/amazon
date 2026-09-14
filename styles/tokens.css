@@ -18,6 +18,13 @@
 
   /* surfaces */
   --color-bg-hero-image: #090723; /* mean of public/hero/spectral.jpg: paints under the hero image until it loads */
+  /* the closing CTA band (Aganta 6818:22068): a near-black field lit from its
+     inline-start top corner, lavender into violet and out by about half the
+     width. The kit's own bloom is a more magenta violet; these are the brand's
+     Primary 100 and 500, and the field is the hero underlay's near-black. */
+  --color-bg-band: #090723;
+  --color-bg-band-bloom: #d9d2f4; /* Primary 100 */
+  --color-bg-band-glow: #755bd8; /* Primary 500 */
   --color-bg-page: #ffffff;
   --color-bg-surface: #f8f9fc; /* Grey 100 */
   --color-bg-elevated: #ffffff;

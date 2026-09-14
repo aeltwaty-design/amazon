@@ -20,6 +20,7 @@
     "render:headline": "node scripts/render/recolor-lottie.mjs",
     "render:phone": "node scripts/render/build-phone-mockup.mjs",
     "render:about": "node scripts/render/build-about-mockup.mjs",
+    "render:map": "node scripts/render/build-map-screen.mjs",
     "render:brands": "node scripts/render/build-brands.mjs",
     "render:flag": "node scripts/render/build-flag.mjs",
     "render:steps": "node scripts/render/build-step-lotties.mjs"

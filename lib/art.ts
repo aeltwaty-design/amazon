@@ -19,6 +19,15 @@ export const APP_SCREEN: Record<Locale, Art> = {
 };
 
 /**
+ * The map screen, for the second phone in the closing band. It is the capture
+ * already placed in the Benefits map mockup, lifted back out of it by
+ * `npm run render:map`. There is one, in Arabic: it is the screen behind the
+ * front phone, roughly half of it visible, and nothing on it is meant to be
+ * read — swap in an English capture here if one is supplied.
+ */
+export const APP_MAP_SCREEN: Art = { src: '/app/map.webp', width: 750, height: 1624 };
+
+/**
  * The flag shown in the phone field's country block: the Twemoji Saudi Arabia
  * flag (SVG Repo 405595, the Twemoji set; graphics CC-BY 4.0 by Twitter),
  * cropped to the flag inside its 36 × 36 emoji canvas and rasterised at 3× the
