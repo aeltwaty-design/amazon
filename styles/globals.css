@@ -185,15 +185,6 @@ html[data-js]:not([data-fonts]) body {
     }
   }
 
-  /* Hero and Final CTA surface: Primary 800→900 with a Primary 500 glow behind
-     the headline. One class so both bands share the recipe. */
-  .surface-hero {
-    background-color: var(--color-bg-hero-deep);
-    background-image:
-      radial-gradient(80% 60% at 50% 0%, var(--color-bg-hero-glow), transparent 70%),
-      linear-gradient(180deg, var(--color-bg-hero) 0%, var(--color-bg-hero-deep) 100%);
-  }
-
   /* Benefit card: fill from the tone utility, hover shifts toward ink by the token. */
   .benefit-card {
     background-color: var(--card-base);

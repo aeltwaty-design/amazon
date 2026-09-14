@@ -35,7 +35,7 @@ export default async function Page({ params }: Props) {
         <Pricing content={content.pricing} locale={locale} />
         <Flow content={content.flow} locale={locale} />
         <Faq content={content.faq} />
-        <FinalCta content={content.finalCta} />
+        <FinalCta content={content.finalCta} locale={locale} />
         <Terms content={content.terms} locale={locale} />
       </main>
       <Footer content={content.footer} wordmark={content.header.wordmark} locale={locale} />
