@@ -168,7 +168,6 @@ export const ar = {
         total: 'الإجمالي المستحق',
       },
       methodsLabel: 'طريقة الدفع', // authored
-      methods: { mada: 'مدى', visa: 'فيزا', card: 'بطاقة ائتمانية' }, // authored
       methodSlot: {
         mada: { title: 'شعار مدى', description: 'علامة الدفع' },
         visa: { title: 'شعار فيزا', description: 'علامة الدفع' },

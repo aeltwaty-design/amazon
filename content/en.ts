@@ -167,7 +167,6 @@ export const en = {
         total: 'Total due',
       },
       methodsLabel: 'Payment method', // authored
-      methods: { mada: 'mada', visa: 'Visa', card: 'Credit card' },
       methodSlot: {
         mada: { title: 'mada logo', description: 'payment mark' },
         visa: { title: 'Visa logo', description: 'payment mark' },

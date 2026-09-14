@@ -12,7 +12,6 @@ import { SECTION_IDS } from '@/lib/anchors';
 import { INITIAL_FLOW, STEP_ORDER, flowReducer } from '@/lib/flow';
 import { fmt, type Locale } from '@/lib/i18n';
 import * as api from '@/lib/mockApi';
-import type { PaymentMethod } from '@/lib/pricing';
 import type { Details, DetailsInput, FlowErrorCode } from '@/lib/validation';
 
 type Props = { content: FlowContent; locale: Locale };
@@ -91,7 +90,7 @@ export function Flow({ content, locale }: Props) {
     const attempt = state.attempts + 1;
     dispatch({ type: 'PAY' });
     try {
-      const { orderRef } = await api.pay(state.method, state.details, attempt);
+      const { orderRef } = await api.pay(state.details, attempt);
       if (mine !== seq.current) return;
       dispatch({ type: 'PAY_SUCCEEDED', orderRef });
     } catch {
@@ -141,13 +140,7 @@ export function Flow({ content, locale }: Props) {
                   onEdit={editDetails}
                 />
               ) : state.step === 'payment' ? (
-                <PaymentStep
-                  state={state}
-                  onMethodChange={(method: PaymentMethod) =>
-                    dispatch({ type: 'METHOD_CHANGED', method })
-                  }
-                  onPay={payNow}
-                />
+                <PaymentStep state={state} onPay={payNow} />
               ) : (
                 <DoneStep state={state} />
               )}

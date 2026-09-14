@@ -1,4 +1,3 @@
-import type { PaymentMethod } from '@/lib/pricing';
 import type { Details, FlowErrorCode } from '@/lib/validation';
 
 export type OtpSession = { issuedAt: number; expiresAt: number };
@@ -66,11 +65,7 @@ export async function verifyOtp(code: string, session: OtpSession): Promise<void
   }
 }
 
-export async function pay(
-  _method: PaymentMethod,
-  details: Details,
-  attempt: number,
-): Promise<{ orderRef: string }> {
+export async function pay(details: Details, attempt: number): Promise<{ orderRef: string }> {
   await wait(MOCK_LATENCY_MS);
   if (details.email === MOCK_TRIGGERS.payFailEmail && attempt === 1) {
     throw new MockApiError('payment.failed');

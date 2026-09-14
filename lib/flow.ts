@@ -1,5 +1,4 @@
 import type { OtpSession } from '@/lib/mockApi';
-import type { PaymentMethod } from '@/lib/pricing';
 import type { Details, DetailsInput, FlowErrorCode } from '@/lib/validation';
 
 export type IdentityStatus = 'idle' | 'verifying' | 'wrong' | 'expired' | 'resending';
@@ -26,7 +25,6 @@ export type FlowState =
       step: 'payment';
       draft: DetailsInput;
       details: Details;
-      method: PaymentMethod;
       status: PaymentStatus;
       attempts: number;
     }
@@ -43,7 +41,6 @@ export type FlowAction =
   | { type: 'OTP_RESEND' }
   | { type: 'OTP_RESENT'; session: OtpSession }
   | { type: 'EDIT_DETAILS' }
-  | { type: 'METHOD_CHANGED'; method: PaymentMethod }
   | { type: 'PAY' }
   | { type: 'PAY_FAILED' }
   | { type: 'PAY_SUCCEEDED'; orderRef: string }
@@ -99,7 +96,6 @@ export function flowReducer(state: FlowState, action: FlowAction): FlowState {
         step: 'payment',
         draft: state.draft,
         details: state.details,
-        method: 'mada',
         status: 'idle',
         attempts: 0,
       };
@@ -112,9 +108,6 @@ export function flowReducer(state: FlowState, action: FlowAction): FlowState {
     case 'EDIT_DETAILS':
       if (state.step !== 'identity' && state.step !== 'payment') return state;
       return { step: 'details', draft: state.draft, serverError: null, submitting: false };
-    case 'METHOD_CHANGED':
-      if (state.step !== 'payment') return state;
-      return { ...state, method: action.method };
     case 'PAY':
       if (state.step !== 'payment') return state;
       return { ...state, status: 'loading', attempts: state.attempts + 1 };

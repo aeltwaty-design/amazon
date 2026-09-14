@@ -134,7 +134,6 @@ export type FlowContent = {
     heading: string;
     rows: { annual: string; discount: string; subtotal: string; vat: string; total: string };
     methodsLabel: string;
-    methods: Record<PaymentMethod, string>;
     methodSlot: Record<PaymentMethod, SlotCopy>;
     /** {amount} */
     payCta: string;

@@ -8,15 +8,14 @@ import { PAYMENT_MARKS } from '@/lib/art';
 import { Summary, type SummaryRow } from '@/components/ui/Summary';
 import type { FlowState } from '@/lib/flow';
 import { fmt } from '@/lib/i18n';
-import { PAYMENT_METHODS, PRICE, formatMoney, type PaymentMethod } from '@/lib/pricing';
+import { PAYMENT_METHODS, PRICE, formatMoney } from '@/lib/pricing';
 
 type Props = {
   state: Extract<FlowState, { step: 'payment' }>;
-  onMethodChange: (method: PaymentMethod) => void;
   onPay: () => void;
 };
 
-export function PaymentStep({ state, onMethodChange, onPay }: Props) {
+export function PaymentStep({ state, onPay }: Props) {
   const { content, locale } = useFlowContent();
   const copy = content.payment;
   const message = useErrorMessage();
@@ -41,12 +40,8 @@ export function PaymentStep({ state, onMethodChange, onPay }: Props) {
 
       <PaymentMethods
         label={copy.methodsLabel}
-        value={state.method}
-        onChange={onMethodChange}
-        disabled={loading}
-        options={PAYMENT_METHODS.map((method) => ({
-          value: method,
-          label: copy.methods[method],
+        marks={PAYMENT_METHODS.map((method) => ({
+          id: method,
           slot: copy.methodSlot[method],
           mark: PAYMENT_MARKS[method],
         }))}
