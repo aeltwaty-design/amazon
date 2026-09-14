@@ -1,5 +1,6 @@
 import type { SiteContent } from '@/content/types';
 import { AppMockup } from '@/components/ui/AppMockup';
+import { CountUp } from '@/components/ui/CountUp';
 import { SECTION_IDS } from '@/lib/anchors';
 import type { Locale } from '@/lib/i18n';
 
@@ -22,7 +23,7 @@ export function About({ content, locale }: Props) {
               <div key={stat.label} className="flex flex-col-reverse px-5 first:ps-0 last:pe-0">
                 <dt className="type-small mt-1 text-ink-muted">{stat.label}</dt>
                 <dd className="type-h3 num">
-                  <bdi>{stat.value}</bdi>
+                  <CountUp value={stat.value} />
                 </dd>
               </div>
             ))}

@@ -105,6 +105,7 @@
   --motion-300: 300ms;
   --motion-600: 600ms;
   --motion-800: 800ms;
+  --stat-count: 1400ms; /* the About stats counting up from 0 on entry */
 
   --hero-headline-enter: 720ms;
   --hero-cta-enter: 420ms;
