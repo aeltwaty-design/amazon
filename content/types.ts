@@ -39,11 +39,10 @@ export type SiteContent = {
     cta: string;
   };
   hero: {
-    eyebrow: string;
     h1Lead: string;
     h1Tail: string;
     sub: string;
-    /** {total} {saving} {discountPct} */
+    /** {total} {saving} {discountPct} {sar} */
     priceLead: string;
     perYear: string;
     wasLabel: string;

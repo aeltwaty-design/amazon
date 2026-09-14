@@ -22,11 +22,10 @@ export const en = {
     cta: 'Subscribe Now',
   },
   hero: {
-    eyebrow: 'Exclusive · For eligible Amazon employees',
     h1Lead: 'An Exclusive Benefit for Amazon Employees',
     h1Tail: 'with WalaOne',
     sub: 'Enjoy a world of offers, discounts, and rewards with a WalaOne subscription at an exclusive price for Amazon employees.',
-    priceLead: '+ VAT · {total} SAR total · save {saving} SAR ({discountPct}% off)',
+    priceLead: '+ VAT · {total} {sar} total · save {saving} {sar} ({discountPct}% off)', // authored
     perYear: '/ year',
     wasLabel: 'was', // authored
     cta: 'Subscribe Now',
@@ -105,7 +104,7 @@ export const en = {
     toggle: { label: 'Price view', beforeVat: 'Before VAT', total: 'Total payable' }, // label authored
     perYear: '/ year',
     wasLabel: 'was', // authored
-    vatLine: 'Price excludes VAT — {vat} SAR VAT is added, making the total due {total} SAR.',
+    vatLine: 'Price excludes VAT — {vat} {sar} VAT is added, making the total due {total} {sar}.', // authored
     features: [
       'Enjoy WalaOne benefits for a full year',
       'More than 4,000 offers and discounts across 6 sectors',
@@ -172,7 +171,7 @@ export const en = {
         visa: { title: 'Visa logo', description: 'payment mark' },
         card: { title: 'Card icon', description: 'payment mark' },
       },
-      payCta: 'Pay {amount} SAR',
+      payCta: 'Pay {amount} {sar}',
       paying: 'Processing payment…', // authored
       secureNote:
         "Payment happens on the gateway's secured page — your card details never touch our servers.",

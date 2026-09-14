@@ -3,10 +3,12 @@
 import { useState } from 'react';
 import type { SiteContent } from '@/content/types';
 import { Button } from '@/components/ui/Button';
+import { Currency } from '@/components/ui/Currency';
+import { Interpolate } from '@/components/ui/Interpolate';
 import { PillToggle } from '@/components/ui/PillToggle';
 import { Price } from '@/components/ui/Price';
 import { SECTION_IDS } from '@/lib/anchors';
-import { fmt, type Locale } from '@/lib/i18n';
+import { type Locale } from '@/lib/i18n';
 import { PRICE, formatMoney } from '@/lib/pricing';
 
 type Props = { locale: Locale; content: SiteContent['pricing'] };
@@ -35,11 +37,6 @@ function Check() {
 
 export function PlanCard({ locale, content }: Props) {
   const [view, setView] = useState<View>('beforeVat');
-  const vatLine = fmt(content.vatLine, {
-    vat: formatMoney(PRICE.vat),
-    total: formatMoney(PRICE.total),
-  });
-
   return (
     <article
       data-tilt
@@ -75,7 +72,16 @@ export function PlanCard({ locale, content }: Props) {
           {content.wasLabel} <Price halalas={PRICE.list} locale={locale} strike />
         </p>
         {/* Always visible, whichever view is selected. */}
-        <p className="type-small mt-3 text-ink-muted">{vatLine}</p>
+        <p className="type-small mt-3 text-ink-muted">
+          <Interpolate
+            template={content.vatLine}
+            vars={{
+              vat: formatMoney(PRICE.vat),
+              total: formatMoney(PRICE.total),
+              sar: <Currency locale={locale} />,
+            }}
+          />
+        </p>
         <ul className="mt-6 grid gap-3">
           {content.features.map((feature) => (
             <li key={feature} className="type-body flex items-start gap-3">

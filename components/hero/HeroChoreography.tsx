@@ -244,7 +244,7 @@ function buildLoadSequence(hero: HTMLElement, desktop: boolean) {
     0,
   );
   tl.fromTo(
-    all(hero, '[data-hero-eyebrow], [data-hero-word]'),
+    all(hero, '[data-hero-word]'),
     { y: 24, opacity: 0 },
     {
       y: 0,

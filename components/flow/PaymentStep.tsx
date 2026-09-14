@@ -3,11 +3,12 @@
 import { useErrorMessage, useFlowContent } from '@/components/flow/FlowContentContext';
 import { Button } from '@/components/ui/Button';
 import { Callout } from '@/components/ui/Callout';
+import { Currency } from '@/components/ui/Currency';
+import { Interpolate } from '@/components/ui/Interpolate';
 import { PaymentMethods } from '@/components/ui/PaymentMethods';
 import { PAYMENT_MARKS } from '@/lib/art';
 import { Summary, type SummaryRow } from '@/components/ui/Summary';
 import type { FlowState } from '@/lib/flow';
-import { fmt } from '@/lib/i18n';
 import { PAYMENT_METHODS, PRICE, formatMoney } from '@/lib/pricing';
 
 type Props = {
@@ -62,7 +63,14 @@ export function PaymentStep({ state, onPay }: Props) {
       ) : null}
 
       <Button type="button" fullWidth loading={loading} onClick={onPay}>
-        {loading ? copy.paying : fmt(copy.payCta, { amount: formatMoney(PRICE.total) })}
+        {loading ? (
+          copy.paying
+        ) : (
+          <Interpolate
+            template={copy.payCta}
+            vars={{ amount: formatMoney(PRICE.total), sar: <Currency locale={locale} /> }}
+          />
+        )}
       </Button>
       <p className="type-small flex items-start justify-center gap-2 text-center text-ink-muted">
         <svg

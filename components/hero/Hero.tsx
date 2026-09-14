@@ -5,10 +5,12 @@ import { HeroChoreography } from '@/components/hero/HeroChoreography';
 import { HeroLottie } from '@/components/hero/HeroLottie';
 import { HeroTiles } from '@/components/hero/HeroTiles';
 import { Button } from '@/components/ui/Button';
+import { Currency } from '@/components/ui/Currency';
+import { Interpolate } from '@/components/ui/Interpolate';
 import { Price } from '@/components/ui/Price';
 import { SECTION_IDS } from '@/lib/anchors';
 import { HERO_LOTTIE, HERO_SURFACE } from '@/lib/art';
-import { dirFor, fmt, type Locale } from '@/lib/i18n';
+import { dirFor, type Locale } from '@/lib/i18n';
 import { WalaOneLockup } from '@/components/brand/WalaOneLockup';
 import { PRICE, PRICING, formatMoney, formatRiyals } from '@/lib/pricing';
 
@@ -22,12 +24,6 @@ type Props = {
 const words = (text: string) => text.split(' ').filter(Boolean);
 
 export function Hero({ locale, content, benefits, lockupLabel }: Props) {
-  const priceLead = fmt(content.priceLead, {
-    total: formatMoney(PRICE.total),
-    saving: formatRiyals(PRICE.discount),
-    discountPct: PRICING.discountPct,
-  });
-
   return (
     <section
       data-hero
@@ -59,13 +55,6 @@ export function Hero({ locale, content, benefits, lockupLabel }: Props) {
           <div data-hero-lockup data-enter className="mb-3">
             <WalaOneLockup dir={dirFor(locale)} title={lockupLabel} className="h-12 w-auto" />
           </div>
-          <p
-            data-hero-eyebrow
-            data-enter
-            className="type-toggle rounded-pill bg-accent px-4 py-2 text-ink"
-          >
-            {content.eyebrow}
-          </p>
           <h1 className="type-display mt-3 flex flex-wrap items-center justify-center gap-x-[0.25em]">
             {words(content.h1Lead).map((word, i) => (
               <span key={`lead-${i}`} data-hero-word data-enter className="inline-block">
@@ -109,7 +98,17 @@ export function Hero({ locale, content, benefits, lockupLabel }: Props) {
             <span className="type-body text-ink-on-dark-muted">
               {content.wasLabel} <Price halalas={PRICE.list} locale={locale} strike />
             </span>
-            <span className="type-small w-full text-ink-on-dark-muted">{priceLead}</span>
+            <span className="type-small w-full text-ink-on-dark-muted">
+              <Interpolate
+                template={content.priceLead}
+                vars={{
+                  total: formatMoney(PRICE.total),
+                  saving: formatRiyals(PRICE.discount),
+                  discountPct: PRICING.discountPct,
+                  sar: <Currency locale={locale} />,
+                }}
+              />
+            </span>
           </p>
           <div data-hero-ctas data-enter className="mt-5 flex flex-wrap justify-center gap-4">
             <Button href={`#${SECTION_IDS.flow}`} variant="primary-on-dark">
