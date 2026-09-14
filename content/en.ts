@@ -36,7 +36,7 @@ export const en = {
     },
     tiles: [
       { id: 'restaurants', label: 'Redeem Points' },
-      { id: 'shopping', label: 'Shopping' },
+      { id: 'shopping', label: 'Offers & Discounts' },
       { id: 'travel', label: 'Exchange Points' },
       { id: 'entertainment', label: 'Buy Vouchers' },
       { id: 'health', label: 'Order Food' },
@@ -52,19 +52,19 @@ export const en = {
       },
       {
         title: 'Redeem Your Points',
-        body: 'Turn the points you earn from your purchases into vouchers and rewards from your favourite brands.',
+        body: 'Turn the points you earn from your purchases into vouchers and rewards from your favorite brands.',
         slot: { title: 'WalaOne points-transfer screen in a phone', description: 'phone mockup' }, // authored
       },
       {
         title: 'More Choices',
-        body: 'Use your earned points across shopping, travel, restaurants, entertainment and more.',
+        body: 'Use your earned points across shopping, travel, restaurants, entertainment, and more.',
         slot: { title: 'WalaOne marketplace screen in a phone', description: 'phone mockup' }, // authored
       },
     ],
   },
   about: {
     title: 'WalaOne… More Benefits in One Place',
-    body: 'WalaOne is a loyalty app that brings together the best offers and discounts from leading local and international brands, with more than 4,000 offers and discounts across restaurants, shopping, travel, entertainment, health and hotels.',
+    body: 'WalaOne is a loyalty app that brings together the best offers and discounts from leading local and international brands, with more than 4,000 offers and discounts across various categories, including restaurants, shopping, travel, entertainment, health, and hotels. It provides you with an integrated experience that combines value and savings every step of the way.',
     stats: [
       { value: '4,000+', label: 'offers & discounts' }, // authored labels
       { value: '6', label: 'sectors' },
@@ -73,26 +73,25 @@ export const en = {
     screenshotSlot: { title: 'App screenshot', description: 'WalaOne home screen' },
   },
   brands: {
-    title: 'Your Favourite Brands, Closer to You',
-    subtitle:
-      'Enjoy exclusive benefits and offers from a wide range of brands across different categories.',
+    title: 'Your Favorite Brands, Closer to You',
+    subtitle: 'Enjoy benefits and offers from a wide range of brands across different categories.',
   },
   howTo: {
     title: 'Subscribe in a Few Simple Steps',
     steps: [
       {
         title: 'Enter your details',
-        body: 'Provide your information, then confirm your identity with a code sent instantly to your work email.',
+        body: 'Provide your information and verify your eligibility as an Amazon employee, with a code sent instantly to your work email.',
         slot: { title: 'Step 1 illustration', description: 'details & work-email code' },
       },
       {
         title: 'Complete your payment',
-        body: 'Pay at the exclusive Amazon employee rate, and you are enrolled in the Amazon programme for a year straight away.',
+        body: 'Pay the subscription fee at the exclusive Amazon employee rate, and you are enrolled for a year straight away.',
         slot: { title: 'Step 2 illustration', description: 'payment' },
       },
       {
         title: 'Open the app',
-        body: 'Sign in to the WalaOne app with your mobile number and your Amazon membership offers are already waiting — no codes.',
+        body: 'Download the WalaOne app, sign in with your mobile number, and start enjoying your benefits — no codes.',
         slot: { title: 'Step 3 illustration', description: 'open the app' },
       },
     ],
@@ -179,7 +178,7 @@ export const en = {
     },
     done: {
       heading: 'Your membership is active',
-      body: 'Payment went through and you are enrolled in the Amazon programme for 12 months. There is no code to enter.',
+      body: 'Payment went through and you are enrolled for 12 months. There is no code to enter.',
       openWith: 'Open the app with this number',
       orderRefLabel: 'Your order reference',
       orderRefNote:
@@ -188,7 +187,7 @@ export const en = {
       nextSteps: [
         'Download the WalaOne app from the App Store or Google Play',
         'Sign in with the same mobile number shown above',
-        'Your Amazon membership offers are there immediately — no codes, no extra steps',
+        'Start enjoying your benefits immediately — no codes, no extra steps',
       ],
     },
     errors: {
@@ -216,11 +215,11 @@ export const en = {
       },
       {
         q: 'How long is the subscription valid for?',
-        a: 'The subscription is valid for 12 months, starting the moment your payment completes.',
+        a: 'The subscription is valid for 12 months, starting from the date the subscription and payment are completed.',
       },
       {
         q: 'How do I start using WalaOne?',
-        a: 'After completing your subscription, download the WalaOne app and sign in with the same mobile number you entered. Your Amazon membership offers appear immediately — there is no code to enter.',
+        a: 'After completing your subscription, download the WalaOne app and sign in with the same mobile number you entered, and start enjoying your benefits. Your Amazon membership offers appear immediately — there is no code to enter.',
       },
       {
         q: 'What if I sign in to the app with a different mobile number?',
@@ -242,8 +241,8 @@ export const en = {
     items: [
       'The subscription is valid for one year starting from the date the subscription and payment are completed.',
       'The subscription cannot be cancelled or refunded once completed.',
-      'Offers and benefits can only be redeemed through the WalaOne app and are subject to the terms of each individual offer.',
-      'Discount rates and benefits are subject to the policies of participating merchants and partners and may vary between merchants.',
+      'Offers and benefits can only be redeemed through the WalaOne app and are subject to the terms and conditions of each individual offer.',
+      'Discount rates and benefits are subject to the policies of participating merchants and partners and may vary from one merchant to another.',
       'WalaOne reserves the right to modify or update available offers and benefits from time to time.',
       'The subscription is subject to the applicable laws and regulations of the Kingdom of Saudi Arabia.',
       'WalaOne reserves the right to reject or cancel any request in cases of suspected misuse or submission of inaccurate information.',

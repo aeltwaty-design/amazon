@@ -12,12 +12,6 @@ import type { PaymentMethod } from '@/lib/pricing';
 
 export type Art = { src: string; width: number; height: number };
 
-const ill = (name: string, width: number, height: number): Art => ({
-  src: `/illustrations/${name}.webp`,
-  width,
-  height,
-});
-
 /** the real home-screen captures inside the About phone, one per locale (design: Home - WO - AR/EN) */
 export const APP_SCREEN: Record<Locale, Art> = {
   ar: { src: '/app/home-ar.webp', width: 750, height: 1624 },
@@ -124,8 +118,21 @@ export const ART = {
       { kind: 'phone', src: '/mockups/market-phone.webp', width: 846, height: 1283 },
     ] satisfies readonly BenefitArt[],
   },
-  howTo: [ill('step1', 640, 400), ill('step2', 640, 400), ill('step3', 640, 400)],
 } as const;
+
+/**
+ * The three "how to subscribe" step animations, in step order: the design's
+ * Neo-Brutalism Lottie set, one file chosen per step (savings for the details,
+ * a payment gateway for the payment, a device for opening the app), recoloured
+ * into the Primary purple and Secondary yellow families and stripped of their
+ * Duik expression rig by `npm run render:steps`. Square canvases, so the card
+ * reserves a square box before the player arrives.
+ */
+export const HOWTO_MOTION: readonly Art[] = [
+  { src: '/lottie/step1.json', width: 350, height: 350 },
+  { src: '/lottie/step2.json', width: 256, height: 256 },
+  { src: '/lottie/step3.json', width: 256, height: 256 },
+];
 
 // Scheme marks for the payment step (Wikimedia Commons, public-domain
 // geometry). "card" shows the Mastercard circles as the generic credit card.
@@ -137,8 +144,8 @@ export const PAYMENT_MARKS: Record<PaymentMethod, Art> = {
 
 export type Brand = Art & { id: string; name: string };
 
-/** every merchant logo is normalised onto this canvas by `npm run render:brands` (2:1; the logo fills up to 85 % × 70 %) */
-export const BRAND_CANVAS = { width: 320, height: 160 } as const;
+/** every merchant logo is normalised onto this square canvas by `npm run render:brands`: each is scaled to the same ink area inside 85 % of it, so a wordmark and a square mark read alike */
+export const BRAND_CANVAS = { width: 320, height: 320 } as const;
 
 const brand = (id: string, name: string): Brand => ({
   id,

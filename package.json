@@ -21,7 +21,8 @@
     "render:phone": "node scripts/render/build-phone-mockup.mjs",
     "render:about": "node scripts/render/build-about-mockup.mjs",
     "render:brands": "node scripts/render/build-brands.mjs",
-    "render:flag": "node scripts/render/build-flag.mjs"
+    "render:flag": "node scripts/render/build-flag.mjs",
+    "render:steps": "node scripts/render/build-step-lotties.mjs"
   },
   "dependencies": {
     "@gsap/react": "2.1.2",

@@ -4,14 +4,15 @@ import { SECTION_IDS } from '@/lib/anchors';
 import { BRAND_ROWS } from '@/lib/art';
 
 // Each row repeats its six logos COPIES times so it is wider than any viewport
-// plus the marquee travel (--brands-marquee-travel, PageMotion): 18 tiles are
-// 3576px at ≥1024 (176 + 24 gap) and 3008px below (152 + 16), against a
+// plus the marquee travel (--brands-marquee-travel, PageMotion): the tiles are
+// square now and so much narrower, which takes five copies — 30 tiles are
+// 3840px at ≥1024 (104 + 24 gap) and 3120px below (88 + 16), against a
 // 2560px viewport and 480px of travel. Flex centring makes the surplus
 // overflow both edges equally, so the resting and reduced-motion layouts are
 // symmetric, and the section's overflow-x-clip hides it without a scroll
 // container. Only the middle copy, the one on screen at rest, is exposed to
 // assistive tech. Tile widths are fixed so nothing is ever measured.
-const COPIES = 3;
+const COPIES = 5;
 const EXPOSED_COPY = Math.floor(COPIES / 2);
 
 export function Brands({ content }: { content: SiteContent['brands'] }) {
@@ -45,19 +46,21 @@ export function Brands({ content }: { content: SiteContent['brands'] }) {
                   <li
                     key={`${copy}-${brand.id}`}
                     aria-hidden={exposed ? undefined : true}
-                    className="flex h-[72px] w-[152px] flex-none items-center justify-center rounded-btn bg-bg-page px-5 lg:h-[84px] lg:w-[176px]"
+                    className="flex size-[88px] flex-none items-center justify-center rounded-btn bg-bg-page lg:size-[104px]"
                   >
                     <Image
                       src={brand.src}
                       alt={exposed ? brand.name : ''}
                       width={brand.width}
                       height={brand.height}
-                      sizes="(min-width: 1024px) 136px, 112px"
+                      sizes="(min-width: 1024px) 104px, 88px"
                       // the section clips horizontally, so a lazy loader never sees a tile
                       // outside the viewport and it would pop in as it slides on; the twelve
                       // files are ~3 kB each
                       loading="eager"
-                      className="h-auto max-h-10 w-auto max-w-full object-contain lg:max-h-12"
+                      // the canvas already holds the logo at its normalised size and is white, like
+                      // the tile, so the image simply fills the square
+                      className="size-full object-contain"
                     />
                   </li>
                 );

@@ -69,7 +69,7 @@ export function BenefitCard({ tone, title, body, slot, art, flipId, mode }: Prop
         data-card-inner
         className={
           phone
-            ? 'absolute inset-x-0 bottom-0 mx-auto h-[60%] w-[64%] max-w-[240px] lg:h-[56%] lg:w-[72%] lg:max-w-none'
+            ? 'absolute inset-x-0 bottom-0 mx-auto h-[68%] w-[64%] max-w-[240px] lg:h-[76%] lg:w-[72%] lg:max-w-none'
             : 'absolute end-0 bottom-0 w-[64%]'
         }
       >
