@@ -87,7 +87,7 @@ export function Hero({ locale, content, benefits }: Props) {
             data-enter
             className="mt-3 flex flex-wrap items-baseline justify-center gap-x-3 gap-y-1"
           >
-            <Price halalas={PRICE.subtotal} locale={locale} size="lead" />
+            <Price halalas={PRICE.total} locale={locale} size="lead" />
             <span className="type-body text-ink-on-dark-muted">{content.perYear}</span>
             <span className="type-body text-ink-on-dark-muted">
               {content.wasLabel} <Price halalas={PRICE.list} locale={locale} strike />
@@ -96,7 +96,6 @@ export function Hero({ locale, content, benefits }: Props) {
               <Interpolate
                 template={content.priceLead}
                 vars={{
-                  total: <Price halalas={PRICE.total} locale={locale} />,
                   saving: <Price halalas={PRICE.discount} locale={locale} format="riyals" />,
                   discountPct: PRICING.discountPct,
                 }}

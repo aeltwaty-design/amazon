@@ -41,7 +41,7 @@ export type SiteContent = {
     h1Lead: string;
     h1Tail: string;
     sub: string;
-    /** {total} {saving} {discountPct} */
+    /** {saving} {discountPct} */
     priceLead: string;
     perYear: string;
     wasLabel: string;
@@ -68,12 +68,13 @@ export type SiteContent = {
   howTo: { title: string; steps: readonly [Step, Step, Step] };
   pricing: {
     title: string;
+    /** {discountPct} */
     ribbon: string;
     planTitle: string;
-    toggle: { label: string; beforeVat: string; total: string };
     perYear: string;
+    /** precedes the struck-through list price */
     wasLabel: string;
-    /** {vat} {total} */
+    /** {vat} — the tax the price already contains */
     vatLine: string;
     /** the label over the feature list */
     includesLabel: string;
@@ -132,7 +133,7 @@ export type FlowContent = {
   };
   payment: {
     heading: string;
-    rows: { annual: string; discount: string; subtotal: string; vat: string; total: string };
+    rows: { annual: string; discount: string; total: string; vat: string };
     methodsLabel: string;
     methodSlot: Record<PaymentMethod, SlotCopy>;
     /** {amount} */

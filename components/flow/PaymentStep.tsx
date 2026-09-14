@@ -22,13 +22,15 @@ export function PaymentStep({ state, onPay }: Props) {
   const message = useErrorMessage();
   const loading = state.status === 'loading';
 
-  // Labels come from content, amounts from PRICE: neither is retyped here.
+  // Labels come from content, amounts from PRICE: neither is retyped here. The
+  // list price already carries the tax, so the column runs list − discount =
+  // total and the VAT follows it as a note: it is inside that total, and a row
+  // for it would stop the figures adding up.
   const rows: SummaryRow[] = [
     { id: 'annual', label: copy.rows.annual, halalas: PRICE.list },
     { id: 'discount', label: copy.rows.discount, halalas: -PRICE.discount, kind: 'discount' },
-    { id: 'subtotal', label: copy.rows.subtotal, halalas: PRICE.subtotal },
-    { id: 'vat', label: copy.rows.vat, halalas: PRICE.vat },
     { id: 'total', label: copy.rows.total, halalas: PRICE.total, kind: 'total' },
+    { id: 'vat', label: copy.rows.vat, halalas: PRICE.vat, kind: 'note' },
   ];
 
   return (

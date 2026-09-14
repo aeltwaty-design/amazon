@@ -1,20 +1,13 @@
-'use client';
-
-import { useState } from 'react';
 import type { SiteContent } from '@/content/types';
 import { Button } from '@/components/ui/Button';
 import { Interpolate } from '@/components/ui/Interpolate';
-import { PillToggle } from '@/components/ui/PillToggle';
 import { Price } from '@/components/ui/Price';
 import { SECTION_IDS } from '@/lib/anchors';
 import { cn } from '@/lib/cn';
 import { dirFor, type Locale } from '@/lib/i18n';
-import { PRICE } from '@/lib/pricing';
+import { PRICE, PRICING } from '@/lib/pricing';
 
 type Props = { locale: Locale; content: SiteContent['pricing'] };
-type View = 'beforeVat' | 'total';
-
-const AMOUNT: Record<View, number> = { beforeVat: PRICE.subtotal, total: PRICE.total };
 
 function Check() {
   return (
@@ -66,53 +59,34 @@ function Chevron({ locale }: { locale: Locale }) {
 // stack beside it, a rule before the list, and a full-width pill button that
 // ends in a chevron. The discount, which used to be a full-bleed bar across
 // the card's head, keeps its words but becomes the badge the reference's calm
-// front would allow. The toggle stays a segmented radiogroup — the reference
-// draws a switch, but that is a control, not a look, and this one is already
-// keyboard- and screen-reader-correct.
+// front would allow.
+//
+// There is one price and it includes the tax, so the card no longer offers a
+// before-VAT view: that figure is not what anyone pays, and quoting it beside
+// a VAT-inclusive headline would only muddy it. The VAT line still names the
+// amount the price contains.
 export function PlanCard({ locale, content }: Props) {
-  const [view, setView] = useState<View>('beforeVat');
   return (
     <article
       data-tilt
       className="w-full max-w-plan rounded-plan border border-line bg-bg-elevated p-6 text-center lg:p-8"
     >
       <p className="type-toggle inline-flex rounded-pill bg-brand-wash px-4 py-2 text-brand">
-        {content.ribbon}
+        <Interpolate template={content.ribbon} vars={{ discountPct: PRICING.discountPct }} />
       </p>
       <h3 className="type-h3 mt-4">{content.planTitle}</h3>
-      <div className="mt-4 flex justify-center">
-        <PillToggle
-          label={content.toggle.label}
-          value={view}
-          onChange={setView}
-          options={[
-            { value: 'beforeVat', label: content.toggle.beforeVat },
-            { value: 'total', label: content.toggle.total },
-          ]}
-        />
-      </div>
       <p className="mt-6 flex flex-wrap items-center justify-center gap-x-3">
-        {/* Remounting on view change replays the switch animation. */}
-        <span
-          key={view}
-          className="animate-[fade-up_var(--plans-switch)_var(--ease-out-cubic)] motion-reduce:animate-none"
-        >
-          <Price halalas={AMOUNT[view]} locale={locale} size="plan" />
-        </span>
+        <Price halalas={PRICE.total} locale={locale} size="plan" />
         <span className="type-small max-w-[12ch] text-start text-ink-muted">
           {content.perYear}
           <br />
           {content.wasLabel} <Price halalas={PRICE.list} locale={locale} strike />
         </span>
       </p>
-      {/* Always visible, whichever view is selected. */}
       <p className="type-small mt-3 text-ink-muted">
         <Interpolate
           template={content.vatLine}
-          vars={{
-            vat: <Price halalas={PRICE.vat} locale={locale} />,
-            total: <Price halalas={PRICE.total} locale={locale} />,
-          }}
+          vars={{ vat: <Price halalas={PRICE.vat} locale={locale} /> }}
         />
       </p>
       <hr className="mt-6 border-line" />

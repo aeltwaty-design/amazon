@@ -24,9 +24,9 @@ export const en = {
     h1Lead: 'An Exclusive Benefit for Amazon Employees',
     h1Tail: 'with WalaOne',
     sub: 'Enjoy a world of offers, discounts, and rewards with a WalaOne subscription at an exclusive price for Amazon employees.',
-    priceLead: '+ VAT · {total} total · save {saving} ({discountPct}% off)', // authored
+    priceLead: 'VAT included · save {saving} ({discountPct}% off)', // authored
     perYear: '/ year',
-    wasLabel: 'was', // authored
+    wasLabel: 'Instead of', // authored
     cta: 'Subscribe Now',
     ghostCta: 'What is WalaOne?',
     illustrationSlot: {
@@ -97,12 +97,11 @@ export const en = {
   },
   pricing: {
     title: 'Exclusive Offer for Amazon Employees',
-    ribbon: '40% off for Amazon employees',
+    ribbon: '{discountPct}% off for Amazon employees',
     planTitle: 'Annual WalaOne Subscription',
-    toggle: { label: 'Price view', beforeVat: 'Before VAT', total: 'Total payable' }, // label authored
     perYear: '/ year',
-    wasLabel: 'was', // authored
-    vatLine: 'Price excludes VAT — {vat} VAT is added, making the total due {total}.', // authored
+    wasLabel: 'Instead of', // authored
+    vatLine: 'VAT included — the price contains {vat} VAT.', // authored
     includesLabel: 'This subscription includes:', // authored
     features: [
       'Enjoy WalaOne benefits for a full year',
@@ -160,9 +159,8 @@ export const en = {
       rows: {
         annual: 'Annual WalaOne subscription, 12 months',
         discount: 'Amazon employee discount',
-        subtotal: 'Subtotal before VAT',
-        vat: 'VAT 15%',
-        total: 'Total due',
+        total: 'Total due, VAT included',
+        vat: 'of which VAT 15%',
       },
       methodsLabel: 'Payment methods', // authored
       methodSlot: {
@@ -246,7 +244,7 @@ export const en = {
       'WalaOne reserves the right to modify or update available offers and benefits from time to time.',
       'The subscription is subject to the applicable laws and regulations of the Kingdom of Saudi Arabia.',
       'WalaOne reserves the right to reject or cancel any request in cases of suspected misuse or submission of inaccurate information.',
-      'Prices shown exclude VAT (15%), which is added at checkout.',
+      'Prices shown include VAT (15%).',
       'The offer is exclusively available to eligible Amazon employees at the special subscription rate.',
       'The membership is linked to the mobile number provided at subscription, and benefits become available on signing in to the WalaOne app with that same number.',
     ],

@@ -7,7 +7,8 @@ export type SummaryRow = {
   id: string;
   label: string;
   halalas: number;
-  kind?: 'discount' | 'total';
+  /** `note` states a figure the column does not add up — the tax inside the total */
+  kind?: 'discount' | 'total' | 'note';
 };
 
 type Props = { rows: readonly SummaryRow[]; locale: Locale; className?: string };
@@ -25,7 +26,12 @@ export function Summary({ rows, locale, className }: Props) {
               row.kind === 'total' && 'border-t border-line pt-3',
             )}
           >
-            <dt className={cn('type-body', row.kind === 'total' ? 'font-bold' : 'text-ink-muted')}>
+            <dt
+              className={cn(
+                row.kind === 'note' ? 'type-small' : 'type-body',
+                row.kind === 'total' ? 'font-bold' : 'text-ink-muted',
+              )}
+            >
               {row.label}
             </dt>
             {/* The whole amount is an LTR isolate: in an RTL paragraph a leading
@@ -35,6 +41,7 @@ export function Summary({ rows, locale, className }: Props) {
                 'type-body num',
                 row.kind === 'total' && 'type-h3',
                 row.kind === 'discount' && 'text-ok',
+                row.kind === 'note' && 'type-small text-ink-muted',
               )}
             >
               <bdi dir="ltr" className="inline-flex items-baseline gap-1">
