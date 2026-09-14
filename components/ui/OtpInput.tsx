@@ -104,9 +104,9 @@ export function OtpInput({
           onKeyDown={onKeyDown(i)}
           onFocus={(event) => event.currentTarget.select()}
           className={cn(
-            'type-h3 num h-14 w-11 rounded-btn border bg-bg-elevated text-center text-ink transition-colors duration-(--motion-300) sm:h-16 sm:w-12',
+            'type-h3 num h-14 w-11 rounded-field border bg-bg-elevated text-center text-ink transition-colors duration-(--motion-300) sm:h-16 sm:w-12',
             'focus-visible:outline-[2.5px] focus-visible:outline-offset-2 focus-visible:outline-brand disabled:opacity-60',
-            invalid ? 'border-err' : 'border-line',
+            invalid ? 'border-err' : 'border-field-border',
           )}
         />
       ))}

@@ -9,14 +9,13 @@ import { cn } from '@/lib/cn';
 
 type IconProps = { className?: string };
 
-function Icon({ className, children }: IconProps & { children: ReactNode }) {
+function Icon({
+  className,
+  children,
+  viewBox = '0 0 24 24',
+}: IconProps & { children: ReactNode; viewBox?: string }) {
   return (
-    <svg
-      aria-hidden
-      viewBox="0 0 24 24"
-      fill="currentColor"
-      className={cn('size-[1.125em] shrink-0', className)}
-    >
+    <svg aria-hidden viewBox={viewBox} fill="currentColor" className={cn('shrink-0', className)}>
       {children}
     </svg>
   );
@@ -47,6 +46,20 @@ export function SmsIcon(props: IconProps) {
     <Icon {...props}>
       <path d="M17 21.25H7c-3.65 0-5.75-2.1-5.75-5.75v-7c0-3.65 2.1-5.75 5.75-5.75h10c3.65 0 5.75 2.1 5.75 5.75v7c0 3.65-2.1 5.75-5.75 5.75Zm-10-17c-2.86 0-4.25 1.39-4.25 4.25v7c0 2.86 1.39 4.25 4.25 4.25h10c2.86 0 4.25-1.39 4.25-4.25v-7c0-2.86-1.39-4.25-4.25-4.25H7Z" />
       <path d="M11.999 12.868c-.84 0-1.69-.26-2.34-.79l-3.13-2.5a.748.748 0 0 1 .93-1.17l3.13 2.5c.76.61 2.05.61 2.81 0l3.13-2.5c.32-.26.8-.21 1.05.12.26.32.21.8-.12 1.05l-3.13 2.5c-.64.53-1.49.79-2.33.79Z" />
+    </Icon>
+  );
+}
+
+/**
+ * Iconsax `TickSquare` (Outline) with its box dropped: the bare check the
+ * checkbox draws inside its own box. The viewBox crops to the glyph, so the
+ * check fills the box the way Singular's does instead of sitting in 24 units
+ * of empty space.
+ */
+export function CheckIcon(props: IconProps) {
+  return (
+    <Icon {...props} viewBox="4 4 16 16">
+      <path d="M10.58 15.582a.75.75 0 0 1-.53-.22l-2.83-2.83a.754.754 0 0 1 0-1.06c.29-.29.77-.29 1.06 0l2.3 2.3 5.14-5.14c.29-.29.77-.29 1.06 0 .29.29.29.77 0 1.06l-5.67 5.67a.75.75 0 0 1-.53.22Z" />
     </Icon>
   );
 }

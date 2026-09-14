@@ -83,6 +83,7 @@ export function DetailsStep({ state, onSubmit }: Props) {
         id="details-fullName"
         label={copy.name.label}
         icon={UserIcon}
+        placeholder={copy.name.placeholder}
         hint={copy.name.hint}
         autoComplete="name"
         required
@@ -93,6 +94,7 @@ export function DetailsStep({ state, onSubmit }: Props) {
         id="details-mobile"
         label={copy.mobile.label}
         icon={MobileIcon}
+        placeholder={copy.mobile.placeholder}
         hint={copy.mobile.hint}
         type="tel"
         inputMode="tel"
@@ -106,6 +108,7 @@ export function DetailsStep({ state, onSubmit }: Props) {
         id="details-email"
         label={copy.email.label}
         icon={SmsIcon}
+        placeholder={copy.email.placeholder}
         hint={copy.email.hint}
         type="email"
         inputMode="email"
