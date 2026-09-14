@@ -15,6 +15,8 @@ type Props = {
   flipId: string;
   /** mirror = the copy that flies inside the hero; grid = the real in-flow card */
   mode: 'mirror' | 'grid';
+  /** column order, so card 1 can sit in the middle without moving in the DOM */
+  className?: string;
 };
 
 // Literal class names: Tailwind only generates what it can read in source.
@@ -30,7 +32,7 @@ const TONE_CLASS: Record<CardTone, string> = {
 // it, and both grids give that row their wrapper's full height, so a mirror
 // card and its in-flow twin are the same size by construction. A phone card
 // only raises the stacked minimum, so the copy and the phone never meet.
-export function BenefitCard({ tone, title, body, slot, art, flipId, mode }: Props) {
+export function BenefitCard({ tone, title, body, slot, art, flipId, mode, className }: Props) {
   const hooks =
     mode === 'mirror'
       ? { 'data-hero-card': '', 'data-enter': '' }
@@ -46,6 +48,7 @@ export function BenefitCard({ tone, title, body, slot, art, flipId, mode }: Prop
         // stacked, a phone card holds the copy plus a phone box 60% of its own height
         phone ? 'min-h-[500px]' : 'min-h-[300px]',
         TONE_CLASS[tone],
+        className,
       )}
     >
       {/* data-card-inner: the choreography fades a mirror card's contents in
