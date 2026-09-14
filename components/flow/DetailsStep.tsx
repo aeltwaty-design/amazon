@@ -95,6 +95,7 @@ export function DetailsStep({ state, onSubmit }: Props) {
         label={copy.mobile.label}
         icon={MobileIcon}
         placeholder={copy.mobile.placeholder}
+        dialCode={copy.mobile.dialCode}
         hint={copy.mobile.hint}
         type="tel"
         inputMode="tel"

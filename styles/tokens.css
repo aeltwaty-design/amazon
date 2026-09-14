@@ -36,6 +36,7 @@
      placeholder is 5.2:1, so an example reads rather than decorates. */
   --color-field-border: #ccd2e0;
   --color-field-placeholder: #626c83;
+  --color-field-prefix: #f4f6fc; /* Singular bg/neutral/Primary: the phone field's country block */
 
   /* actions: yellow on dark surfaces, purple on light ones (yellow is 1.6:1 against white) */
   --color-cta-on-dark-bg: #fac333; /* Secondary 500 */

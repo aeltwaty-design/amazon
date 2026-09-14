@@ -25,6 +25,16 @@ export const APP_SCREEN: Record<Locale, Art> = {
 };
 
 /**
+ * The flag shown in the phone field's country block, converted from the
+ * Wikimedia SVG of the Saudi flag (a national flag, public domain) with sharp
+ * at 3× its drawn size. Decorative: the dial code beside it carries the
+ * meaning, so the image is rendered with an empty alt.
+ */
+export const DIAL_FLAG: Record<'sa', Art> = {
+  sa: { src: '/flags/sa.webp', width: 72, height: 48 },
+};
+
+/**
  * The About phone: the UI8 kit "Aganta - Mobile App Landing Website UI Kit"
  * (Figma key 54gPLHdsJKLMMubB2NZjk7) node 8803:2881 "Mockup", an iPhone 14 Pro
  * "Silver" frame over a rounded block of a gradient photo with the home capture

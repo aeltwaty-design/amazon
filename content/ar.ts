@@ -130,7 +130,8 @@ export const ar = {
       mobile: {
         label: 'رقم الجوال',
         hint: 'ستستخدم هذا الرقم لتسجيل الدخول إلى تطبيق ولاء ون بعد الدفع',
-        placeholder: '05XXXXXXXX', // authored
+        placeholder: '5XXXXXXXX', // authored: the country block already shows +966
+        dialCode: '+966',
       },
       email: {
         label: 'البريد الوظيفي',

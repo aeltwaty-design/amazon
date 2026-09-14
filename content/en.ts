@@ -129,7 +129,8 @@ export const en = {
       mobile: {
         label: 'Mobile number',
         hint: "You'll use this number to sign in to the WalaOne app after payment",
-        placeholder: '05XXXXXXXX', // authored
+        placeholder: '5XXXXXXXX', // authored: the country block already shows +966
+        dialCode: '+966',
       },
       email: {
         label: 'Work email',

@@ -1,9 +1,11 @@
 'use client';
 
+import Image from 'next/image';
 import type { ComponentType, HTMLInputAutoCompleteAttribute, ReactNode } from 'react';
 import type { UseFormRegisterReturn } from 'react-hook-form';
 import { useErrorMessage } from '@/components/flow/FlowContentContext';
 import { CheckIcon } from '@/components/ui/Icon';
+import { DIAL_FLAG } from '@/lib/art';
 import { cn } from '@/lib/cn';
 
 type BaseProps = {
@@ -18,6 +20,8 @@ type TextProps = BaseProps & {
   label: string;
   /** an Iconsax glyph from components/ui/Icon, shown inside the field before the input */
   icon?: ComponentType<{ className?: string }>;
+  /** a dial code, e.g. +966: turns the field into the phone-number variant */
+  dialCode?: string;
   hint?: string;
   placeholder?: string;
   type?: 'text' | 'email' | 'tel';
@@ -32,9 +36,11 @@ type TextProps = BaseProps & {
 // padding, with the glyph inside it leading the text. The box carries the
 // states because the input it wraps cannot style its own container — the ring
 // through `has-focus-visible`, the error border through the input's own
-// `aria-invalid`, which is what the server errors set.
+// `aria-invalid`, which is what the server errors set. `items-stretch` and the
+// clipping let the phone variant's country block fill the height and take the
+// box's own corners.
 const BOX =
-  'mt-2 flex h-12 items-center gap-3 rounded-field border border-field-border bg-bg-elevated px-4 transition-colors duration-(--motion-300) has-focus-visible:outline-[2.5px] has-focus-visible:outline-offset-2 has-focus-visible:outline-brand has-[[aria-invalid="true"]]:border-err';
+  'mt-2 flex h-12 items-stretch overflow-hidden rounded-field border border-field-border bg-bg-elevated transition-colors duration-(--motion-300) has-focus-visible:outline-[2.5px] has-focus-visible:outline-offset-2 has-focus-visible:outline-brand has-[[aria-invalid="true"]]:border-err';
 
 const INPUT =
   'type-body w-full min-w-0 bg-transparent text-ink outline-none placeholder:text-field-placeholder';
@@ -51,6 +57,7 @@ export function Field({
   id,
   label,
   icon: LeadingIcon,
+  dialCode,
   hint,
   placeholder,
   error,
@@ -72,22 +79,39 @@ export function Field({
       <label htmlFor={id} className="type-body block font-bold">
         {label}
       </label>
-      <div className={BOX}>
-        {LeadingIcon ? <LeadingIcon className="size-5 text-ink" /> : null}
-        <input
-          id={id}
-          type={type}
-          inputMode={inputMode}
-          autoComplete={autoComplete}
-          placeholder={placeholder}
-          dir={dir}
-          required={required}
-          aria-required={required || undefined}
-          aria-invalid={message ? true : undefined}
-          aria-describedby={describedBy}
-          className={cn(INPUT, dir === 'ltr' && 'text-start')}
-          {...registration}
-        />
+      {/* A phone number is left-to-right data: the box itself is LTR so the
+          country block sits on the same side in both locales, the way the
+          design draws it, and the digits run away from it. */}
+      <div className={BOX} dir={dialCode ? 'ltr' : undefined}>
+        {dialCode ? (
+          <span className="flex items-center gap-2 border-e border-field-border bg-field-prefix px-4">
+            <span className="type-small num text-ink-muted">{dialCode}</span>
+            <Image
+              src={DIAL_FLAG.sa.src}
+              alt=""
+              width={DIAL_FLAG.sa.width}
+              height={DIAL_FLAG.sa.height}
+              className="h-4 w-6 rounded-[2px] object-cover"
+            />
+          </span>
+        ) : null}
+        <span className="flex min-w-0 flex-1 items-center gap-3 px-4">
+          {LeadingIcon ? <LeadingIcon className="size-5 text-ink" /> : null}
+          <input
+            id={id}
+            type={type}
+            inputMode={inputMode}
+            autoComplete={autoComplete}
+            placeholder={placeholder}
+            dir={dir}
+            required={required}
+            aria-required={required || undefined}
+            aria-invalid={message ? true : undefined}
+            aria-describedby={describedBy}
+            className={cn(INPUT, dir === 'ltr' && 'text-start')}
+            {...registration}
+          />
+        </span>
       </div>
       {/* the rule and the error both sit under the field, so the label and the
           box read as one unit; `aria-describedby` still names them both */}

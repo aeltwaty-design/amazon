@@ -71,22 +71,22 @@ Two attributes on `<html>` gate everything above: `data-js` (the hero pre-hide o
 
 ## Token glossary
 
-| Token                                                                        | Changing it…                                                      |
-| ---------------------------------------------------------------------------- | ----------------------------------------------------------------- |
-| `--hero-logo-enter`                                                          | how long the lockup takes to appear                               |
-| `--hero-headline-enter`                                                      | per-word rise duration                                            |
-| `--hero-cta-enter`, `--hero-cta-enter-start`                                 | CTA rise duration and when it starts                              |
-| `--hero-cta-enter-distance`, `--hero-cta-settle`                             | how far the CTA travels and how much it overshoots                |
-| `--hero-tile-enter`, `--hero-tile-enter-start`, `--hero-tile-enter-distance` | tile rise duration, start and travel                              |
-| `--tile-hover-lift`, `--tile-fade`                                           | tile hover lift and the illustration ↔ label cross-fade           |
-| `--brands-marquee-travel`                                                    | total x travel of a brand row across its section's viewport pass  |
-| `--radius-tile`                                                              | tile corner; the morph starts from it and ends on `--radius-card` |
-| `--hero-illustration-exit`, `--hero-illustration-exit-start`                 | mobile illustration exit (desktop uses the scrub window)          |
-| `--card-hover`                                                               | benefit card hover speed                                          |
-| `--plans-switch`                                                             | pill toggle thumb speed                                           |
-| `--stepper-flow`                                                             | one gradient cycle along a reached stepper connector              |
-| `--color-field-border`, `--color-field-placeholder`, `--radius-field`        | the Singular input: border, placeholder ink and radius            |
-| `--scroll-arrow-bounce*`                                                     | scroll hint bounce period, delay and amplitude                    |
-| `--motion-300/600/800`                                                       | scroll hint, reveals, pricing tilt                                |
-| `--btn-hover`, `--header-surface`                                            | button hover and header surface transition                        |
-| `--ease-out-cubic`, `--ease-out-expo`, `--ease-spring`                       | the three curves, shared by CSS and GSAP                          |
+| Token                                                                                         | Changing it…                                                                             |
+| --------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
+| `--hero-logo-enter`                                                                           | how long the lockup takes to appear                                                      |
+| `--hero-headline-enter`                                                                       | per-word rise duration                                                                   |
+| `--hero-cta-enter`, `--hero-cta-enter-start`                                                  | CTA rise duration and when it starts                                                     |
+| `--hero-cta-enter-distance`, `--hero-cta-settle`                                              | how far the CTA travels and how much it overshoots                                       |
+| `--hero-tile-enter`, `--hero-tile-enter-start`, `--hero-tile-enter-distance`                  | tile rise duration, start and travel                                                     |
+| `--tile-hover-lift`, `--tile-fade`                                                            | tile hover lift and the illustration ↔ label cross-fade                                  |
+| `--brands-marquee-travel`                                                                     | total x travel of a brand row across its section's viewport pass                         |
+| `--radius-tile`                                                                               | tile corner; the morph starts from it and ends on `--radius-card`                        |
+| `--hero-illustration-exit`, `--hero-illustration-exit-start`                                  | mobile illustration exit (desktop uses the scrub window)                                 |
+| `--card-hover`                                                                                | benefit card hover speed                                                                 |
+| `--plans-switch`                                                                              | pill toggle thumb speed                                                                  |
+| `--stepper-flow`                                                                              | one gradient cycle along a reached stepper connector                                     |
+| `--color-field-border`, `--color-field-placeholder`, `--color-field-prefix`, `--radius-field` | the Singular input: border, placeholder ink, the phone field's country block, and radius |
+| `--scroll-arrow-bounce*`                                                                      | scroll hint bounce period, delay and amplitude                                           |
+| `--motion-300/600/800`                                                                        | scroll hint, reveals, pricing tilt                                                       |
+| `--btn-hover`, `--header-surface`                                                             | button hover and header surface transition                                               |
+| `--ease-out-cubic`, `--ease-out-expo`, `--ease-spring`                                        | the three curves, shared by CSS and GSAP                                                 |
