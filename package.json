@@ -20,7 +20,8 @@
     "render:headline": "node scripts/render/recolor-lottie.mjs",
     "render:phone": "node scripts/render/build-phone-mockup.mjs",
     "render:about": "node scripts/render/build-about-mockup.mjs",
-    "render:brands": "node scripts/render/build-brands.mjs"
+    "render:brands": "node scripts/render/build-brands.mjs",
+    "render:flag": "node scripts/render/build-flag.mjs"
   },
   "dependencies": {
     "@gsap/react": "2.1.2",

@@ -25,13 +25,16 @@ export const APP_SCREEN: Record<Locale, Art> = {
 };
 
 /**
- * The flag shown in the phone field's country block, converted from the
- * Wikimedia SVG of the Saudi flag (a national flag, public domain) with sharp
- * at 3× its drawn size. Decorative: the dial code beside it carries the
- * meaning, so the image is rendered with an empty alt.
+ * The flag shown in the phone field's country block: the Twemoji Saudi Arabia
+ * flag (SVG Repo 405595, the Twemoji set; graphics CC-BY 4.0 by Twitter),
+ * cropped to the flag inside its 36 × 36 emoji canvas and rasterised at 3× the
+ * size it is drawn at by scripts/render/build-flag.mjs. The rounded corners
+ * are the emoji tile's own, baked into the image, so the page neither rounds
+ * nor crops it — cropping to another ratio would cut the shahada. Decorative:
+ * the dial code beside it carries the meaning, so it renders with an empty alt.
  */
 export const DIAL_FLAG: Record<'sa', Art> = {
-  sa: { src: '/flags/sa.webp', width: 72, height: 48 },
+  sa: { src: '/flags/sa.webp', width: 72, height: 52 },
 };
 
 /**

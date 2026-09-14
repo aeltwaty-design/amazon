@@ -89,14 +89,14 @@ export function Field({
       <div className={BOX} dir={dialCode ? 'ltr' : undefined}>
         {dialCode ? (
           <span className="flex items-center gap-2 border-e border-field-border bg-field-prefix px-4">
-            <span className="type-small num text-ink-muted">{dialCode}</span>
             <Image
               src={DIAL_FLAG.sa.src}
               alt=""
               width={DIAL_FLAG.sa.width}
               height={DIAL_FLAG.sa.height}
-              className="h-4 w-6 rounded-[2px] object-cover"
+              className="h-auto w-6"
             />
+            <span className="type-small num text-ink-muted">{dialCode}</span>
           </span>
         ) : null}
         <span
