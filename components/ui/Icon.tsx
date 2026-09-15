@@ -65,6 +65,44 @@ export function TicketIcon(props: IconProps) {
   );
 }
 
+/** Iconsax `coin` (Linear): a coin with a second behind it. */
+export function CoinIcon(props: IconProps) {
+  return (
+    <StrokeIcon {...props}>
+      <path
+        strokeWidth="5"
+        d="M26.7147 48.0811C38.5151 48.0811 48.0811 38.5151 48.0811 26.7147C48.0811 14.9144 38.5151 5.34829 26.7147 5.34829C14.9144 5.34829 5.34829 14.9144 5.34829 26.7147C5.34829 38.5151 14.9144 48.0811 26.7147 48.0811Z"
+      />
+      <path
+        strokeWidth="5"
+        d="M34.7104 53.162C37.1171 56.5582 41.0481 58.7777 45.5407 58.7777C52.8411 58.7777 58.7777 52.8411 58.7777 45.5407C58.7777 41.1016 56.5849 37.1706 53.2422 34.7639"
+      />
+    </StrokeIcon>
+  );
+}
+
+/** Heroicons `arrows-right-left` (mini), as the mockup file carries it: a filled glyph, so it fills. */
+export function ArrowsRightLeftIcon({ className }: IconProps) {
+  return (
+    <svg
+      aria-hidden
+      viewBox="0 0 51.277 51.277"
+      fill="currentColor"
+      stroke="currentColor"
+      strokeWidth="1.3"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className={cn('shrink-0', className)}
+    >
+      <path
+        fillRule="evenodd"
+        clipRule="evenodd"
+        d="M35.6349 1.39931C34.7545 2.34739 34.8094 3.82963 35.7575 4.70999L42.3182 10.802L15.4872 10.802C14.1934 10.802 13.1446 11.8508 13.1446 13.1446C13.1446 14.4384 14.1934 15.4872 15.4872 15.4872L42.3182 15.4872L35.7575 21.5793C34.8094 22.4596 34.7545 23.9419 35.6349 24.89C36.5153 25.838 37.9975 25.8929 38.9456 25.0126L49.8777 14.8613C50.3551 14.418 50.6263 13.796 50.6263 13.1446C50.6263 12.4932 50.3551 11.8712 49.8777 11.428L38.9456 1.2767C37.9975 0.396338 36.5153 0.451236 35.6349 1.39931ZM15.6421 26.3871C14.7618 25.439 13.2795 25.3841 12.3315 26.2645L1.3993 36.4158C0.921956 36.859 0.650724 37.481 0.650724 38.1324C0.650724 38.7838 0.921956 39.4058 1.3993 39.8491L12.3315 50.0004C13.2795 50.8807 14.7618 50.8258 15.6421 49.8777C16.5225 48.9297 16.4676 47.4474 15.5195 46.5671L8.95886 40.475H35.7898C37.0836 40.475 38.1324 39.4262 38.1324 38.1324C38.1324 36.8386 37.0836 35.7898 35.7898 35.7898H8.95886L15.5195 29.6978C16.4676 28.8174 16.5225 27.3352 15.6421 26.3871Z"
+      />
+    </svg>
+  );
+}
+
 /** Iconsax `User` (Outline): a head and shoulders. */
 export function UserIcon(props: IconProps) {
   return (

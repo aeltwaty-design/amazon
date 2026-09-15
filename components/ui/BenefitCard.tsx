@@ -1,7 +1,7 @@
 import type { SlotCopy } from '@/content/types';
 import { ImageSlot } from '@/components/ui/ImageSlot';
 import type { BadgeId, BenefitArt } from '@/lib/art';
-import { DiscountShapeIcon, TicketIcon } from '@/components/ui/Icon';
+import { ArrowsRightLeftIcon, CoinIcon, DiscountShapeIcon, TicketIcon } from '@/components/ui/Icon';
 import { cn } from '@/lib/cn';
 
 export type CardTone = 1 | 2 | 3 | 4 | 5;
@@ -39,17 +39,18 @@ const TONE_CLASS: Record<CardTone, string> = {
 // card and its in-flow twin are the same size by construction. A phone card
 // only raises the stacked minimum, so the copy and the phone never meet.
 // The hover badges: a white disc with a hairline, tipped ±15° like the
-// mockup file draws them, straddling the phone's edge — the first at the
-// inline start a quarter of the way down, the second at the end just past
-// halfway, so the pair reads as scattered rather than paired. Their reveal
-// and float are CSS (`.benefit-badge` in globals.css, hover-capable only).
-const BADGE: Record<BadgeId, { Icon: typeof DiscountShapeIcon; place: string; ink: string }> = {
-  discount: {
-    Icon: DiscountShapeIcon,
-    place: 'start-0 top-[24%] -ms-8 -rotate-[15deg]',
-    ink: 'text-brand',
-  },
-  ticket: { Icon: TicketIcon, place: 'end-0 top-[56%] -me-8 rotate-[15deg]', ink: 'text-accent' },
+// mockup file draws them, straddling the phone's edge — a card's first badge
+// at the inline start a quarter of the way down, its second at the end just
+// past halfway, so the pair reads as scattered rather than paired. Their
+// reveal and float are CSS (`.benefit-badge` in globals.css, hover-capable
+// only). The glyph sizes keep the file's proportions: its stroked glyphs
+// span half the disc, the filled arrows two fifths.
+const PLACE = ['start-0 top-[24%] -ms-8 -rotate-[15deg]', 'end-0 top-[56%] -me-8 rotate-[15deg]'];
+const BADGE: Record<BadgeId, { Icon: typeof DiscountShapeIcon; glyph: string }> = {
+  discount: { Icon: DiscountShapeIcon, glyph: 'size-8 text-brand' },
+  ticket: { Icon: TicketIcon, glyph: 'size-8 text-accent' },
+  coin: { Icon: CoinIcon, glyph: 'size-8 text-brand' },
+  arrows: { Icon: ArrowsRightLeftIcon, glyph: 'size-[26px] text-accent' },
 };
 
 export function BenefitCard({
@@ -119,18 +120,18 @@ export function BenefitCard({
             !art && 'rounded-ss-card border-0 bg-ink/5 text-ink',
           )}
         />
-        {art?.badges?.map((id) => {
-          const { Icon, place, ink } = BADGE[id];
+        {art?.badges?.map((id, i) => {
+          const { Icon, glyph } = BADGE[id];
           return (
             <span
               key={id}
               aria-hidden
               className={cn(
                 'benefit-badge absolute flex size-16 items-center justify-center rounded-pill border-2 border-line bg-bg-elevated shadow-md',
-                place,
+                PLACE[i],
               )}
             >
-              <Icon className={cn('size-8', ink)} />
+              <Icon className={glyph} />
             </span>
           );
         })}

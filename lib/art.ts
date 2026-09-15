@@ -120,12 +120,14 @@ export type BenefitArt = Art & { kind: 'still' | 'phone'; badges?: readonly Badg
 
 /**
  * The badges that float in beside a phone on hover (BenefitCard): the mockup
- * file's own "discount-shape" and "ticket" instances (nodes 55993:11202 and
- * 55993:11204 in the Matte iPhone Mockups community file), a white circle
- * with a hairline, tipped ±15°, an Iconsax Linear glyph inside. The first is
- * placed at the phone's inline start, the second at its end.
+ * file's own instances in the Matte iPhone Mockups community file — a white
+ * circle with a hairline, tipped ±15°, a glyph inside. "discount-shape" and
+ * "ticket" (nodes 55993:11202, 55993:11204) sit beside the map phone; "coin"
+ * and "arrows-right-left" (56000:7469, 56000:7471) beside the points phone.
+ * A card's first badge is placed at the phone's inline start, the second at
+ * its end.
  */
-export type BadgeId = 'discount' | 'ticket';
+export type BadgeId = 'discount' | 'ticket' | 'coin' | 'arrows';
 
 export const ART = {
   tiles: {
@@ -152,7 +154,13 @@ export const ART = {
         height: 1283,
         badges: ['discount', 'ticket'],
       },
-      { kind: 'phone', src: '/mockups/transfer-phone.webp', width: 848, height: 1283 },
+      {
+        kind: 'phone',
+        src: '/mockups/transfer-phone.webp',
+        width: 848,
+        height: 1283,
+        badges: ['coin', 'arrows'],
+      },
       { kind: 'phone', src: '/mockups/market-phone.webp', width: 846, height: 1283 },
     ] satisfies readonly BenefitArt[],
   },
