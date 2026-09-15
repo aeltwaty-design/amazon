@@ -1,7 +1,14 @@
 import type { SlotCopy } from '@/content/types';
 import { ImageSlot } from '@/components/ui/ImageSlot';
 import type { BadgeId, BenefitArt } from '@/lib/art';
-import { ArrowsRightLeftIcon, CoinIcon, DiscountShapeIcon, TicketIcon } from '@/components/ui/Icon';
+import {
+  ArrowsRightLeftIcon,
+  CoinIcon,
+  DiscountShapeIcon,
+  FoodServingIcon,
+  ShoppingBagIcon,
+  TicketIcon,
+} from '@/components/ui/Icon';
 import { cn } from '@/lib/cn';
 
 export type CardTone = 1 | 2 | 3 | 4 | 5;
@@ -44,13 +51,16 @@ const TONE_CLASS: Record<CardTone, string> = {
 // past halfway, so the pair reads as scattered rather than paired. Their
 // reveal and float are CSS (`.benefit-badge` in globals.css, hover-capable
 // only). The glyph sizes keep the file's proportions: its stroked glyphs
-// span half the disc, the filled arrows two fifths.
+// span half the disc, the filled ones two fifths to a shade under half.
 const PLACE = ['start-0 top-[24%] -ms-8 -rotate-[15deg]', 'end-0 top-[56%] -me-8 rotate-[15deg]'];
 const BADGE: Record<BadgeId, { Icon: typeof DiscountShapeIcon; glyph: string }> = {
   discount: { Icon: DiscountShapeIcon, glyph: 'size-8 text-brand' },
   ticket: { Icon: TicketIcon, glyph: 'size-8 text-accent' },
   coin: { Icon: CoinIcon, glyph: 'size-8 text-brand' },
   arrows: { Icon: ArrowsRightLeftIcon, glyph: 'size-[26px] text-accent' },
+  // the file's colours on this pair are the other way round: gold bag, purple cloche
+  bag: { Icon: ShoppingBagIcon, glyph: 'size-[29px] text-accent' },
+  food: { Icon: FoodServingIcon, glyph: 'size-[28px] text-brand' },
 };
 
 export function BenefitCard({
