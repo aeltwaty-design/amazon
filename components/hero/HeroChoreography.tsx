@@ -38,11 +38,16 @@ export const HERO = {
     bar: [0.42, 0.6],
     /** the bar contracts to pill 1; the other pills emerge from behind it into a stack */
     split: [0.6, 0.72],
-    /** all pills expand into their grid slots */
-    expand: [0.72, 0.86],
+    /**
+     * all pills expand into their grid slots, then the contents fade in right
+     * up to the release: the mirrors are inert, so every frame the cards look
+     * finished before the pin lets go is a frame you can hover but nothing
+     * answers — the morph runs to the last pixel of the pin instead
+     */
+    expand: [0.76, 0.92],
     /** card contents (titles, art) fade in */
-    content: [0.86, 0.95],
-    lock: 0.95,
+    content: [0.92, 1],
+    lock: 1,
     /** header and scroll hint switch to light-surface tones */
     tone: 0.62,
   },
@@ -467,7 +472,7 @@ function buildPinnedScrub(
 
   // ScrollTrigger maps the pin onto the timeline's full duration, so the
   // timeline must span exactly 1 for the P windows to mean scroll fractions
-  // (the last tween ends at P.content[1] < 1).
+  // (the content fade ends at 1 today; the pad keeps that true if it moves).
   tl.set({}, {}, 1);
 
   if (art) addArtExit(tl, art, geometry, P.art[0], P.art[1] - P.art[0]);
