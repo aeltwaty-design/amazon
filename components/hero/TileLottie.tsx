@@ -23,7 +23,8 @@ type Props = { motion: TileMotion };
 // is fetched or rendered until the query matches, so touch devices and
 // reduced-motion users get the still and the label exactly as before. Hover is
 // read from the <li>, the element the CSS :hover rules use, so the playhead and
-// the cross-fade agree: enter restarts from frame 0, leave pauses, and a
+// the cross-fade agree: enter restarts from the frame that matches the still
+// (TILE_MOTION.startFrame, so the cross-fade does not jump), leave pauses, and a
 // cross-fade that ends hidden pauses too (the pin turns the tiles' pointer
 // events off while a pointer may still sit on one).
 export function TileLottie({ motion }: Props) {
@@ -44,7 +45,7 @@ export function TileLottie({ motion }: Props) {
     const tile = el?.closest<HTMLElement>('[data-hero-tile]');
     if (!active || !el || !tile) return;
     const restart = () => {
-      handle.current?.seek(0);
+      handle.current?.seek(motion.startFrame);
       handle.current?.play();
     };
     const pause = () => handle.current?.pause();
@@ -59,13 +60,13 @@ export function TileLottie({ motion }: Props) {
       tile.removeEventListener('pointerleave', pause);
       el.removeEventListener('transitionend', settled);
     };
-  }, [active]);
+  }, [active, motion.startFrame]);
 
   // A pointer already on the tile when the file arrives should not have to
   // leave and come back.
   const ready = () => {
     if (box.current?.closest('[data-hero-tile]')?.matches(':hover')) {
-      handle.current?.seek(0);
+      handle.current?.seek(motion.startFrame);
       handle.current?.play();
     }
   };

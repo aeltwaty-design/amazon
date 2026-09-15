@@ -85,7 +85,12 @@ export const HERO_LOTTIE = {
 export type HeroTileId = 'restaurants' | 'shopping' | 'travel' | 'entertainment' | 'health';
 
 /** a Lottie a tile cross-fades to on hover in place of its label (components/hero/TileLottie.tsx) */
-export type TileMotion = { src: string; crop: { x: number; y: number; w: number; h: number } };
+export type TileMotion = {
+  src: string;
+  crop: { x: number; y: number; w: number; h: number };
+  /** the frame the hover starts on — the one that matches the still, so the cross-fade does not jump */
+  startFrame: number;
+};
 
 // Only on a hover-capable desktop with motion allowed; touch and reduced
 // motion keep the still and the label. `crop` is the region of the canvas the
@@ -94,7 +99,16 @@ export type TileMotion = { src: string; crop: { x: number; y: number; w: number;
 export const TILE_MOTION: Partial<Record<HeroTileId, TileMotion>> = {
   // design-supplied "WO coin — spin, glint, float": 1080 × 1080, 30 fps,
   // 90 frames, a 3 s seamless loop on a transparent ground
-  restaurants: { src: '/lottie/wo-coin.json', crop: { x: 230, y: 120, w: 620, h: 754 } },
+  // `startFrame` is the frame that matches public/tiles/wo-coin.webp: every
+  // frame was rendered at the crop and scored against the still (trimmed to
+  // its alpha, RGB difference where both are opaque); 65–72 tie as the coin
+  // at rest, face on, highlight top-right and bottom-left, and 68 is their
+  // middle. Frame 0 is the same pose a beat earlier in the float; 30 is edge on.
+  restaurants: {
+    src: '/lottie/wo-coin.json',
+    crop: { x: 230, y: 120, w: 620, h: 754 },
+    startFrame: 68,
+  },
 };
 
 /**
