@@ -240,6 +240,38 @@ html[data-js]:not([data-fonts]) body {
     }
   }
 
+  /* Hover badges beside the first card's phone (BenefitCard BADGE): hidden and
+     shrunk until the card is hovered on a hover-capable device, then they
+     spring in over --card-hover and bob on --badge-float, the second half a
+     cycle behind so the two never move together. `rotate`, `scale` and
+     `translate` are separate properties, so the tilt, the reveal and the
+     bob never fight. Reduced motion shows them on hover without the bob. */
+  .benefit-badge {
+    opacity: 0;
+    scale: 0.6;
+    transition:
+      opacity var(--card-hover) var(--ease-spring),
+      scale var(--card-hover) var(--ease-spring);
+  }
+  @media (hover: hover) {
+    .benefit-card:hover .benefit-badge {
+      opacity: 1;
+      scale: 1;
+      animation: badge-float var(--badge-float) ease-in-out infinite alternate;
+    }
+    .benefit-card:hover .benefit-badge:nth-of-type(2) {
+      animation-delay: calc(var(--badge-float) / -2);
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .benefit-badge {
+      transition: none;
+    }
+    .benefit-card:hover .benefit-badge {
+      animation: none;
+    }
+  }
+
   /* Mirror cards: every card is clipped by the choreography through these
      insets — the first one to tile 1's square, then a bar (S2b); all three to
      pills that expand into their slots (S2c–S2d). The defaults clip nothing. */
@@ -421,6 +453,15 @@ html[data-js]:not([data-fonts]) body {
 @media (prefers-reduced-motion: reduce) {
   .stepper-flow {
     animation: none;
+  }
+}
+
+@keyframes badge-float {
+  from {
+    translate: 0 -6px;
+  }
+  to {
+    translate: 0 6px;
   }
 }
 

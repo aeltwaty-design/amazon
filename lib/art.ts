@@ -116,7 +116,16 @@ export const TILE_MOTION: Partial<Record<HeroTileId, TileMotion>> = {
  * or a phone standing centred on the bottom edge with its top three quarters
  * in view (the asset is already cropped to that; BenefitCard fits it in a box).
  */
-export type BenefitArt = Art & { kind: 'still' | 'phone' };
+export type BenefitArt = Art & { kind: 'still' | 'phone'; badges?: readonly BadgeId[] };
+
+/**
+ * The badges that float in beside a phone on hover (BenefitCard): the mockup
+ * file's own "discount-shape" and "ticket" instances (nodes 55993:11202 and
+ * 55993:11204 in the Matte iPhone Mockups community file), a white circle
+ * with a hairline, tipped ±15°, an Iconsax Linear glyph inside. The first is
+ * placed at the phone's inline start, the second at its end.
+ */
+export type BadgeId = 'discount' | 'ticket';
 
 export const ART = {
   tiles: {
@@ -136,7 +145,13 @@ export const ART = {
     // recoloured to the card's --color-phone-frame* token, top three quarters
     // kept. Attribute the community file per its licence before launch.
     cards: [
-      { kind: 'phone', src: '/mockups/map-phone.webp', width: 848, height: 1283 },
+      {
+        kind: 'phone',
+        src: '/mockups/map-phone.webp',
+        width: 848,
+        height: 1283,
+        badges: ['discount', 'ticket'],
+      },
       { kind: 'phone', src: '/mockups/transfer-phone.webp', width: 848, height: 1283 },
       { kind: 'phone', src: '/mockups/market-phone.webp', width: 846, height: 1283 },
     ] satisfies readonly BenefitArt[],

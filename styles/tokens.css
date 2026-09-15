@@ -117,6 +117,7 @@
   --hero-tile-enter-distance: 300px;
 
   --card-hover: 440ms;
+  --badge-float: 3s; /* one bob of a hover badge beside the benefit phone, up and back */
   --tile-hover-lift: 18px;
   --tile-fade: 180ms; /* illustration ↔ label cross-fade on a tile */
   --brands-marquee-travel: 480px; /* total x travel of a brand row while its section crosses the viewport; alternate rows go opposite ways; keep ≤ row width − widest viewport (3576 − 2560) */
