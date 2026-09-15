@@ -99,15 +99,15 @@ export type TileMotion = {
 export const TILE_MOTION: Partial<Record<HeroTileId, TileMotion>> = {
   // design-supplied "WO coin — spin, glint, float": 1080 × 1080, 30 fps,
   // 90 frames, a 3 s seamless loop on a transparent ground
-  // `startFrame` is the frame that matches public/tiles/wo-coin.webp: every
-  // frame was rendered at the crop and scored against the still (trimmed to
-  // its alpha, RGB difference where both are opaque); 65–72 tie as the coin
-  // at rest, face on, highlight top-right and bottom-left, and 68 is their
-  // middle. Frame 0 is the same pose a beat earlier in the float; 30 is edge on.
+  // `startFrame` is the frame the hover starts on, chosen by eye from a
+  // numbered sheet of all 90 frames rendered at the crop: 10 is the coin at
+  // rest, face on, the pose the still shows, on the beat the spin begins —
+  // so the cross-fade does not jump and the turn is what the pointer gets.
+  // (Scored against the still, 65–72 match closest; 30 is edge on.)
   restaurants: {
     src: '/lottie/wo-coin.json',
     crop: { x: 230, y: 120, w: 620, h: 754 },
-    startFrame: 68,
+    startFrame: 10,
   },
 };
 
